@@ -145,11 +145,16 @@ p{margin:0 0 16px; overflow-wrap:break-word;}
 .def-box strong{color:var(--navy);}
 
 .formula-box{
-  background:var(--navy); color:#fff; border-radius:var(--radius); padding:clamp(16px,4vw,24px) clamp(12px,3vw,20px); margin:20px 0;
-  box-shadow:var(--shadow); overflow-x:auto; -webkit-overflow-scrolling:touch;
+  background:var(--navy); color:#fff; border-radius:var(--radius); padding:clamp(16px,4vw,24px) clamp(12px,3vw,20px); margin:20px 0 6px;
+  box-shadow:var(--shadow); overflow-x:auto; -webkit-overflow-scrolling:touch; position:relative;
 }
 .formula-box mjx-container{color:#fff !important;}
 .formula-box mjx-container[display="true"]{margin:0.5em 0 !important;}
+.formula-scroll-hint{
+  display:none; text-align:center; font-size:var(--fs-sm); color:var(--slate); margin:6px 0 20px;
+  font-family:'JetBrains Mono',monospace;
+}
+.formula-scroll-hint.show{display:block;}
 
 .note-box{
   background:#fffbea; border-right:5px solid var(--amber); border-radius:var(--radius-sm); padding:16px clamp(14px,3vw,22px); margin:20px 0; overflow-wrap:break-word;
@@ -551,7 +556,7 @@ button{-webkit-tap-highlight-color: rgba(46,134,193,0.25);}
       </div>
     </div>
     <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">6.1 Star Connection (Y-Connection)</h3>
-    <p>في توصيل النجمة، بيتم تجميع أحد أطراف الفازات (الملفات) الثلاثة في نقطة مشتركة تسمى <strong>Neutral Point</strong> (نقطة التعادل). وبكده يبقى عندنا ثلاثة أطراف للفازات بالإضافة لنقطة التعادل عند إخراجها. عندنا L1، L2، L3، وممكن يكون عندنا Neutral، والفرق الزاوي بين الفازات يفضل $120^\circ$ كهربائية.</p>
+    <p>في توصيل النجمة، بيتم تجميع أحد أطراف الفازات (الملفات) الثلاثة في نقطة مشتركة تسمى <strong>Neutral Point</strong> (نقطة التعادل). وبكده يبقى عندنا ثلاثة أطراف للفازات بالإضافة لنقطة التعادل عند إخراجها. عندنا L1، L2، L3، وممكن يكون عندنا Neutral، والفرق الزاوي بين الفازات يفضل \(120^\circ\) كهربائية.</p>
 
     <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">6.2 Delta Connection (Δ-Connection)</h3>
     <p>في الـ Delta، بيتم توصيل نهاية كل ملف ببداية الملف اللي يليه، وبالتالي الملفات الثلاثة بتتصل مع بعضها على شكل مثلث.</p>
@@ -649,7 +654,7 @@ button{-webkit-tap-highlight-color: rgba(46,134,193,0.25);}
     <div class="def-box">
       <p style="margin:0;"><strong>Faraday's law</strong> states that the time variation of flux linkage induces voltage (transformer).</p>
     </div>
-    <p>يعني لما يكون عندنا فيض مغناطيسي متغير مع الزمن داخل قلب مغناطيسي، وده بيحصل من مصدر AC موصّل بملف أولي $N_1$، الفيض المتغير ده بيقطع ملف ثانوي $N_2$ ملفوف على نفس القلب، فيتولد فيه جهد مستحث. ده بالظبط المبدأ اللي بيشتغل عليه الـ Transformer، واللي هنرجع نفصّله في قسم لاحق.</p>
+    <p>يعني لما يكون عندنا فيض مغناطيسي متغير مع الزمن داخل قلب مغناطيسي، وده بيحصل من مصدر AC موصّل بملف أولي \(N_1\)، الفيض المتغير ده بيقطع ملف ثانوي \(N_2\) ملفوف على نفس القلب، فيتولد فيه جهد مستحث. ده بالظبط المبدأ اللي بيشتغل عليه الـ Transformer، واللي هنرجع نفصّله في قسم لاحق.</p>
 
     <div class="figure-wrap">
       <img src="images/lecture-01-transformer-schematic.png" alt="Transformer schematic with primary N1, secondary N2, flux φ, i1, i2, Load">
@@ -771,7 +776,7 @@ button{-webkit-tap-highlight-color: rgba(46,134,193,0.25);}
     <div class="formula-box">
       \[ B = \frac{\phi}{A} \quad \text{, where } A \text{ is area } (m^2) \]
     </div>
-    <p><strong>B — Magnetic Flux Density</strong> (تسلا، $T = Wb/m^2$).</p>
+    <p><strong>B — Magnetic Flux Density</strong> (تسلا، \(T = Wb/m^2\)).</p>
 
     <div class="formula-box">
       \[ F = MMF = \phi \mathcal{R} = Ni \quad (AT) \]
@@ -782,7 +787,7 @@ button{-webkit-tap-highlight-color: rgba(46,134,193,0.25);}
       \[ \mathcal{R} = \frac{l_c}{\mu A} \quad \text{(A-turns/Wb)} \]
       \[ \mu = \mu_r \cdot \mu_0 \quad ; \quad \mu_0 = 4\pi \times 10^{-7}\ H/m \]
     </div>
-    <p><strong>Reluctance ($\mathcal{R}$)</strong>: الممانعة المغناطيسية، حيث $l_c$ طول المسار المغناطيسي المتوسط، و $\mu$ النفاذية المغناطيسية.</p>
+    <p><strong>Reluctance (\(\mathcal{R}\))</strong>: الممانعة المغناطيسية، حيث \(l_c\) طول المسار المغناطيسي المتوسط، و \(\mu\) النفاذية المغناطيسية.</p>
 
     <div class="formula-box">
       \[ MMF = H \cdot l_c = \phi \mathcal{R} = Ni \quad ; \quad B = \mu H \]
@@ -989,8 +994,8 @@ button{-webkit-tap-highlight-color: rgba(46,134,193,0.25);}
       \[ \frac{V_1}{V_2} = \frac{N_1}{N_2} \]
     </div>
     <div class="def-box">
-      <p>$V_1$: جهد الـ Primary — $V_2$: جهد الـ Secondary</p>
-      <p style="margin:0;">$N_1$: عدد لفات الـ Primary — $N_2$: عدد لفات الـ Secondary</p>
+      <p>\(V_1\): جهد الـ Primary — \(V_2\): جهد الـ Secondary</p>
+      <p style="margin:0;">\(N_1\): عدد لفات الـ Primary — \(N_2\): عدد لفات الـ Secondary</p>
     </div>
     <p>نسبة الجهد بتعتمد على <strong>Turns Ratio</strong>. لو عدد لفات الملف الثانوي أكبر من الأولي → <strong>Step-up</strong>. لو أقل → <strong>Step-down</strong>.</p>
 
@@ -1083,13 +1088,13 @@ button{-webkit-tap-highlight-color: rgba(46,134,193,0.25);}
     <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">ثانيًا: الـ Transformer</h3>
     <div class="def-box">
       <p>ممكن يكون Step-up لرفع الجهد، أو Step-down لخفض الجهد.</p>
-      <p>العلاقة الأساسية: <span class="ltr" style="display:inline">$\dfrac{V_1}{V_2} = \dfrac{N_1}{N_2}$</span></p>
+      <p>العلاقة الأساسية: <span class="ltr" style="display:inline">\(\dfrac{V_1}{V_2} = \dfrac{N_1}{N_2}\)</span></p>
       <p style="margin:0;">بيحقق Electrical Isolation عن طريق الـ Magnetic Coupling.</p>
     </div>
 
     <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">ثالثًا: أنظمة القدرة</h3>
     <div class="def-box">
-      <p>في أنظمة القدرة الكبيرة بنستخدم غالبًا Three Phase، والفازات الثلاث بينها $120^\circ$، وممكن توصيلها إما Star أو Delta.</p>
+      <p>في أنظمة القدرة الكبيرة بنستخدم غالبًا Three Phase، والفازات الثلاث بينها \(120^\circ\)، وممكن توصيلها إما Star أو Delta.</p>
       <p>الـ Single Line Diagram هي الخريطة اللي بتساعدنا نفهم النظام الكهربائي داخل المصنع أو المحطة.</p>
       <p style="margin:0;">الـ Nameplate هي بطاقة تعريف أي جهاز.</p>
     </div>
@@ -1171,6 +1176,28 @@ document.querySelectorAll('.toc-item').forEach(function(link){
     if(target){ target.scrollIntoView({behavior:'smooth', block:'start'}); }
   });
 });
+
+/* Show a "swipe to see more" hint under any equation box whose rendered
+   math is actually wider than the box (only relevant on narrow screens). */
+function markOverflowingFormulas(){
+  document.querySelectorAll('.formula-box').forEach(function(box){
+    var isOverflowing = box.scrollWidth > box.clientWidth + 1;
+    var hint = box.nextElementSibling;
+    if(!hint || !hint.classList || !hint.classList.contains('formula-scroll-hint')){
+      hint = document.createElement('p');
+      hint.className = 'formula-scroll-hint';
+      hint.textContent = '\u2190 \u0627\u0633\u062d\u0628 \u0644\u0631\u0624\u064a\u0629 \u0627\u0644\u0645\u0639\u0627\u062f\u0644\u0629 \u0643\u0627\u0645\u0644\u0629 \u2192';
+      box.parentNode.insertBefore(hint, box.nextSibling);
+    }
+    hint.classList.toggle('show', isOverflowing);
+  });
+}
+if(window.MathJax && MathJax.startup && MathJax.startup.promise){
+  MathJax.startup.promise.then(markOverflowingFormulas);
+} else {
+  window.addEventListener('load', markOverflowingFormulas);
+}
+window.addEventListener('resize', markOverflowingFormulas);
 </script>
 
 </body>
