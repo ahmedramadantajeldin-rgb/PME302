@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lecture 2 — Single-Phase Transformers</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=Cairo:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&family=Amiri&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<style>
+:root{--navy:#0B2447;--royal:#1B4F8A;--sky:#2E86C1;--azure:#5DADE2;--mist:#D6EAF8;--pearl:#EBF5FB;--white:#FFFFFF;--ink:#1A1A2E;--graphite:#2C3E50;--slate:#5D6D7E;--gold:#D4AC0D;--amber:#F0B429;--mint:#1ABC9C;--mint-light:#D5F5E3;--coral:#E74C3C;--coral-light:#FADBD8;--shadow:0 4px 20px rgba(11,36,71,0.10);--shadow-lg:0 8px 40px rgba(11,36,71,0.16);--radius:14px;--radius-sm:8px}
+*{box-sizing:border-box;max-width:100%}
+html,body{overflow-x:hidden;margin:0}
+html{scroll-behavior:smooth}
+body{background:linear-gradient(160deg,#f0f6ff 0%,#e8f1fb 50%,#f5f9ff 100%);font-family:'Cairo','Source Serif 4',serif;font-size:17px;line-height:1.85;color:var(--ink)}
+.en{direction:ltr;unicode-bidi:embed;font-family:'JetBrains Mono',monospace;font-size:.9em}
+header{position:relative;background:linear-gradient(135deg,var(--navy) 0%,var(--royal) 60%,var(--sky) 100%);color:#fff;text-align:center;padding:60px 40px 50px;overflow:hidden}
+header::before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M0 30h60M30 0v60' stroke='white' stroke-opacity='.04'/%3E%3C/svg%3E")}
+header>*{position:relative}
+.badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 18px;font-size:.78rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:18px;direction:ltr}
+h1{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(2rem,5vw,3.2rem);text-shadow:0 2px 8px rgba(0,0,0,.25);margin:0 0 14px;line-height:1.25}
+h1 span{font-size:.65em;opacity:.85;font-family:'Cairo'}
+.sub{font-family:'Source Serif 4',serif;font-size:1.1rem;opacity:.85;direction:ltr;max-width:650px;margin:0 auto 22px}
+.pills{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.pills span{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:3px 14px;font-size:.85rem}
+.dua-wrap{max-width:960px;margin:28px auto 0;padding:0 24px}
+.dua-card{background:#fff;border:1.5px solid #e8b84b;border-radius:14px;box-shadow:0 2px 12px rgba(168,120,42,.10);overflow:hidden}
+.dua-btn{width:100%;border:0;cursor:pointer;background:linear-gradient(135deg,#7a5800,#b8860b);color:#fff;font:600 1rem 'Cairo',sans-serif;text-align:right;padding:12px 18px;display:flex;justify-content:space-between;align-items:center}
+.dua-btn .ar{display:inline-block;transition:transform .25s}
+.dua-btn[aria-expanded="true"] .ar{transform:rotate(180deg)}
+.dua-body{display:none;padding:16px 18px;background:linear-gradient(135deg,#fffbea,#fff9f0)}
+.dua-body p{font-family:'Amiri',serif;font-size:17px;line-height:2.1;color:#5a3e00;border-right:3px solid #e8b84b;padding-right:14px;margin:6px 0}
+.wrap{max-width:900px;margin:30px auto;padding:0 24px}
+.content{max-width:960px;margin:0 auto;padding:0 24px}
+.toc-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+.toc-head{background:linear-gradient(90deg,var(--royal),var(--sky));color:#fff;font:700 1.2rem 'Playfair Display',serif;padding:14px 22px;direction:ltr}
+.toc-body{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:16px}
+.toc-body a{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--navy);font-weight:600;padding:6px 8px;border-radius:var(--radius-sm)}
+.toc-body a:hover{background:var(--pearl)}
+.toc-body b{flex:0 0 26px;width:26px;height:26px;border-radius:50%;background:var(--sky);color:#fff;font:500 .78rem/26px 'JetBrains Mono',monospace;text-align:center}
+.sec-head{display:flex;align-items:center;gap:16px;border-bottom:3px solid var(--mist);padding-bottom:12px;margin-bottom:20px}
+.ico{flex:0 0 52px;width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--royal),var(--sky));display:flex;align-items:center;justify-content:center;font-size:1.5rem}
+.sec-head h2{margin:0;font:700 1.75rem 'Playfair Display',serif;color:var(--navy);direction:ltr;text-align:right;line-height:1.3}
+.sec-head small{display:block;font:400 .78rem 'JetBrains Mono',monospace;color:var(--slate);direction:ltr;text-align:right}
+hr.section-divider{border:0;height:2px;margin:50px 0;background:linear-gradient(90deg,transparent,var(--sky),transparent)}
+h3{color:var(--royal);font-size:1.15rem;margin:22px 0 6px}
+.def-box{background:linear-gradient(135deg,var(--mist),var(--pearl));border-right:5px solid var(--sky);border-radius:var(--radius-sm);padding:14px 18px;margin:16px 0}
+.note-box{background:#fffbea;border-right:5px solid var(--amber);border-radius:var(--radius-sm);padding:14px 18px;margin:16px 0}
+.formula-box{background:var(--navy);color:#fff;border-radius:var(--radius);padding:14px 18px;margin:16px 0;overflow-x:auto;direction:ltr;text-align:center}
+.split{display:flex;gap:20px;align-items:center;margin:16px 0}
+.split>div{flex:1}
+figure{margin:16px auto;text-align:center;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:10px}
+figure img{border-radius:var(--radius-sm);height:auto;display:block;margin:0 auto}
+figcaption{font-size:.85rem;color:var(--slate);margin-top:6px;direction:ltr}
+.s img{width:260px}.m img{width:440px}.l img{width:760px}
+.split figure{margin:0;flex:0 0 38%}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+table{width:100%;border-collapse:collapse;direction:ltr;background:#fff;border-radius:var(--radius-sm);overflow:hidden;box-shadow:var(--shadow)}
+th{background:var(--royal);color:#fff;padding:8px 10px}td{padding:8px 10px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:.85rem}
+tr:nth-child(even) td{background:var(--pearl)}
+td:first-child{font-family:'Cairo';text-align:right;color:var(--navy);font-weight:600}
+.tw{overflow-x:auto}.hint{display:none;font-size:.78rem;color:var(--slate);text-align:center}
+.example-card{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin:20px 0}
+.ex-h{background:linear-gradient(90deg,var(--sky),var(--azure));color:#fff;padding:10px 20px;font:700 1.05rem 'Playfair Display',serif;direction:ltr}
+.ex-b{padding:14px 18px}
+.ex-b figure{box-shadow:none;border:1px solid var(--mist);margin:8px auto}
+.ans{display:inline-block;background:var(--mint-light);color:#0b6b57;border:1px solid var(--mint);border-radius:999px;padding:3px 16px;font:500 .85rem 'JetBrains Mono',monospace;direction:ltr;margin-top:6px}
+.q-section{border:2px solid var(--royal);border-radius:var(--radius);padding:16px 20px;background:#fff;margin:14px 0}
+.q-section .q{direction:ltr;font-weight:600;color:var(--navy)}
+.sol-btn{margin-top:10px;border:0;cursor:pointer;background:var(--royal);color:#fff;border-radius:var(--radius-sm);padding:7px 16px;font:600 .9rem 'Cairo'}
+.sol{display:none;margin-top:10px;padding:10px 14px;background:var(--pearl);border-radius:var(--radius-sm)}
+footer{background:var(--navy);color:#fff;text-align:center;border-radius:14px;margin:40px auto 0;max-width:960px;padding:30px 20px}
+footer h4{font:700 1.2rem 'Playfair Display',serif;margin:0 0 6px}footer p{opacity:.7;margin:0 0 14px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}.tags span{background:rgba(255,255,255,.1);border-radius:999px;padding:2px 14px;font-size:.8rem}
+.closing{max-width:960px;margin:24px auto 40px;background:linear-gradient(135deg,#0B2447,#1B4F8A);border-top:4px solid #D4AC0D;border-radius:14px;box-shadow:0 8px 32px rgba(11,36,71,.18);padding:24px;text-align:center;font:19px/2.2 'Amiri',serif;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.3)}
+.qb{background:var(--pearl);border-radius:8px;padding:10px 14px;direction:ltr;text-align:left;font-family:"Source Serif 4",serif;font-style:italic}.sm{direction:ltr;text-align:left;overflow-x:auto;margin:8px 0}.sm .en{font-family:"Source Serif 4",serif}.ex-b h4{margin:14px 0 4px;color:var(--royal);direction:ltr;text-align:left}
+@media(max-width:768px){header{padding:46px 24px 40px}.split{flex-direction:column}.split figure{flex:auto}.l img,.m img{width:100%}}
+@media(max-width:650px){.grid2{grid-template-columns:1fr}.sec-head h2{font-size:1.45rem}}
+@media(max-width:600px){body{font-size:16px}.toc-body{grid-template-columns:1fr}.hint{display:block}.content,.wrap,.dua-wrap{padding:0 14px}}
+@media(max-width:380px){header{padding:36px 14px}.ico{flex-basis:42px;width:42px;height:42px}}
+</style>
+<script>
+try{ if(localStorage.getItem('eyeProtection')==='on'){ document.documentElement.setAttribute('data-eye','on'); } }catch(e){}
+</script>
+<style id="eye-protection-css">
+.eye-toggle{position:fixed; top:14px; left:14px; z-index:10000; direction:ltr; display:inline-flex; align-items:center; gap:8px; padding:6px 14px 6px 12px; border-radius:999px; cursor:pointer; margin:0; font-family:'Cairo',sans-serif; font-weight:600; font-size:0.82rem; line-height:1.4; background:rgba(255,255,255,0.93); color:#0B2447; border:1px solid rgba(11,36,71,0.28); box-shadow:0 2px 10px rgba(11,36,71,0.18); backdrop-filter:blur(6px); transition:background .2s, border-color .2s, color .2s;}
+.eye-toggle:focus-visible{outline:2px solid #F0B429; outline-offset:2px;}
+.eye-sw{position:relative; flex:0 0 30px; width:30px; height:16px; border-radius:999px; background:#A9B4C0; transition:background .2s;}
+.eye-sw::after{content:""; position:absolute; top:2px; left:2px; width:12px; height:12px; border-radius:50%; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.3); transition:transform .2s;}
+.eye-st{min-width:2.3em; text-align:left; font-family:'JetBrains Mono',monospace; font-size:0.76rem; font-weight:500;}
+.eye-toggle[aria-pressed="true"]{background:#F8EFD6; border-color:#C9A25A; color:#5A3E00;}
+.eye-toggle[aria-pressed="true"] .eye-sw{background:#C8902E;}
+.eye-toggle[aria-pressed="true"] .eye-sw::after{transform:translateX(14px);}
+@media (max-width:420px){ .eye-toggle{padding:5px 10px 5px 9px; gap:6px; font-size:0.74rem;} .eye-lbl{display:none;} }
+.eye-overlay{display:none;}
+@media screen{
+html[data-eye="on"]{ --pearl:#EAF1F5; --mist:#D5E4EE; --white:#F8F8F5; --sky:#3A84B3; --azure:#69A8CF; --amber:#E2AD3C; --gold:#C8A21C; --mint:#27AD93; --mint-light:#D6EADC; --coral:#D9544A; --coral-light:#F0DCD6; --slate:#556576; --shadow:0 4px 20px rgba(50,44,32,0.10); --shadow-lg:0 8px 40px rgba(50,44,32,0.14); --eye-paper:#F8F8F5; }
+html[data-eye="on"] body{background:linear-gradient(160deg,#F0F1F0 0%,#ECEDEC 50%,#F1F2F1 100%);}
+html[data-eye="on"] img{filter:brightness(0.97) saturate(0.96);}
+html[data-eye="on"] .toc-card,html[data-eye="on"] .example-card,html[data-eye="on"] .q-section,html[data-eye="on"] figure,html[data-eye="on"] table,html[data-eye="on"] .dua-card{background:var(--eye-paper);}
+html[data-eye="on"] .note-box{background:#F6F0DF;}
+html[data-eye="on"] .dua-body{background:linear-gradient(135deg,#F6F1E0,#F7F2E6);}
+html[data-eye="on"] .formula-box{color:#F4F4F2 !important;}
+@supports (mix-blend-mode:multiply){ html[data-eye="on"] .eye-overlay{ display:block; position:fixed; inset:0; z-index:9990; pointer-events:none; background:rgba(255,225,170,0.22); mix-blend-mode:multiply; } }
+}
+@media print{ .eye-toggle,.eye-overlay{display:none !important;} }
+</style>
+<style id="home-link-css">
+.home-link{position:fixed;top:14px;right:14px;z-index:10000;direction:rtl;display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:999px;font:600 .82rem/1.4 'Cairo',sans-serif;text-decoration:none;background:rgba(255,255,255,.93);color:#0B2447;border:1px solid rgba(11,36,71,.28);box-shadow:0 2px 10px rgba(11,36,71,.18);backdrop-filter:blur(6px)}
+.home-link:hover{background:#D6EAF8}.home-link:focus-visible{outline:2px solid #F0B429;outline-offset:2px}
+@media(max-width:420px){.home-link{padding:5px 10px;font-size:.74rem}}
+@media print{.home-link{display:none !important}}
+html[data-eye="on"] .home-link{background:#F8F8F5}
+</style>
+</head>
+<body>
+<button type="button" class="eye-toggle" id="eyeToggle" aria-pressed="false" title="Eye Protection: softer brightness and less blue light for long study sessions">
+  <span class="eye-ico" aria-hidden="true">👁</span>
+  <span class="eye-lbl">Eye Protection</span>
+  <span class="eye-sw" aria-hidden="true"></span>
+  <span class="eye-st">OFF</span>
+</button>
+<div class="eye-overlay" aria-hidden="true"></div>
+<a class="home-link" href="index.html" title="Back to course home">← الصفحة الرئيسية</a>
+
+<header>
+  <div class="badge">Electric Machines · Lecture 2</div>
+  <h1>Single-Phase Transformers<br><span>المحولات أحادية الفاز</span></h1>
+  <p class="sub">Grid role, construction, ideal-transformer theory, EMF equation, impedance transformation and solved examples</p>
+  <div class="pills"><span>⚡ Power Grid</span><span>🧲 Core &amp; Windings</span><span>📐 EMF Equation</span><span>📝 Solved Examples</span></div>
+</header>
+
+<div class="dua-wrap"><div class="dua-card">
+  <button type="button" class="dua-btn" id="duaBtn" aria-expanded="false" aria-controls="duaBody"><span>📖 دعاء</span><span class="ar">▼</span></button>
+  <div class="dua-body" id="duaBody">
+    <p>اللَّهُمَّ لا سَهْلَ إِلاَّ ما جَعَلْتَهُ سَهْلاً، وأنْتَ تَجْعَلُ الحَزْنَ إِذَا شِئْتَ سَهْلاً.</p>
+    <p>رَبِّ اشْرَحْ لِي صَدْرِي * وَيَسِّرْ لِي أَمْرِي * وَاحْلُلْ عُقْدَةً مِنْ لِسَانِي * يَفْقَهُوا قَوْلِي.</p>
+    <p>اللَّهُمَّ انْفَعْنِي بِمَا عَلَّمْتَنِي، وَعَلِّمْنِي مَا يَنْفَعُنِي، وَزِدْنِي عِلْمًا.</p>
+    <p>اللهم إني أسألك فهم النبيين، وحفظ المرسلين والملائكة المقربين، اللهم اجعل ألسنتنا عامرة بذكرك، وقلوبنا بخشيتك، وأسرارنا بطاعتك، إنك على كل شيء قدير.</p>
+    <p>يا حي يا قيوم برحمتك أستغيث، أصلح لي شأني كله ولا تكلني إلى نفسي طرفة عين.</p>
+    <p>اللهم يا جامع الناس ليوم لا ريب فيه، اجمع علي ضالتي.</p>
+    <p>اللهم إني استودعتك ما قرأت وما حفظت وما تعلمت، فرده عند حاجتي إليه، إنك على كل شيء قدير، وحسبنا الله ونعم الوكيل.</p>
+    <p>أستغفر الله، أستغفر الله، أستغفر الله.</p>
+  </div>
+</div></div>
+
+<div class="wrap"><div class="toc-card">
+  <div class="toc-head">Table of Contents</div>
+  <div class="toc-body">
+    <a href="#s1"><b>1</b>لماذا نحتاج Transformers؟</a>
+    <a href="#s2"><b>2</b>أنواع الـ Transformers</a>
+    <a href="#s3"><b>3</b>التركيب والمكونات</a>
+    <a href="#s4"><b>4</b>Ideal Transformer &amp; EMF</a>
+    <a href="#s5"><b>5</b>Ratios &amp; Rating</a>
+    <a href="#s6"><b>6</b>Impedance Transformation</a>
+    <a href="#s7"><b>7</b>أمثلة محلولة</a>
+    <a href="#s8"><b>8</b>أسئلة تدريبية</a>
+  </div>
+</div></div>
+
+<main class="content">
+
+<section id="s1">
+  <div class="sec-head"><div class="ico">⚡</div><div><h2>Why Do We Need Transformers?</h2><small>Grid · Voltage Levels</small></div></div>
+  <div class="split"><div>
+    <div class="def-box"><b>Transformer:</b> جهاز كهربائي ساكن (<span class="en">static</span>) بيحوّل القدرة الكهربائية <span class="en">AC</span> من مستوى جهد لمستوى جهد تاني <b>بنفس الـ frequency</b>.</div>
+    <p>الـ Transformer بيخلّينا نـ <span class="en">transmit electrical power</span> لمسافات طويلة، ونستخدم جهد الـ generator عشان ننقل <b>high power at low current</b>، وده بيقلل تكلفة نظام النقل، وبعدها نظبط الجهد لمستوى صالح للاستخدام.</p>
+  </div>
+  <figure class="s"><img src="images/img-01-transformer-overview.jpg" alt="Oil-filled power transformer with bushings and conservator" loading="lazy"><figcaption>IMG-01 — Oil-filled power transformer</figcaption></figure></div>
+  <p>في <b>IMG-04</b> الرحلة كاملة: <span class="en">Power Plant → Step-up Transformer → Tower → Transmission Substation → Distribution Substation → Transformers → Home</span>.</p>
+  <figure class="m"><img src="images/img-04-power-system-chain.jpg" alt="Power chain from power plant through step-up transformer, towers and substations to home" loading="lazy"><figcaption>IMG-04 — From power plant to home</figcaption></figure>
+  <h3>Voltage levels in the Egyptian grid</h3>
+  <div class="note-box">قاعدة تقريبية من المحاضرة: <span class="en">1 V ≈ 1 m</span>، <span class="en">1 kV ≈ 1 km</span>، و <span class="en">500 kV</span> بينقل قدرة عالية لحوالي <span class="en">500 km</span>. عشان كده الشبكة الموحدة <span class="en">500 &amp; 220 kV</span>.</div>
+  <div class="split"><figure class="m"><img src="images/img-03-egypt-unified-grid-map.jpg" alt="Map of the Egyptian unified power system with 500, 400, 220 and 132 kV lines" loading="lazy"><figcaption>IMG-03 — Unified Power System (500/400/220/132 kV)</figcaption></figure>
+  <div><p><b>66/22 kV</b> في المدن الجديدة: <span class="en">22 kV ≈ 22 km</span> فالمحول بيغطي حوالي <span class="en">1500 km²</span> (مساحات كبيرة).</p><p><b>66/11 kV</b> في القرى القديمة: <span class="en">11 kV ≈ 11 km</span> فبيغطي حوالي <span class="en">380 km²</span> (مساحات صغيرة).</p></div></div>
+  <div class="tw"><table><tr><th>Unit</th><th>Ratio</th><th>Voltage</th><th>Level</th></tr>
+  <tr><td>Gen_1</td><td>250 MVA</td><td>11 : 35 kV</td><td>Generation</td></tr>
+  <tr><td>TR_1</td><td>Δ–Y</td><td>11 / 220 kV</td><td>Generation</td></tr>
+  <tr><td>TR_2</td><td>Y–Y</td><td>220 / 66 kV</td><td>Transmission</td></tr>
+  <tr><td>TR_3</td><td>Δ–Y</td><td>66 / 11 kV</td><td>Transmission</td></tr>
+  <tr><td>TR_4</td><td>Δ–Y</td><td>11 / 0.4 kV</td><td>Distribution</td></tr></table></div>
+</section>
+<hr class="section-divider">
+
+<section id="s2">
+  <div class="sec-head"><div class="ico">🗂️</div><div><h2>Types of Transformers</h2><small>Power · Instrument · Single-phase</small></div></div>
+  <p>المحاضرة بتقسّم الـ Transformers لـ: <span class="en">Single phase</span>، <span class="en">Three phase</span>، و<span class="en">Autotransformers</span>، وبعدين بتصنفهم حسب الوظيفة في الشبكة.</p>
+  <div class="split"><figure class="m"><img src="images/img-02-transformer-classification.jpg" alt="Classification tree of electrical transformers" loading="lazy"><figcaption>IMG-02 — Classification</figcaption></figure><div><p>الشجرة في <b>IMG-02</b> بتقسم لـ <b>Power Transformers</b> (Generator GSU، Transmission، Distribution بنوعيه Oil وDry، وأنواع تانية زي Arc Furnace وHVDC وRail Truck وPhase Shift وIsolation) و<b>Instrument Transformers</b> (<span class="en">PT/VT</span> و<span class="en">CT</span>).</p></div></div>
+  <div class="split"><figure class="s"><img src="images/img-05-gsu-transformer.jpg" alt="GSU transformer being serviced" loading="lazy"><figcaption>IMG-05 — GSU Transformer</figcaption></figure><div><p><b>GSU</b> هو الـ Generator Transformer اللي بيرفع جهد الـ generator قبل النقل، زي <span class="en">TR_1: 11/220 kV</span> في الشبكة المصرية (IMG-04).</p></div></div>
+  <div class="split"><figure class="s"><img src="images/img-06-distribution-oil-transformers.png" alt="Oil-type distribution transformers" loading="lazy"><figcaption>IMG-06 — Distribution (Oil)</figcaption></figure><div><p>الـ <b>Distribution Transformer</b> من نوع <b>Oil</b>: الصورة بتبين المحول بالـ tank والـ radiators بتاعته على الأرض.</p></div></div>
+  <div class="split"><figure class="s"><img src="images/img-07-distribution-dry-transformer.jpg" alt="Dry-type distribution transformer with red coils" loading="lazy"><figcaption>IMG-07 — Distribution (Dry)</figcaption></figure><div><p>النوع التاني <b>Dry</b>: الـ coils ظاهرة ومفيش tank زيت، بعكس IMG-06.</p></div></div>
+  <div class="split"><figure class="s"><img src="images/img-10-low-power-single-phase.jpg" alt="Low power single-phase transformers" loading="lazy"><figcaption>IMG-10 — Low power</figcaption></figure><div><p>الـ <b>Single-phase transformers</b> بتيجي <b>low power</b> (محولات صغيرة بالـ enclosure)...</p></div></div>
+  <div class="split"><figure class="s"><img src="images/img-11-high-power-single-phase.png" alt="High power single-phase transformer" loading="lazy"><figcaption>IMG-11 — High power</figcaption></figure><div><p>...أو <b>high power single-phase</b> (محول زيتي بالـ radiator fins). الاتنين بيشتغلوا بنفس المبدأ.</p></div></div>
+  </section>
+<hr class="section-divider">
+
+<section id="s3">
+  <div class="sec-head"><div class="ico">🧲</div><div><h2>Construction &amp; Components</h2><small>Core · Windings · Tank</small></div></div>
+  <p><b>IMG-08</b> بتوضح إن الـ Transformer <i>complex system</i>: <span class="en">Coils, Core, Oil, Tank, Bushings, Tap changer, Cooling System, Control Cabinet</span>.</p>
+  <figure class="m"><img src="images/img-08-transformer-complex-system.jpg" alt="Cutaway showing coils, core, oil, tank, bushings, tap changer, cooling system and control cabinet" loading="lazy"><figcaption>IMG-08 — The transformer as a complex system</figcaption></figure>
+  <figure class="l"><img src="images/img-09-transformer-labeled-parts.jpg" alt="Labeled power transformer: bushings, conservator, core, LV and HV windings, on-load tap changer, radiators, cooling fans" loading="lazy"><figcaption>IMG-09 — Labeled parts of a power transformer</figcaption></figure>
+  <h3>Basic components of a single-phase transformer</h3>
+  <p>أربع مكونات: <b>1) Magnetic core</b>، <b>2) Primary winding</b>، <b>3) Secondary winding</b>، <b>4) Enclosure</b>.</p>
+  <div class="split"><figure class="s"><img src="images/img-12-single-phase-enclosure.jpg" alt="Small single-phase transformer in enclosure" loading="lazy"><figcaption>IMG-12 — Enclosure</figcaption></figure><div><p><b>Enclosure</b> هو المكون الرابع: الغلاف اللي بيحوي الـ core والـ windings وبتخرج منه الأطراف.</p></div></div>
+  <div class="split"><figure class="m"><img src="images/img-13-core-windings-flux-diagram.jpg" alt="Laminated core with limbs, yoke, windings and flux" loading="lazy"><figcaption>IMG-13 — Core, windings, flux</figcaption></figure><div><p>في <b>IMG-13</b>: المصدر <span class="en">V₁</span> على الـ primary (<span class="en">supply side</span>) والحمل <span class="en">V₂</span> على الـ secondary (<span class="en">load side</span>)، والـ flux <span class="en">φ</span> بيلف في الـ laminated core عبر الـ limbs والـ yoke.</p></div></div>
+  <h3>Core</h3>
+  <p>الـ core بيدّي مسار للـ magnetic flux، وهو مش <i>solid bar</i> من الحديد لكن طبقات رفيعة <b>laminated steel sheets</b> عشان نقلل الـ heating. فيه نوعين:</p>
+  <div class="grid2">
+    <div class="def-box"><b>Core Type:</b> فيه limbين رأسيين و yokeين أفقيين، مغناطيسي واحد مشترك، والـ windings (HV و LV) <b>بتحيط بالـ core</b> على الـ limbs.</div>
+    <div class="def-box"><b>Shell Type:</b> فيه central limb و two outer limbs، والـ HV و LV على الـ central limb، والـ windings <b>محاطة بالـ core</b>، و<i>double magnetic circuit</i>.</div>
+  </div>
+  <h3>Windings</h3>
+  <p>ملفين نحاس معزولين كويس حوالين الـ core. الـ <b>primary</b> بيستقبل القدرة من المصدر، والـ AC بيولّد changing magnetic field في الـ core. الـ <b>secondary</b> بيتولد فيه جهد من الـ field المتغير، وحسب الـ turns ratio يبقى step-up أو step-down.</p>
+  <div class="note-box"><b>Why is the LV winding next to the core?</b> (1) تقليل الـ leakage reactance، (2) تقليل العزل لأن الـ core grounded، (3) الـ Tap changer على الـ HV لأن التيار هناك قليل فاحتكاك الـ contacts أقل.</div>
+  <h3>Multi-output transformer</h3>
+  <div class="split"><figure class="s"><img src="images/img-14-multi-output-circuit.jpg" alt="One primary winding with three secondary windings" loading="lazy"><figcaption>IMG-14 — Multi-output circuit</figcaption></figure><div><p>الـ primary <span class="en">V<sub>P1</sub></span> واحد، وعدة secondaries <span class="en">V<sub>S1</sub>, V<sub>S2</sub>, V<sub>S3</sub></span> بتغذي أحمال مختلفة (Load #1 وLoad #2).</p></div></div>
+  <div class="split"><figure class="s"><img src="images/img-15-multi-output-tapped-transformer.jpg" alt="Multi-output transformer with 220 V AC input" loading="lazy"><figcaption>IMG-15 — Multi-output transformer</figcaption></figure><div><p>مثال عملي: دخل <span class="en">220 V AC</span> وخرج بجهود من <span class="en">0 إلى 24 V</span> (Multi Voltage Output Step Down) بخطوات 3 V.</p></div></div>
+</section>
+<hr class="section-divider">
+
+<section id="s4">
+  <div class="sec-head"><div class="ico">📐</div><div><h2>Ideal Transformer &amp; EMF Equation</h2><small>Faraday · Flux · 4.44</small></div></div>
+  <div class="def-box"><b>Ideal transformer assumptions:</b> مقاومة الـ windings = 0، pure inductive، no leakage flux، لا hysteresis ولا eddy losses، core له infinite permeability، efficiency = 100%. <b>مستحيل تتحقق عمليًا.</b></div>
+  <div class="formula-box">\[ e_1 = N_1\frac{d\phi}{dt}\qquad e_2 = N_2\frac{d\phi}{dt} \]</div>
+  <h3>Derivation</h3>
+  <p>نفترض إن الـ core flux جيبي:</p>
+  <div class="formula-box">\[ \Phi(t)=\Phi_{max}\sin\omega t \]
+  \[ e_1(t)=-N_1\frac{d\Phi}{dt}=-N_1\omega\Phi_{max}\cos\omega t=2\pi f N_1\Phi_{max}\sin(\omega t-90^\circ) \]
+  \[ E_{1max}=2\pi f N_1\Phi_{max}\;\Rightarrow\; E_1=\frac{E_{1max}}{\sqrt2}=\sqrt2\,\pi f N_1\Phi_{max} \]
+  \[ \boxed{E_1=4.44\,f\,N_1\,\Phi_{max}}\qquad \boxed{E_2=4.44\,f\,N_2\,\Phi_{max}} \]</div>
+  <div class="note-box">الجهد المستحث متأخر <b>90°</b> عن الـ flux. وللـ ideal transformer: <span class="en">E₁ ≈ V₁</span> و <span class="en">V₂ ≈ E₂</span>.</div>
+</section>
+<hr class="section-divider">
+
+<section id="s5">
+  <div class="sec-head"><div class="ico">🔁</div><div><h2>Ratios &amp; Transformer Rating</h2><small>K · mmf balance · kVA</small></div></div>
+  <div class="formula-box">\[ \frac{V_2}{V_1}=\frac{E_2}{E_1}=\frac{I_1}{I_2}=\frac{N_2}{N_1}=K \qquad S_{in}=V_1I_1=V_2I_2=S_{out} \]</div>
+  <div class="note-box">الـ <b>mmf balance</b> محفوظ لما الـ windings الاتنين بيحملوا تيار: الـ mmf للـ primary والـ secondary متساويين ومتعاكسين، يعني <span class="en">I₁N₁ = I₂N₂</span>.</div>
+  <div class="grid2">
+    <div class="def-box"><b>Step-down:</b> <span class="en">V₂ &lt; V₁ (N₂ &lt; N₁)</span> — many turns / high voltage / low current في الـ primary، و few turns / low voltage / high current في الـ secondary.</div>
+    <div class="def-box"><b>Step-up:</b> <span class="en">V₂ &gt; V₁ (N₂ &gt; N₁)</span>.</div>
+  </div>
+  <h3>Nameplate</h3>
+  <p>مثال: <span class="en">10 kVA, 1100/110 V</span> يعني <b>Rated Apparent Power = 10 kVA</b>، <b>Rated Primary Voltage = 1100 V</b>، <b>Rated Secondary Voltage = 110 V</b>. والقدرة بالـ <span class="en">kVA</span> مش <span class="en">kW</span>.</p>
+  <div class="formula-box">\[ I_{FL}=\frac{\text{VA rating}}{V} \]</div>
+</section>
+<hr class="section-divider">
+
+<section id="s6">
+  <div class="sec-head"><div class="ico">🔄</div><div><h2>Impedance Transformation</h2><small>Reflected Impedance</small></div></div>
+  <p>لو عايزين نشوف حمل الـ secondary من ناحية الـ primary (<b>Reflected Impedance</b>): <span class="en">Z₂′ = V₁ / I₁</span>، وبتعويض نسب الجهد والتيار:</p>
+  <div class="formula-box">\[ \frac{Z_2'}{Z_2}=\frac{V_1}{V_2}\cdot\frac{I_2}{I_1}=\left(\frac{N_1}{N_2}\right)^2=\frac1{K^2}\;\Rightarrow\; Z_2'=Z_2\left(\frac{N_1}{N_2}\right)^2 \]
+  \[ V_2'=V_2\frac{N_1}{N_2}\qquad I_2'=I_2\frac{N_2}{N_1} \]</div>
+  <h3>From primary to secondary side</h3>
+  <div class="formula-box">\[ V_1'=V_1\frac{N_2}{N_1}\qquad I_1'=I_1\frac{N_1}{N_2}\qquad Z_1'=Z_1\left(\frac{N_2}{N_1}\right)^2 \]</div>
+  <div class="note-box">الـ impedance بتتغير مع <b>مربع</b> الـ turns ratio، مش مع النسبة نفسها.</div>
+</section>
+<hr class="section-divider">
+
+<section id="s7">
+  <div class="sec-head"><div class="ico">📝</div><div><h2>Solved Examples</h2><small>Examples 2.1 – 2.7</small></div></div>
+  <p>الأمثلة دي كلها تطبيق مباشر على <b>EMF equation</b> و<b>turns ratio</b> اللي اتشرحوا في الأقسام 4 و5.</p>
+  <div class="example-card"><div class="ex-h">Example 2.1</div><div class="ex-b"><div class="qb">What will be the number of primary and secondary turns of a single-phase 2310/220 V, 50 Hz transformer which has an emf of 13 V per turn approximately.</div><h4>Solution</h4><div class="sm">\[\frac{E_1}{N_1}=\frac{E_2}{N_2}=13\text{ V (given)};\quad E_1=2310\text{ V};\ E_2=220\text{ V}\]\[N_1=\frac{E_1}{13}=\frac{2310}{13}=177.69\cong 178\qquad N_2=\frac{E_2}{13}=\frac{220}{13}=16.92\cong 17\]</div><span class="ans">N₁ = 178 · N₂ = 17</span></div></div>
+  <div class="example-card"><div class="ex-h">Example 2.2</div><div class="ex-b"><div class="qb">A power transformer has 1000 primary turns and 100 secondary turns. The cross-sectional area of the core is 6 sq. cm and the maximum flux density while in operation is 10000 Gauss. Calculate turns per volt for the primary and secondary windings.</div><h4>Solution</h4><div class="sm">\[N_1=1000;\ N_2=100;\ A_i=6\text{ cm}^2=6\times10^{-4}\text{ m}^2\]\[B_m=10000\text{ gauss}=10000\times10^{-8}\times10^{4}=1\text{ tesla}\]\[E_1=4.44\,N_1fB_mA_i=4.44\times1000\times50\times1\times6\times10^{-4}=133.2\text{ V}\]\[E_2=4.44\,N_2fB_mA_i=4.44\times100\times50\times1\times6\times10^{-4}=13.32\text{ V}\]\[\text{Primary: }\frac{N_1}{E_1}=\frac{1000}{133.2}=7.5\qquad \text{Secondary: }\frac{N_2}{E_2}=\frac{100}{13.32}=7.5\]</div><p class="en">The number of turns per volt (voltage per turn) on primary and secondary remains the same.</p><span class="ans">7.5 turns/V</span></div></div>
+  <div class="example-card"><div class="ex-h">Example 2.3 (Example 1.1 in the slides)</div><div class="ex-b"><div class="qb">The primary and secondary of a 25 kVA transformer have 500 and 40 turns, respectively. If the primary is connected to 3000 V, 50 Hz mains, calculate (i) primary and secondary currents at full load; (ii) the secondary emf and (iii) the maximum flux in the core. Neglect magnetic leakage, resistance of the winding and the primary no-load current in relation to the full load current.</div><h4>Solution</h4><div class="sm">\[\text{(i)}\quad I_1=\frac{25\times10^3}{3000}=8.33\text{ A}\qquad \frac{I_1}{I_2}=\frac{E_2}{E_1}=\frac{N_2}{N_1}\]\[I_2=\frac{N_1}{N_2}I_1=\frac{500}{40}\times8.33=104.15\text{ A}\]\[\text{(ii)}\quad E_2=\frac{N_2}{N_1}E_1=\frac{40}{500}\times3000=240\text{ V}\]\[\text{(iii)}\quad E_1=4.44\,N_1f\phi_m\ \Rightarrow\ \phi_m=\frac{3000}{4.44\times500\times50}=27\text{ mWb}\]</div><div class="note-box">في المرجع مكتوب <span class="en">3300</span> في سطر (iii) بالغلط، والصح <span class="en">3000</span> زي ما الحل بيستخدمه.</div><span class="ans">I₁ = 8.33 A · I₂ = 104.15 A · E₂ = 240 V · φm = 27 mWb</span></div></div>
+  <div class="example-card"><div class="ex-h">Example 2.4</div><div class="ex-b"><div class="qb">The emf per turn of an 11 kV/415 V, 50 Hz single-phase core type transformer is 15 V. The maximum flux density in the core is 2.5 T. Find number of primary and secondary turns and net cross sectional area of core.</div><h4>Solution</h4><div class="sm">\[E_1=11000\text{ V};\ E_2=415\text{ V};\ f=50\text{ Hz};\ B_m=2.5\text{ T}\]\[N_1=\frac{11000}{15}=733.33\qquad N_2=\frac{415}{15}=27.67\]\[E_1=4.44\,N_1fA_iB_m\ \Rightarrow\ 15=4.44\times50\times A_i\times2.5\]\[A_i=\frac{15}{4.44\times50\times2.5}=0.027\text{ m}^2\approx 270\text{ cm}^2\]</div><div class="note-box"><b>تصحيح:</b> المرجع كتب <span class="en">1.5</span> في المقام فطلع <span class="en">450.45 cm²</span>، لكن <span class="en">B<sub>m</sub> = 2.5 T</span> فالناتج الصحيح حوالي <span class="en">270 cm²</span>.</div><span class="ans">N₁ = 733.33 · N₂ = 27.67 · A_i ≈ 270 cm²</span></div></div>
+  <div class="example-card"><div class="ex-h">Example 2.5 — Iron factor</div><div class="ex-b"><div class="qb">A single phase 50 Hz core type transformer has rectangular cores 30 × 20 cm and the maximum allowable density is 1.05 tesla. Find the number of turns per limb on the high and low voltage sides for a voltage ratio of 3300/200 volt. Take iron factor as 0.93.</div><h4>Solution</h4><p>الـ gross area بتتحسب من أبعاد الـ core (الـ limbs في IMG-13)، والـ iron factor لأن الـ laminations معزولة عن بعض:</p><div class="sm">\[A_{gc}=30\times20=600\text{ cm}^2=600\times10^{-4}\text{ m}^2\]\[K_i=\frac{\text{Net Area}}{\text{Gross Area}}=\frac{A_i}{A_{gc}}\ \Rightarrow\ A_i=0.93\times600\times10^{-4}=558\times10^{-4}\text{ m}^2\]\[\text{emf per turn}=4.44\,fB_{max}A_i=4.44\times50\times1.05\times558\times10^{-4}=13\text{ V}\]\[N_1=\frac{3300}{13}=254\qquad N_2=\frac{200}{13}=16\]</div><span class="ans">254 turns (HV) · 16 turns (LV)</span></div></div>
+  <div class="example-card"><div class="ex-h">Example 2.6</div><div class="ex-b"><div class="qb">The secondary of a 500 kVA, 4400/500 V, 50 Hz, single-phase transformer has 500 turns. Determine (i) emf per turn (ii) primary turns (iii) secondary full load current (iv) maximum flux (v) gross cross-sectional area of the core for flux density of 1.2 tesla and iron factor 0.92 (vi) if the core is of square cross-section find the width of the limb.</div><h4>Solution</h4><div class="sm">\[\text{Rating}=500\text{ kVA};\ V_1=4400\text{ V};\ V_2=500\text{ V};\ f=50\text{ Hz};\ N_2=500;\ B_m=1.2\text{ T};\ k_i=0.92\]\[\text{(i)}\ \frac{E_2}{N_2}=\frac{500}{500}=1.0\text{ V/turn}\qquad \text{(ii)}\ N_1=\frac{4400}{1.0}=4440\]\[\text{(iii)}\ I_2=\frac{kVA\times1000}{V_2}=\frac{500\times1000}{500}=1000\text{ A}\]\[\text{(iv)}\ \phi_m=\frac{E_2}{4.44N_2f}=\frac{500}{4.44\times500\times50}=4.5\text{ mWb}\]\[\text{(v)}\ A_i=\frac{\phi_m}{B_m}=\frac{4.5\times10^{-3}}{1.2}=37.54\text{ cm}^2\ ;\ A_g=\frac{A_i}{k_i}=\frac{37.54}{0.92}=40.8\text{ cm}^2\]\[\text{(vi)}\ \text{width}=\sqrt{A_g}=\sqrt{40.8}=6.39\text{ cm}\]</div><span class="ans">1 V/turn · 4440 · 1000 A · 4.5 mWb · 40.8 cm² · 6.39 cm</span></div></div>
+  <div class="example-card"><div class="ex-h">Example 2.7 — Frequency change</div><div class="ex-b"><div class="qb">A 100 kVA, 3300/200 volt, 50 Hz single phase transformer has 40 turns on the secondary, calculate: (i) the values of primary and secondary currents. (ii) the number of primary turns. (iii) the maximum value of the flux. If the transformer is to be used on a 25 Hz system, calculate (iv) the primary voltage, assuming that the flux is increased by 10%. (v) the kVA rating of the transformer assuming the current density in the windings to be unaltered.</div><h4>Solution</h4><div class="sm">\[\text{(i)}\ I_1=\frac{100\times1000}{3300}=30.3\text{ A}\qquad I_2=\frac{100\times1000}{200}=500\text{ A}\]\[\text{(ii)}\ N_1=N_2\frac{E_1}{E_2}=40\times\frac{3300}{200}=660\]\[\text{(iii)}\ E_2=4.44f\phi_{max}N_2\ \Rightarrow\ \phi_{max}=\frac{200}{4.44\times50\times40}=0.0225\text{ Wb}\]\[\text{(iv)}\ \phi_m=0.0225\times1.1=0.02475\text{ Wb};\ V_1=4.44N_1f\phi_m=4.44\times660\times25\times0.02475=1815\text{ V}\]\[\text{(v)}\ \text{same current density}\Rightarrow I_1,I_2\text{ unchanged};\ kVA=\frac{30.3\times1815}{1000}=55\text{ kVA}\]</div><span class="ans">30.3 A / 500 A · 660 · 0.0225 Wb · 1815 V · 55 kVA</span></div></div>
+  </section>
+<hr class="section-divider">
+
+<section id="s8">
+  <div class="sec-head"><div class="ico">❓</div><div><h2>Practice Questions</h2><small>Tap to reveal</small></div></div>
+  <div class="q-section"><div class="q">Q1. Why is the transformer core made of laminated steel sheets?</div>
+    <button type="button" class="sol-btn" onclick="tg(this)">عرض الحل الكامل ▼</button>
+    <div class="sol">لأن الـ core مش <i>solid bar</i> بل طبقات رفيعة، والتصميم ده بيساعد في تقليل الـ heating.</div></div>
+  <div class="q-section"><div class="q">Q2. Why is the LV winding placed next to the core?</div>
+    <button type="button" class="sol-btn" onclick="tg(this)">عرض الحل الكامل ▼</button>
+    <div class="sol">(1) Reduce leakage reactance. (2) Reduce insulation: الـ core grounded، فالـ LV جنبه بيصغّر الحجم والتكلفة. والـ Tap changer على الـ HV لأن التيار هناك قليل.</div></div>
+  <div class="q-section"><div class="q">Q3. State the mmf balance condition.</div>
+    <button type="button" class="sol-btn" onclick="tg(this)">عرض الحل الكامل ▼</button>
+    <div class="sol"><span class="en">I₁N₁ = I₂N₂</span> — الـ mmfs متساوية ومتعاكسة في الاتجاه.</div></div>
+</section>
+</main>
+
+<footer>
+  <h4>Lecture 2 — Single-Phase Transformers</h4>
+  <p>Dr.Eng. Abdelaziz Ismail · Faculty of Engineering, Capital University</p>
+  <div class="tags"><span>Grid Levels</span><span>Core &amp; Shell</span><span>EMF Equation</span><span>Turns Ratio</span><span>Reflected Impedance</span><span>Solved Examples</span></div>
+</footer>
+
+<div class="closing">🤲 ولا تنسوا الصلاة على النبي صلى الله عليه وسلم، والدعاء لإخوانكم في فلسطين وغزة وفي جميع بقاع الأرض، وأن ينصر الله المسلمين المستضعفين. 🤲</div>
+
+<script>
+(function(){var b=document.getElementById('duaBtn'),c=document.getElementById('duaBody');
+b.addEventListener('click',function(){var o=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',o?'false':'true');c.style.display=o?'none':'block';});})();
+function tg(b){var s=b.nextElementSibling,o=s.style.display==='block';s.style.display=o?'none':'block';b.textContent=o?'عرض الحل الكامل ▼':'إخفاء الحل ▲';}
+document.querySelectorAll('.toc-body a').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();var t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth'});});});
+(function(){
+  var KEY='eyeProtection', root=document.documentElement, btn=document.getElementById('eyeToggle');
+  if(!btn) return;
+  var st=btn.querySelector('.eye-st');
+  function render(on){ btn.setAttribute('aria-pressed', on?'true':'false'); st.textContent = on?'ON':'OFF'; }
+  render(root.getAttribute('data-eye')==='on');
+  btn.addEventListener('click', function(){
+    var on = root.getAttribute('data-eye') !== 'on';
+    if(on){ root.setAttribute('data-eye','on'); } else { root.removeAttribute('data-eye'); }
+    render(on);
+    try{ localStorage.setItem(KEY, on?'on':'off'); }catch(e){}
+  });
+})();
+</script>
+</body>
+</html>

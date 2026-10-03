@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="description" content="Basics of Electric Machines — Magnetic Circuit lecture notes: Transformer, Three-Phase Systems, Energy Conversion, MMF, Flux, Reluctance.">
+<meta name="theme-color" content="#0B2447">
+<title>Basics of Electric Machines — أساسيات الآلات الكهربية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=Cairo:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&family=Amiri&display=swap" rel="stylesheet">
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+    chtml: { scale: 1, minScale: 0.5, matchFontHeight: false },
+    options: { renderActions: { assistiveMml: [] } }
+  };
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.min.js"></script>
+<style>
+:root{
+  --navy:#0B2447; --royal:#1B4F8A; --sky:#2E86C1; --azure:#5DADE2; --mist:#D6EAF8; --pearl:#EBF5FB; --white:#FFFFFF;
+  --ink:#1A1A2E; --graphite:#2C3E50; --slate:#5D6D7E; --gold:#D4AC0D; --amber:#F0B429; --mint:#1ABC9C; --mint-light:#D5F5E3;
+  --coral:#E74C3C; --coral-light:#FADBD8;
+  --shadow:0 4px 20px rgba(11,36,71,0.10); --shadow-lg:0 8px 40px rgba(11,36,71,0.16);
+  --radius:14px; --radius-sm:8px;
+  /* Fluid spacing/typography tokens: scale smoothly from a 320px phone to a 1920px desktop */
+  --fs-base: clamp(0.95rem, 0.86rem + 0.4vw, 1.0625rem);      /* body text: ~15.2px -> ~17px */
+  --fs-h1:   clamp(1.5rem, 1.05rem + 2vw, 3.1rem);              /* page title */
+  --fs-h2:   clamp(1.15rem, 1rem + 0.8vw, 1.75rem);             /* section titles */
+  --fs-h3:   clamp(1rem, 0.92rem + 0.4vw, 1.15rem);             /* subsection titles */
+  --fs-sm:   clamp(0.72rem, 0.68rem + 0.2vw, 0.85rem);          /* pills, captions, meta */
+  --gutter:  clamp(14px, 3vw, 24px);                            /* page-edge padding */
+  --section-gap: clamp(28px, 5vw, 44px);
+}
+*, *::before, *::after{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%; text-size-adjust:100%;}
+html,body{max-width:100%; overflow-x:hidden;}
+img, svg, video, canvas, table, .figure-wrap, .svg-wrap{max-width:100%;}
+body{
+  margin:0; background:linear-gradient(160deg,#f0f6ff 0%,#e8f1fb 50%,#f5f9ff 100%);
+  font-family:'Cairo','Source Serif 4',serif; font-size:var(--fs-base); line-height:1.85; color:var(--ink);
+  overflow-wrap:break-word; word-break:break-word;
+}
+.ltr{direction:ltr; unicode-bidi:embed; font-family:'JetBrains Mono',monospace;}
+.content-wrapper{max-width:960px; width:100%; margin:0 auto; padding:0 var(--gutter);}
+.toc-wrapper{max-width:900px; width:100%; margin:0 auto; padding:0 var(--gutter);}
+
+/* ===== HEADER ===== */
+header{
+  position:relative; overflow:hidden; width:100%;
+  background:linear-gradient(135deg, var(--navy) 0%, var(--royal) 60%, var(--sky) 100%);
+  padding:clamp(34px, 7vw, 60px) var(--gutter) clamp(30px, 6vw, 50px); text-align:center; color:#fff;
+}
+header::before{
+  content:""; position:absolute; inset:0; opacity:0.04; pointer-events:none;
+  background-image:repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 1px, transparent 40px),
+                    repeating-linear-gradient(-45deg, #fff 0, #fff 1px, transparent 1px, transparent 40px);
+}
+.badge{
+  position:relative; display:inline-block; max-width:100%; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.3);
+  border-radius:20px; padding:6px 16px; font-size:var(--fs-sm); letter-spacing:1.5px; text-transform:uppercase;
+  font-family:'JetBrains Mono',monospace; margin-bottom:18px; word-break:break-word;
+}
+h1{
+  position:relative; font-family:'Playfair Display',serif; font-weight:800; font-size:var(--fs-h1);
+  text-shadow:0 2px 10px rgba(0,0,0,0.2); margin:0 0 16px; line-height:1.3; word-break:break-word;
+}
+h1 .ar-line{display:block; font-size:0.65em; opacity:0.85; margin-top:8px;}
+.subtitle{
+  position:relative; font-family:'Source Serif 4',serif; font-style:italic; font-size:clamp(0.9rem, 0.8rem + 0.5vw, 1.1rem); opacity:0.85;
+  direction:ltr; max-width:650px; width:100%; margin:0 auto 24px; padding:0 4px;
+}
+.meta-row{position:relative; display:flex; flex-wrap:wrap; gap:8px; justify-content:center; max-width:100%;}
+.meta-pill{
+  background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.25); border-radius:20px;
+  padding:6px 14px; font-size:var(--fs-sm); font-family:'Cairo',sans-serif; white-space:nowrap;
+}
+
+/* ===== DUAA (OPENING) ===== */
+.duaa-wrapper{max-width:960px; width:100%; margin:28px auto 0; padding:0 var(--gutter);}
+.duaa-card{
+  background:#fff; border:1.5px solid #e8b84b; border-radius:14px; box-shadow:0 2px 12px rgba(168,120,42,0.10);
+  overflow:hidden;
+}
+.duaa-toggle{
+  width:100%; background:linear-gradient(135deg,#7a5800,#b8860b); color:#fff; border:none; cursor:pointer;
+  padding:14px 18px; font-family:'Cairo',sans-serif; font-size:clamp(0.9rem, 0.85rem + 0.3vw, 1rem); font-weight:700; text-align:right;
+  display:flex; justify-content:space-between; align-items:center; gap:10px; border-radius:12px 12px 0 0;
+}
+.duaa-toggle .arrow{display:inline-block; flex-shrink:0; transition:transform 0.3s ease; font-size:0.9em;}
+.duaa-toggle[aria-expanded="true"] .arrow{transform:rotate(180deg);}
+.duaa-content{
+  display:none; padding:20px var(--gutter); background:linear-gradient(135deg,#fffbea,#fff9f0);
+}
+.duaa-content.open{display:block;}
+.duaa-line{
+  font-family:'Amiri',serif; font-size:clamp(0.95rem, 0.9rem + 0.2vw, 1.0625rem); line-height:2.1; color:#5a3e00;
+  border-right:3px solid #e8b84b; padding-right:14px; margin-bottom:16px;
+}
+.duaa-line:last-child{margin-bottom:0;}
+
+/* ===== TOC ===== */
+.toc-card{
+  background:#fff; border-radius:var(--radius); box-shadow:var(--shadow); margin:32px auto; overflow:hidden;
+}
+.toc-header{
+  background:linear-gradient(90deg, var(--royal), var(--sky)); color:#fff; font-family:'Playfair Display',serif;
+  font-weight:700; font-size:clamp(1.05rem, 1rem + 0.3vw, 1.2rem); padding:16px var(--gutter);
+}
+.toc-body{display:grid; grid-template-columns:1fr 1fr; gap:6px 10px; padding:16px;}
+.toc-item{
+  display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--graphite); padding:8px 10px;
+  border-radius:var(--radius-sm); transition:background 0.2s; min-width:0; font-size:clamp(0.88rem, 0.85rem + 0.15vw, 1rem);
+}
+.toc-item span:last-child{overflow-wrap:break-word; min-width:0;}
+.toc-item:hover{background:var(--pearl);}
+.toc-num{
+  flex-shrink:0; width:26px; height:26px; border-radius:50%; background:var(--sky); color:#fff;
+  display:flex; align-items:center; justify-content:center; font-family:'JetBrains Mono',monospace; font-size:0.8rem;
+}
+@media (max-width:640px){ .toc-body{grid-template-columns:1fr;} }
+
+/* ===== SECTIONS ===== */
+main{max-width:960px; width:100%; margin:0 auto; padding:0 var(--gutter) 20px;}
+.section{margin:var(--section-gap) 0;}
+.section-header{display:flex; flex-wrap:wrap; align-items:center; gap:14px; padding-bottom:14px; border-bottom:3px solid var(--mist); margin-bottom:20px;}
+.section-icon{
+  flex-shrink:0; width:clamp(40px, 8vw, 52px); height:clamp(40px, 8vw, 52px); border-radius:14px; background:linear-gradient(135deg, var(--royal), var(--sky));
+  display:flex; align-items:center; justify-content:center; font-size:clamp(1.1rem, 4vw, 1.6rem);
+}
+.section-title-group{min-width:0; flex:1 1 200px;}
+.section-title-group h2{font-family:'Playfair Display',serif; font-size:var(--fs-h2); color:var(--navy); margin:0 0 4px; line-height:1.35; overflow-wrap:break-word;}
+.section-title-group .sub{font-family:'JetBrains Mono',monospace; font-size:var(--fs-sm); color:var(--slate); overflow-wrap:break-word;}
+.section-divider{border:none; height:2px; margin:clamp(30px,6vw,50px) 0; background:linear-gradient(90deg, transparent, var(--azure), transparent); opacity:0.5;}
+
+h3{font-size:var(--fs-h3); overflow-wrap:break-word;}
+p{margin:0 0 16px; overflow-wrap:break-word;}
+
+/* ===== BOXES ===== */
+.def-box{
+  background:linear-gradient(135deg, var(--mist), #eaf4fc); border-right:5px solid var(--sky);
+  border-radius:var(--radius-sm); padding:16px clamp(14px,3vw,22px); margin:20px 0; overflow-wrap:break-word;
+}
+.def-box strong{color:var(--navy);}
+
+.formula-box{
+  background:var(--navy); color:#fff; border-radius:var(--radius); padding:clamp(16px,4vw,24px) clamp(12px,3vw,20px); margin:20px 0 6px;
+  box-shadow:var(--shadow); overflow-x:auto; -webkit-overflow-scrolling:touch; position:relative;
+}
+.formula-box mjx-container{color:#fff !important;}
+.formula-box mjx-container[display="true"]{margin:0.5em 0 !important;}
+.formula-scroll-hint{
+  display:none; text-align:center; font-size:var(--fs-sm); color:var(--slate); margin:6px 0 20px;
+  font-family:'JetBrains Mono',monospace;
+}
+.formula-scroll-hint.show{display:block;}
+
+.note-box{
+  background:#fffbea; border-right:5px solid var(--amber); border-radius:var(--radius-sm); padding:16px clamp(14px,3vw,22px); margin:20px 0; overflow-wrap:break-word;
+}
+.note-box .note-title{font-weight:700; color:#8a6300; margin-bottom:6px; font-family:'Cairo',sans-serif;}
+
+.warn-box{
+  background:var(--coral-light); border-right:5px solid var(--coral); border-radius:var(--radius-sm); padding:16px clamp(14px,3vw,22px); margin:20px 0; overflow-wrap:break-word;
+}
+.warn-box .warn-title{font-weight:700; color:#a5281a; margin-bottom:6px;}
+
+.insight-box{
+  background:var(--mint-light); border-right:5px solid var(--mint); border-radius:var(--radius-sm); padding:16px clamp(14px,3vw,22px); margin:20px 0; overflow-wrap:break-word;
+}
+.insight-box .insight-title{font-weight:700; color:#128a6d; margin-bottom:6px;}
+
+/* ===== EXAMPLE CARD ===== */
+.example-card{border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); margin:24px 0; max-width:100%;}
+.example-head{
+  background:linear-gradient(90deg, var(--sky), var(--azure)); color:#fff; padding:14px clamp(14px,3vw,22px);
+  font-family:'Playfair Display',serif; font-weight:700; font-size:clamp(1rem, 0.9rem + 0.5vw, 1.15rem);
+}
+.example-body{background:#fff; padding:clamp(14px,3.5vw,22px);}
+.example-question{
+  background:var(--pearl); border-radius:var(--radius-sm); padding:14px 16px; margin-bottom:18px;
+  direction:ltr; text-align:left; font-family:'JetBrains Mono',monospace; font-size:clamp(0.82rem, 0.78rem + 0.2vw, 0.95rem);
+  color:var(--graphite); overflow-x:auto; -webkit-overflow-scrolling:touch; white-space:pre-wrap; overflow-wrap:break-word;
+}
+.solution-steps{list-style:none; padding:0; margin:0; counter-reset:step;}
+.solution-steps li{
+  counter-increment:step; position:relative; padding:6px 0 6px 0; margin-bottom:10px; padding-right:38px; overflow-wrap:break-word;
+}
+.solution-steps li::before{
+  content:counter(step); position:absolute; right:0; top:4px; width:26px; height:26px; border-radius:50%;
+  background:var(--royal); color:#fff; display:flex; align-items:center; justify-content:center;
+  font-family:'JetBrains Mono',monospace; font-size:0.8rem; flex-shrink:0;
+}
+.answer-badge{
+  display:inline-block; max-width:100%; background:var(--mint); color:#fff; border-radius:20px; padding:8px 18px; margin-top:12px;
+  font-family:'JetBrains Mono',monospace; font-weight:500; font-size:clamp(0.8rem, 0.76rem + 0.2vw, 0.95rem);
+  overflow-wrap:break-word; white-space:normal;
+}
+
+/* ===== QUIZ / Q-SECTION ===== */
+.q-section{border:2px solid var(--royal); border-radius:var(--radius); padding:18px clamp(14px,3vw,22px); margin:22px 0; background:#fff; max-width:100%;}
+.q-section h4{margin:0 0 10px; color:var(--navy); font-family:'Cairo',sans-serif; overflow-wrap:break-word;}
+.q-toggle-btn{
+  background:var(--sky); color:#fff; border:none; border-radius:var(--radius-sm); padding:9px 16px; cursor:pointer;
+  font-family:'Cairo',sans-serif; font-size:clamp(0.85rem, 0.82rem + 0.15vw, 0.9rem); margin-top:8px;
+  min-height:40px; touch-action:manipulation;
+}
+.q-solution{display:none; margin-top:14px; padding-top:14px; border-top:1px dashed var(--mist); font-size:clamp(0.88rem, 0.85rem + 0.15vw, 0.95rem); overflow-wrap:break-word;}
+.q-solution.open{display:block;}
+
+/* ===== TABLES ===== */
+.table-scroll{overflow-x:auto; margin:20px 0; -webkit-overflow-scrolling:touch; border-radius:var(--radius-sm);}
+table{width:100%; border-collapse:collapse; background:#fff; border-radius:var(--radius-sm); overflow:hidden; min-width:380px; font-size:clamp(0.8rem, 0.76rem + 0.2vw, 1rem);}
+thead th{background:var(--royal); color:#fff; padding:10px 14px; font-family:'Cairo',sans-serif; text-align:right; white-space:nowrap;}
+tbody td{padding:10px 14px; border-bottom:1px solid var(--mist); color:var(--navy); overflow-wrap:break-word;}
+tbody tr:nth-child(even){background:var(--pearl);}
+td.mono, th.mono{font-family:'JetBrains Mono',monospace; text-align:center;}
+.scroll-hint{display:none; text-align:center; font-size:var(--fs-sm); color:var(--slate); margin-top:6px; font-family:'JetBrains Mono',monospace;}
+@media (max-width:700px){ .scroll-hint{display:block;} }
+
+/* ===== FIGURE / SVG containers ===== */
+.svg-wrap{overflow-x:auto; text-align:center; margin:20px 0; background:#fff; border-radius:var(--radius); padding:14px; box-shadow:var(--shadow); -webkit-overflow-scrolling:touch;}
+.svg-wrap svg{max-width:100%; height:auto;}
+.svg-caption{font-family:'JetBrains Mono',monospace; font-size:var(--fs-sm); color:var(--slate); margin-top:8px; overflow-wrap:break-word;}
+.figure-wrap{overflow-x:auto; text-align:center; margin:20px 0; background:#fff; border-radius:var(--radius); padding:14px; box-shadow:var(--shadow); -webkit-overflow-scrolling:touch;}
+.figure-wrap img{max-width:100%; width:auto; height:auto; display:inline-block; border-radius:var(--radius-sm);}
+.figure-caption{font-family:'JetBrains Mono',monospace; font-size:var(--fs-sm); color:var(--slate); margin-top:10px; overflow-wrap:break-word;}
+
+/* ===== FOOTER ===== */
+footer{background:var(--navy); color:#fff; text-align:center; border-radius:var(--radius); margin:40px auto; max-width:960px; width:calc(100% - 2 * var(--gutter)); padding:clamp(24px,5vw,34px) var(--gutter);}
+footer h3{font-family:'Playfair Display',serif; font-weight:700; font-size:clamp(1.05rem, 1rem + 0.3vw, 1.2rem); margin:0 0 10px; overflow-wrap:break-word;}
+footer p{opacity:0.7; margin:0 0 18px; font-size:clamp(0.85rem, 0.82rem + 0.15vw, 0.95rem);}
+.tags-row{display:flex; flex-wrap:wrap; gap:8px; justify-content:center; max-width:100%;}
+.tag{background:rgba(255,255,255,0.1); border-radius:16px; padding:6px 12px; font-size:var(--fs-sm); font-family:'JetBrains Mono',monospace; white-space:nowrap;}
+
+/* ===== CLOSING DUAA ===== */
+.closing-wrapper{max-width:960px; width:100%; margin:0 auto 40px; padding:0 var(--gutter);}
+.closing-card{
+  background:linear-gradient(135deg,#0B2447,#1B4F8A); border-top:4px solid #D4AC0D; border-radius:14px;
+  box-shadow:0 8px 32px rgba(11,36,71,0.18); padding:clamp(22px,5vw,30px) clamp(18px,4vw,26px); text-align:center;
+}
+.closing-card p{
+  font-family:'Amiri',serif; font-size:clamp(0.98rem, 0.9rem + 0.4vw, 1.1875rem); line-height:2.2; color:#fff;
+  text-shadow:0 1px 4px rgba(0,0,0,0.25); margin:0; overflow-wrap:break-word;
+}
+
+/* ===== MathJax mobile sizing ===== */
+mjx-container{font-size:clamp(0.85em, 0.8em + 0.3vw, 1em) !important;}
+
+/* ===== ACCESSIBILITY: focus states for keyboard/touch nav ===== */
+.duaa-toggle:focus-visible, .q-toggle-btn:focus-visible, .toc-item:focus-visible{
+  outline:3px solid var(--azure); outline-offset:2px;
+}
+button{-webkit-tap-highlight-color: rgba(46,134,193,0.25);}
+
+/* =========================================================
+   RESPONSIVE BREAKPOINTS
+   Mobile-first base styles above already scale fluidly via
+   clamp()/vw; the queries below fine-tune layout structure
+   (not just size) at the tested device classes.
+   ========================================================= */
+
+/* Small phones: 320–374px */
+@media (max-width:374px){
+  .badge{font-size:0.68rem; padding:5px 10px; letter-spacing:1px;}
+  .meta-pill{padding:5px 10px;}
+  .example-body{padding:12px;}
+  .duaa-toggle{padding:12px 14px;}
+  .section-header{gap:10px;}
+  table{min-width:340px;}
+}
+
+/* Phones: 375–430px (covers 375 / 390 / 430) */
+@media (min-width:375px) and (max-width:430px){
+  table{min-width:380px;}
+}
+
+/* Tablets portrait: 640–900px (covers 768 / 820) */
+@media (min-width:640px) and (max-width:900px){
+  .toc-body{grid-template-columns:1fr 1fr;}
+  header{padding:44px var(--gutter) 42px;}
+  main{padding-bottom:24px;}
+}
+
+/* Tablets landscape / small laptops: 901–1100px (covers 1024) */
+@media (min-width:901px) and (max-width:1100px){
+  .content-wrapper, .toc-wrapper, main, footer, .duaa-wrapper, .closing-wrapper{max-width:880px;}
+}
+
+/* Laptop/Desktop: 1101–1600px (covers 1280 / 1366 / 1440) */
+@media (min-width:1101px){
+  .content-wrapper, .toc-wrapper, main, footer, .duaa-wrapper, .closing-wrapper{max-width:960px;}
+}
+
+/* Large desktop: 1601px+ (covers 1920) */
+@media (min-width:1601px){
+  :root{ --fs-base: 1.0625rem; }
+  .content-wrapper, .toc-wrapper, main, footer, .duaa-wrapper, .closing-wrapper{max-width:1040px;}
+  header{padding:64px var(--gutter) 54px;}
+}
+
+/* Landscape phones (short viewport height) — avoid header eating the whole screen */
+@media (max-height:480px) and (orientation:landscape){
+  header{padding:24px var(--gutter) 22px;}
+  .section{margin:26px 0;}
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce){
+  *{transition-duration:0.01ms !important; animation-duration:0.01ms !important;}
+}
+</style>
+<script>
+try{ if(localStorage.getItem('eyeProtection')==='on'){ document.documentElement.setAttribute('data-eye','on'); } }catch(e){}
+</script>
+<style id="eye-protection-css">
+.eye-toggle{position:fixed; top:14px; left:14px; z-index:10000; direction:ltr; display:inline-flex; align-items:center; gap:8px; padding:6px 14px 6px 12px; border-radius:999px; cursor:pointer; margin:0; font-family:'Cairo',sans-serif; font-weight:600; font-size:0.82rem; line-height:1.4; background:rgba(255,255,255,0.93); color:#0B2447; border:1px solid rgba(11,36,71,0.28); box-shadow:0 2px 10px rgba(11,36,71,0.18); backdrop-filter:blur(6px); transition:background .2s, border-color .2s, color .2s;}
+.eye-toggle:focus-visible{outline:2px solid #F0B429; outline-offset:2px;}
+.eye-sw{position:relative; flex:0 0 30px; width:30px; height:16px; border-radius:999px; background:#A9B4C0; transition:background .2s;}
+.eye-sw::after{content:""; position:absolute; top:2px; left:2px; width:12px; height:12px; border-radius:50%; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.3); transition:transform .2s;}
+.eye-st{min-width:2.3em; text-align:left; font-family:'JetBrains Mono',monospace; font-size:0.76rem; font-weight:500;}
+.eye-toggle[aria-pressed="true"]{background:#F8EFD6; border-color:#C9A25A; color:#5A3E00;}
+.eye-toggle[aria-pressed="true"] .eye-sw{background:#C8902E;}
+.eye-toggle[aria-pressed="true"] .eye-sw::after{transform:translateX(14px);}
+@media (max-width:420px){ .eye-toggle{padding:5px 10px 5px 9px; gap:6px; font-size:0.74rem;} .eye-lbl{display:none;} }
+.eye-overlay{display:none;}
+@media screen{
+html[data-eye="on"]{ --pearl:#EAF1F5; --mist:#D5E4EE; --white:#F8F8F5; --sky:#3A84B3; --azure:#69A8CF; --amber:#E2AD3C; --gold:#C8A21C; --mint:#27AD93; --mint-light:#D6EADC; --coral:#D9544A; --coral-light:#F0DCD6; --slate:#556576; --shadow:0 4px 20px rgba(50,44,32,0.10); --shadow-lg:0 8px 40px rgba(50,44,32,0.14); --eye-paper:#F8F8F5; }
+html[data-eye="on"] body{background:linear-gradient(160deg,#F0F1F0 0%,#ECEDEC 50%,#F1F2F1 100%);}
+html[data-eye="on"] img{filter:brightness(0.97) saturate(0.96);}
+html[data-eye="on"] .toc-card,html[data-eye="on"] .example-body,html[data-eye="on"] .q-section,html[data-eye="on"] .svg-wrap,html[data-eye="on"] .figure-wrap,html[data-eye="on"] table,html[data-eye="on"] .duaa-card{background:var(--eye-paper);}
+html[data-eye="on"] .note-box{background:#F6F0DF;}
+html[data-eye="on"] .duaa-content{background:linear-gradient(135deg,#F6F1E0,#F7F2E6);}
+html[data-eye="on"] .formula-box,html[data-eye="on"] .formula-box mjx-container{color:#F4F4F2 !important;}
+@supports (mix-blend-mode:multiply){ html[data-eye="on"] .eye-overlay{ display:block; position:fixed; inset:0; z-index:9990; pointer-events:none; background:rgba(255,225,170,0.22); mix-blend-mode:multiply; } }
+}
+@media print{ .eye-toggle,.eye-overlay{display:none !important;} }
+</style>
+<style id="home-link-css">
+.home-link{position:fixed;top:14px;right:14px;z-index:10000;direction:rtl;display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:999px;font:600 .82rem/1.4 'Cairo',sans-serif;text-decoration:none;background:rgba(255,255,255,.93);color:#0B2447;border:1px solid rgba(11,36,71,.28);box-shadow:0 2px 10px rgba(11,36,71,.18);backdrop-filter:blur(6px)}
+.home-link:hover{background:#D6EAF8}.home-link:focus-visible{outline:2px solid #F0B429;outline-offset:2px}
+@media(max-width:420px){.home-link{padding:5px 10px;font-size:.74rem}}
+@media print{.home-link{display:none !important}}
+html[data-eye="on"] .home-link{background:#F8F8F5}
+</style>
+</head>
+<body>
+<button type="button" class="eye-toggle" id="eyeToggle" aria-pressed="false" title="Eye Protection: softer brightness and less blue light for long study sessions">
+  <span class="eye-ico" aria-hidden="true">👁</span>
+  <span class="eye-lbl">Eye Protection</span>
+  <span class="eye-sw" aria-hidden="true"></span>
+  <span class="eye-st">OFF</span>
+</button>
+<div class="eye-overlay" aria-hidden="true"></div>
+<a class="home-link" href="index.html" title="Back to course home">← الصفحة الرئيسية</a>
+
+<header>
+  <div class="badge">المحاضرة الأولى — Lecture 1</div>
+  <h1>Basics of Electric Machines
+    <span class="ar-line">أساسيات الآلات الكهربية</span>
+  </h1>
+  <p class="subtitle">Magnetic Circuit — Transformer · Three-Phase Systems · Energy Conversion · Fundamentals</p>
+  <div class="meta-row">
+    <span class="meta-pill">⚡ Power &amp; Electric Machines</span>
+    <span class="meta-pill">🧲 Magnetic Circuit</span>
+    <span class="meta-pill">🔌 Transformer Basics</span>
+  </div>
+</header>
+
+<div class="duaa-wrapper" style="margin-top:28px;">
+  <div class="duaa-card" style="border-color:var(--azure);">
+    <div style="padding:20px 22px; background:linear-gradient(135deg, var(--pearl), #eaf4fc);">
+      <p style="margin:0 0 10px; font-weight:700; color:var(--navy); font-family:'Cairo',sans-serif;">📋 ملحوظة يا شباب</p>
+      <p style="margin:0; color:var(--graphite); font-size:0.95rem; line-height:1.9;">
+        تم إعداد هذا الملف بالاعتماد على أكثر من مصدر: شرح الدكتور والنقاط التي تم تناولها أثناء المحاضرة، بالإضافة إلى الملف الأصلي الذي أرسله الدكتور. وقد تطرّق الدكتور أثناء الشرح إلى عدد من النقاط والمعلومات الإضافية التي لم تكن موجودة بشكل مباشر في الملف الأصلي، وتم تضمينها هنا لأنها مفيدة لفهم الموضوع بصورة أوضح ولمذاكرة أشمل.
+        وبالتالي، فإن محتوى هذا الملف يمثل مزيجًا من محتوى الملف الأصلي للدكتور والنقاط التي تم شرحها أثناء المحاضرة، مع إعادة تنظيم وصياغة المحتوى بأسلوب أكاديمي واضح ومنظم.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="duaa-wrapper">
+  <div class="duaa-card">
+    <button class="duaa-toggle" id="duaaBtn" aria-expanded="false" onclick="toggleDuaa()">
+      <span>📖 دعاء</span>
+      <span class="arrow" id="duaaArrow">▼</span>
+    </button>
+    <div class="duaa-content" id="duaaContent">
+      <p class="duaa-line">"اللَّهُمَّ لا سَهْلَ إِلاَّ ما جَعَلْتَهُ سَهْلاً، وأنْتَ تَجْعَلُ الحَزْنَ إِذَا شِئْتَ سَهْلاً."</p>
+      <p class="duaa-line">"رَبِّ اشْرَحْ لِي صَدْرِي * وَيَسِّرْ لِي أَمْرِي * وَاحْلُلْ عُقْدَةً مِنْ لِسَانِي * يَفْقَهُوا قَوْلِي."</p>
+      <p class="duaa-line">"اللَّهُمَّ انْفَعْنِي بِمَا عَلَّمْتَنِي، وَعَلِّمْنِي مَا يَنْفَعُنِي، وَزِدْنِي عِلْمًا."</p>
+      <p class="duaa-line">"اللهم إني أسألك فهم النبيين، وحفظ المرسلين والملائكة المقربين، اللهم اجعل ألسنتنا عامرة بذكرك، وقلوبنا بخشيتك، وأسرارنا بطاعتك، إنك على كل شيء قدير."</p>
+      <p class="duaa-line">"يا حي يا قيوم برحمتك أستغيث، أصلح لي شأني كله ولا تكلني إلى نفسي طرفة عين."</p>
+      <p class="duaa-line">"اللهم يا جامع الناس ليوم لا ريب فيه، اجمع علي ضالتي."</p>
+      <p class="duaa-line">"اللهم إني استودعتك ما قرأت وما حفظت وما تعلمت، فرده عند حاجتي إليه، إنك على كل شيء قدير، وحسبنا الله ونعم الوكيل."</p>
+      <p class="duaa-line">"أستغفر الله، أستغفر الله، أستغفر الله."</p>
+    </div>
+  </div>
+</div>
+
+<div class="toc-wrapper">
+  <div class="toc-card">
+    <div class="toc-header">📑 محتويات المحاضرة</div>
+    <div class="toc-body">
+      <a class="toc-item" href="#s1"><span class="toc-num">1</span> السلسلة الأساسية لمنظومة القدرة</a>
+      <a class="toc-item" href="#s2"><span class="toc-num">2</span> الـ Transformer ووظيفته</a>
+      <a class="toc-item" href="#s3"><span class="toc-num">3</span> قدرة المحول والـ Nameplate</a>
+      <a class="toc-item" href="#s4"><span class="toc-num">4</span> الـ Single Line Diagram</a>
+      <a class="toc-item" href="#s5"><span class="toc-num">5</span> Single &amp; Three Phase Systems</a>
+      <a class="toc-item" href="#s6"><span class="toc-num">6</span> توصيلات Star و Delta</a>
+      <a class="toc-item" href="#s7"><span class="toc-num">7</span> Energy Conversion</a>
+      <a class="toc-item" href="#s8"><span class="toc-num">8</span> المجال المغناطيسي وقاعدة اليد اليمنى</a>
+      <a class="toc-item" href="#s8b"><span class="toc-num">8b</span> تطبيقات الدائرة المغناطيسية: Coil / Faraday / Generator / Motor</a>
+      <a class="toc-item" href="#s9"><span class="toc-num">9</span> Reluctance والحاجة للحديد</a>
+      <a class="toc-item" href="#s10"><span class="toc-num">10</span> الـ Magnetic Circuit</a>
+      <a class="toc-item" href="#s11"><span class="toc-num">11</span> التعريفات الأساسية (Φ, B, F, H, λ)</a>
+      <a class="toc-item" href="#s12"><span class="toc-num">12</span> Magnetic vs Electric Circuits</a>
+      <a class="toc-item" href="#s13"><span class="toc-num">13</span> Example 1 — مسألة محلولة</a>
+      <a class="toc-item" href="#s14"><span class="toc-num">14</span> Fringing Effect</a>
+      <a class="toc-item" href="#s15"><span class="toc-num">15</span> مبدأ عمل الـ Transformer</a>
+      <a class="toc-item" href="#s16"><span class="toc-num">16</span> Turns Ratio ونقل القدرة</a>
+      <a class="toc-item" href="#s17"><span class="toc-num">17</span> الـ DC Motor</a>
+      <a class="toc-item" href="#s18"><span class="toc-num">18</span> خلاصة ونقاط مهمة من الدكتور</a>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <section class="section" id="s1">
+    <div class="section-header">
+      <div class="section-icon">⚡</div>
+      <div class="section-title-group">
+        <h2>1. السلسلة الأساسية لمنظومة القدرة الكهربائية</h2>
+        <div class="sub">Power System Chain</div>
+      </div>
+    </div>
+    <p>أكّد الدكتور إن الصورة العامة اللي لازم تكون في دماغنا هي التسلسل التالي:</p>
+    <div class="formula-box">
+      \[ \text{Generator} \rightarrow \text{Transformer} \rightarrow \text{Transmission} \rightarrow \text{Distribution} \rightarrow \text{Loads} \]
+    </div>
+    <div class="def-box">
+      <p><strong>Generator</strong> (المولد): يولّد الكهرباء عند جهد معين.</p>
+      <p><strong>Transformer</strong> (المحول): يرفع أو يخفض الجهد.</p>
+      <p><strong>Transmission</strong> (النقل): نقل القدرة بجهد عالٍ لمسافات طويلة.</p>
+      <p><strong>Distribution</strong> (التوزيع): توصيل الكهرباء للمناطق والمنشآت.</p>
+      <p style="margin:0;"><strong>Loads</strong> (الأحمال): الأجهزة والمعدات اللي بتستهلك القدرة.</p>
+    </div>
+    <p>وبشكل أكثر تفصيلًا، مسار الكهرباء من المحطة للمستهلك:</p>
+    <div class="formula-box">
+      \[ \text{Generator} \rightarrow \text{Step-up Transformer} \rightarrow \text{High Voltage Transmission} \rightarrow \text{Step-down Transformer} \rightarrow \text{Distribution} \rightarrow \text{Consumer} \]
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section class="section" id="s2">
+    <div class="section-header">
+      <div class="section-icon">🔌</div>
+      <div class="section-title-group">
+        <h2>2. الـ Transformer (المحول)</h2>
+        <div class="sub">Function &amp; Purpose</div>
+      </div>
+    </div>
+
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">2.1 وظيفته الأساسية</h3>
+    <p>وظيفة المحول الأساسية هي تغيير مستوى الجهد الكهربائي مع نقل القدرة بين دائرتين:</p>
+    <div class="def-box">
+      <p><strong>Step-up Transformer</strong>: يرفع الجهد.</p>
+      <p style="margin:0;"><strong>Step-down Transformer</strong>: يخفض الجهد.</p>
+    </div>
+
+    <div class="warn-box">
+      <div class="warn-title">⚠️ ملاحظة مهمة جدًا من الدكتور</div>
+      <p style="margin:0;">المحول <strong>لا يحوّل</strong> الكهرباء إلى حركة، ولا الحركة إلى كهرباء. دي مش وظيفته. هو بيشتغل على:</p>
+    </div>
+    <div class="formula-box">
+      \[ \text{Electrical Energy} \rightarrow \text{Electrical Energy} \]
+    </div>
+    <p>لكن مع تغيير مستويات الجهد والتيار، وانتقال القدرة من دائرة لأخرى.</p>
+
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">2.2 ليه بنستخدم الـ Transformer؟</h3>
+    <p>لأن الجهد في شبكة الكهرباء بيكون مرتفع جدًا أثناء النقل لمسافات طويلة، عشان نقلل التيار وبالتالي نقلل الفقد في خطوط النقل. ولما الكهرباء توصل لمنطقة أو مصنع، بنحتاج نخفض الجهد للمستوى المناسب للاستخدام.</p>
+
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">2.3 أماكن وجود المحولات</h3>
+    <div class="def-box" style="margin-top:0;">
+      <p style="margin:0;">محطات الكهرباء · المصانع · شبكات التوزيع · المباني والمنشآت الكبيرة</p>
+    </div>
+
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">2.4 نفس المحول ممكن يُستخدم Step-up أو Step-down</h3>
+    <p>الـ Transformer مش بالضرورة Step-up أو Step-down بشكل ثابت، واللي بيحدد ده هو جهة التوصيل — يعني أنهي ملف هتوصّل عليه جهد الـ Input وأنهي ملف هتاخد منه جهد الـ Output. لو جهد الـ Output طلع أكبر من جهد الـ Input يبقى Step-up، ولو جهد الـ Output طلع أقل من جهد الـ Input يبقى Step-down. مثلًا لو عندنا Transformer فيه ملفين واحد 6 V والتاني 12 V: لو وصّلنا الـ 6 V كـ Input وأخدنا الخرج من ملف الـ 12 V → يبقى Step-up، ولو وصّلنا الـ 12 V كـ Input وأخدنا الخرج من ملف الـ 6 V → يبقى Step-down. يعني نفس الـ Transformer بنفس تركيبه ونفس نسبة اللفات ممكن يشتغل في الحالتين، اللي بيتغير هو بس جهة التوصيل.</p>
+  </section>
+
+  <hr class="section-divider">
+
+  <section class="section" id="s3">
+    <div class="section-header">
+      <div class="section-icon">🏭</div>
+      <div class="section-title-group">
+        <h2>3. معرفة قدرة المحول في المصنع</h2>
+        <div class="sub">kVA vs kW · Nameplate</div>
+      </div>
+    </div>
+    <p>لو بتشتغل في مصنع وعايز تعرف المحول اللي فيه، ما تعتمدش على كلام أي حد جوه المصنع بشكل عشوائي. مثلًا ممكن تلاقي مكتوب على المحول:</p>
+    <div class="formula-box">
+      \[ 500\ \text{kVA} \]
+    </div>
+    <p>وده لا يعني إن المحول بيدي دائمًا <span class="ltr" style="direction:ltr; display:inline;">500 kW</span>، لأن:</p>
+    <div class="def-box">
+      <p><strong>kVA</strong> = القدرة الظاهرية (Apparent Power) للمحول.</p>
+      <p style="margin:0;"><strong>kW</strong> = القدرة الفعالة (Active Power).</p>
+    </div>
+    <p>كمان المحول مش مفضّل تشغيله باستمرار عند أقصى حمل له؛ عادةً بيتم مراعاة نسبة تحميل مناسبة حسب التصميم والتشغيل.</p>
+
+    <div class="note-box">
+      <div class="note-title">📌 المصادر اللي لازم ترجع لها عند العمل في مصنع أو منشأة</div>
+      <p style="margin:0;">الـ Nameplate الخاصة بالمحول · بيانات المصنع · المخططات الكهربائية · الـ Single Line Diagram · بيانات الأحمال الفعلية.</p>
+    </div>
+
+    <div class="warn-box">
+      <div class="warn-title">⚠️ ملاحظة الدكتور</div>
+      <p style="margin:0;">ما تعتمدش بس على إنك تسأل واحد من العاملين "المصنع ده قدرته كام؟"، لأن الشخص ممكن ما يكونش عنده المعلومات الدقيقة، أو ممكن يفهم السؤال بطريقة مختلفة.</p>
+    </div>
+
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">الـ Nameplate — بطاقة تعريف الجهاز</h3>
+    <p>المحرك ممكن يكون موجود في مصنع أسمنت، أو مصنع حديد، أو أي بيئة صناعية صعبة، ويشتغل لسنين طويلة. لما ييجي مهندس جديد يتعامل معه، مش مفروض يعرف مواصفاته من شكله بس. كل جهاز تقريبًا بيكون عليه <strong>Nameplate</strong> تحتوي على أهم البيانات اللازمة للتعرف على الجهاز وتشغيله بالشكل الصحيح.</p>
+
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>البيان</th><th class="mono">Nameplate Data</th></tr></thead>
+        <tbody>
+          <tr><td>الجهد المقنن</td><td class="mono">Rated Voltage</td></tr>
+          <tr><td>التيار المقنن</td><td class="mono">Rated Current</td></tr>
+          <tr><td>القدرة</td><td class="mono">Power</td></tr>
+          <tr><td>التردد</td><td class="mono">Frequency</td></tr>
+          <tr><td>السرعة</td><td class="mono">Speed / RPM</td></tr>
+          <tr><td>معامل القدرة</td><td class="mono">Power Factor</td></tr>
+          <tr><td>الكفاءة</td><td class="mono">Efficiency</td></tr>
+          <tr><td>طريقة التوصيل</td><td class="mono">Star / Delta</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="scroll-hint">← اسحب لرؤية المزيد →</p>
+    <p>الـ Nameplate مش خاصة بالمحركات بس؛ ممكن تلاقيها على <span class="ltr" style="display:inline">Transformer, Generator, Motor</span> وبعض معدات القدرة الأخرى، لأن الجهاز ممكن يشتغل لسنين وممكن ييجي مهندس تاني بعد كده يحتاج يعرف مواصفاته من غير ما يرجع للشخص اللي ركّبه.</p>
+  </section>
+
+  <hr class="section-divider">
+
+  <section class="section" id="s4">
+    <div class="section-header">
+      <div class="section-icon">🗺️</div>
+      <div class="section-title-group">
+        <h2>4. الـ Single Line Diagram (SLD)</h2>
+        <div class="sub">System Map</div>
+      </div>
+    </div>
+    <p>من الحاجات المهمة جدًا اللي هنقابلها في المصانع والمحطات، ويمكن اعتبارها <strong>خريطة النظام الكهربائي</strong>. بدل ما تدخل المصنع وتحتاج تعرف كل ماكينة وكل سلك بالتفصيل، تبص على الـ SLD تفهم منها:</p>
+    <div class="def-box">
+      <p style="margin:0;">مصدر التغذية · المحولات · المولدات · لوحات التوزيع · الأحمال · القواطع · طريقة توصيل أجزاء النظام ببعضها.</p>
+    </div>
+    <p>يعني الـ SLD بتديك صورة مختصرة عن النظام الكهربائي للمصنع أو المحطة.</p>
+  </section>
+
+  <hr class="section-divider">
+
+  <section class="section" id="s5">
+    <div class="section-header">
+      <div class="section-icon">🔺</div>
+      <div class="section-title-group">
+        <h2>5. Single Phase و Three Phase</h2>
+        <div class="sub">Power Systems</div>
+      </div>
+    </div>
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">5.1 Single Phase</h3>
+    <p>في البيوت غالبًا بنتعامل مع Single Phase، وفيه عادةً <strong>Line</strong> و <strong>Neutral</strong> — يعني المصدر له طرفين أساسيين.</p>
+
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">5.2 Three Phase</h3>
+    <p>في أنظمة القدرة الكبيرة، زي المصانع ومحطات الكهرباء، بنستخدم غالبًا Three Phase System، وفيه ثلاث فازات: <strong>L1, L2, L3</strong>. الفرق الزاوي بين الفازات:</p>
+    <div class="formula-box">
+      \[ 120^\circ \text{ (electrical)} \]
+    </div>
+    <p>أي أن كل فازة متأخرة عن الأخرى بزاوية 120 درجة كهربائية.</p>
+
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">5.3 ليه بنستخدم Three Phase؟</h3>
+    <p>لأن أنظمة الـ Three Phase مناسبة جدًا لنقل وتوزيع القدرة الكبيرة. بدل ما نستخدم نظام Single Phase لنقل قدرة كبيرة، بنستخدم ثلاث فازات، وده بيخلي النظام أكثر كفاءة وملاءمة للأحمال الكبيرة، خصوصًا المحركات والمعدات الصناعية.</p>
+  </section>
+
+  <hr class="section-divider">
+
+  <section class="section" id="s6">
+    <div class="section-header">
+      <div class="section-icon">🔻</div>
+      <div class="section-title-group">
+        <h2>6. توصيلات Star و Delta</h2>
+        <div class="sub">Y &amp; Δ Connections</div>
+      </div>
+    </div>
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">6.1 Star Connection (Y-Connection)</h3>
+    <p>في توصيل النجمة، بيتم تجميع أحد أطراف الفازات (الملفات) الثلاثة في نقطة مشتركة تسمى <strong>Neutral Point</strong> (نقطة التعادل). وبكده يبقى عندنا ثلاثة أطراف للفازات بالإضافة لنقطة التعادل عند إخراجها. عندنا L1، L2، L3، وممكن يكون عندنا Neutral، والفرق الزاوي بين الفازات يفضل \(120^\circ\) كهربائية.</p>
+
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">6.2 Delta Connection (Δ-Connection)</h3>
+    <p>في الـ Delta، بيتم توصيل نهاية كل ملف ببداية الملف اللي يليه، وبالتالي الملفات الثلاثة بتتصل مع بعضها على شكل مثلث.</p>
+
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>التوصيلة</th><th>الوصف</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">Star (Y)</td><td>تجميع طرف من كل ملف في نقطة تعادل مشتركة (Neutral)</td></tr>
+          <tr><td class="mono">Delta (Δ)</td><td>توصيل نهاية كل ملف ببداية التالي، على شكل مثلث</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note-box">
+      <div class="note-title">📌 ملاحظة عند التعامل مع المحركات</div>
+      <p style="margin:0;">لما تتعامل مع محرك كهربائي، مهم تعرف هل المحرك مصمم للعمل بتوصيلة Star ولا Delta، وإيه قيم الجهد والتيار المناسبة لكل توصيلة.</p>
+    </div>
+
+    <p>في محطات التوليد الكبيرة بنتعامل مع أنظمة Three Phase، والمولدات الكبيرة عادةً بتكون مصممة لإنتاج نظام ثلاثي الأوجه. مهم نفهم الفرق بين Single Phase / Three Phase / Star Connection / Delta Connection، لأن المفاهيم دي هتتكرر كتير في دراسة أنظمة القدرة والمحطات والمصانع.</p>
+  </section>
+
+  <hr class="section-divider">
+
+  <section class="section" id="s7">
+    <div class="section-header">
+      <div class="section-icon">🔄</div>
+      <div class="section-title-group">
+        <h2>7. Energy Conversion — تحويل الطاقة</h2>
+        <div class="sub">Conservation of Energy Rule</div>
+      </div>
+    </div>
+    <div class="def-box">
+      <p style="margin:0;">Energy can neither be created nor destroyed, but it can be converted from one form to another. <strong>Magnetic field is the medium of energy conversion.</strong></p>
+    </div>
+    <p>قبل ما ندخل في الـ Transformer والـ Machines، لازم نفهم فكرة تحويل الطاقة. فيه أنواع مختلفة:</p>
+
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>الجهاز</th><th>نوع التحويل</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Generator</strong> (المولد)</td><td class="mono">Mechanical Energy → Electrical Energy</td></tr>
+          <tr><td><strong>Motor</strong> (المحرك)</td><td class="mono">Electrical Energy → Mechanical Energy</td></tr>
+          <tr><td><strong>Transformer</strong> (المحول)</td><td class="mono">Electrical Energy → Electrical Energy</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="scroll-hint">← اسحب لرؤية المزيد →</p>
+    <p><strong>خلاصة:</strong> الـ Motor والـ Generator متشابهان في المبدأ العام، لكن اتجاه تحويل الطاقة مختلف. الـ Transformer بيحوّل كهرباء لكهرباء مع تغيير مستويات الجهد والتيار وانتقال القدرة من دائرة لأخرى.</p>
+  </section>
+
+  <hr class="section-divider">
+
+  <section class="section" id="s8">
+    <div class="section-header">
+      <div class="section-icon">🧲</div>
+      <div class="section-title-group">
+        <h2>8. الـ Magnetic Field (المجال المغناطيسي)</h2>
+        <div class="sub">Right-Hand Rule</div>
+      </div>
+    </div>
+    <p>لو عايزين نحوّل الطاقة بين Electrical و Mechanical، لازم يكون عندنا عنصر أساسي جدًا وهو <strong>Magnetic Field</strong>. ممكن نعتبره الوسيط اللي تنتقل من خلاله الطاقة بين الأجزاء المختلفة في الـ Electrical Machines. والسؤال: كيف نستطيع توليد Magnetic Field بطريقة فعالة؟</p>
+
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">المجال المغناطيسي الناتج عن التيار</h3>
+    <p>لما يمر تيار كهربائي في سلك، يتولد حول السلك Magnetic Field. واتجاه المجال المغناطيسي يمكن تحديده باستخدام <strong>Right-Hand Rule</strong> (قاعدة اليد اليمنى) — يعني اتجاه المجال بيعتمد على اتجاه التيار المار في السلك.</p>
+
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">ليه بنستخدم Coil / Winding؟</h3>
+    <p>المجال الناتج عن سلك مستقيم واحد بيكون محدود نسبيًا. عشان كده، لو عايزين مجال مغناطيسي أقوى وأكثر فاعلية، بنستخدم <strong>Coil / Winding</strong> (لفّ السلك عدة لفات). وبدل ما يكون عندنا سلك واحد يولّد مجالًا ضعيفًا، يبقى عندنا عدة لفات، وبالتالي تتجمع تأثيرات المجالات المغناطيسية الناتجة عنها.</p>
+  </section>
+
+  <hr class="section-divider">
+
+  <section class="section" id="s8b">
+    <div class="section-header">
+      <div class="section-icon">🔁</div>
+      <div class="section-title-group">
+        <h2>8b. تطبيقات الدائرة المغناطيسية الثلاثة</h2>
+        <div class="sub">Magnetic Circuit Applications — Faraday's Law · Generator · Motor</div>
+      </div>
+    </div>
+    <p>الدائرة المغناطيسية ليها ثلاثة تطبيقات أساسية بتربط بين التيار، المجال المغناطيسي، والقوة/الجهد. الثلاثة دول هما أساس عمل كل الـ Electrical Machines.</p>
+
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">Application 1 — Coil / Solenoid (المغناطيس الكهربائي)</h3>
+    <div class="def-box">
+      <p style="margin:0;">A current carrying wire produces a magnetic field around it (Magnet).</p>
+    </div>
+    <p>لما نلف السلك حول مسمار حديدي (Iron Nail) ونوصّله ببطارية، السلك بيتصرف كملف (Coil)، والتيار المار فيه بيولّد مجال مغناطيسي حول المسمار، فيتحول المسمار الحديدي لمغناطيس مؤقت له قطب شمالي (N) وقطب جنوبي (S). اتجاه المجال بيتحدد بـ Right-Hand Rule اللي شرحناها في القسم السابق.</p>
+
+    <div class="figure-wrap">
+      <img src="images/lecture-01-coil-flux.png" alt="Coil of wire carrying current I, producing magnetic flux Φ with N and S poles">
+      <div class="figure-caption">Coil of wire حول Iron Nail — Current carrying wire produces a magnetic field around it</div>
+    </div>
+
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">Application 2 — Faraday's Law (مبدأ عمل المحول)</h3>
+    <div class="def-box">
+      <p style="margin:0;"><strong>Faraday's law</strong> states that the time variation of flux linkage induces voltage (transformer).</p>
+    </div>
+    <p>يعني لما يكون عندنا فيض مغناطيسي متغير مع الزمن داخل قلب مغناطيسي، وده بيحصل من مصدر AC موصّل بملف أولي \(N_1\)، الفيض المتغير ده بيقطع ملف ثانوي \(N_2\) ملفوف على نفس القلب، فيتولد فيه جهد مستحث. ده بالظبط المبدأ اللي بيشتغل عليه الـ Transformer، واللي هنرجع نفصّله في قسم لاحق.</p>
+
+    <div class="figure-wrap">
+      <img src="images/lecture-01-transformer-schematic.png" alt="Transformer schematic with primary N1, secondary N2, flux φ, i1, i2, Load">
+      <div class="figure-caption">Faraday's Law — the time variation of flux linkage induces voltage (transformer)</div>
+    </div>
+
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">Application 3 — Generator</h3>
+    <div class="def-box">
+      <p style="margin:0;">A moving wire in the presence of a magnetic field has a voltage induced in it (generator).</p>
+    </div>
+    <p>هنا بنستخدم <strong>Fleming's Right Hand Rule</strong> لتحديد اتجاه التيار الناتج: لو حركنا سلك داخل مجال مغناطيسي (بين قطبين N و S)، بيتولد فيه جهد كهربائي (EMF).</p>
+
+    <div class="figure-wrap">
+      <img src="images/lecture-01-flemings-rule.png" alt="Fleming's Right Hand Rule diagram showing Field, Current, and Force directions">
+      <div class="figure-caption">Fleming's Right Hand Rule</div>
+    </div>
+
+    <p>في المولد العملي، الملف بيدور ميكانيكيًا داخل المجال المغناطيسي، والتيار بينتقل للخارج عن طريق <strong>Carbon Brushes</strong> و <strong>Metal Rings (Slip Rings)</strong>.</p>
+
+    <div class="figure-wrap">
+      <img src="images/lecture-01-generator-brushes.png" alt="Generator with carbon brushes, metal rings, coil rotated by mechanical means, connected to a lamp">
+      <div class="figure-caption">A moving wire in the presence of a magnetic field has a voltage induced in it (generator)</div>
+    </div>
+
+    <p>والجهد الناتج بيكون على شكل موجة جيبية متغيرة مع الزمن:</p>
+
+    <div class="figure-wrap">
+      <img src="images/lecture-01-emf-sine-wave.png" alt="Sine wave graph of induced EMF versus time">
+      <div class="figure-caption">شكل الموجة الجيبية للـ EMF الناتج من المولد</div>
+    </div>
+
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">Application 4 — Motor</h3>
+    <div class="def-box">
+      <p style="margin:0;">A current-carrying wire in the presence of a magnetic field has a force induced on it (motor).</p>
+    </div>
+    <p>العكس من المولد: هنا عندنا سلك بيحمل تيار وموجود داخل مجال مغناطيسي، فبتتولد عليه قوة ميكانيكية (Force)، والقوة دي هي اللي بتنتج عزم الدوران في المحرك. ده هو المبدأ الأساسي اللي هنفصّله أكتر في قسم الـ DC Motor لاحقًا في المحاضرة.</p>
+
+    <div class="figure-wrap">
+      <img src="images/lecture-01-motor-3d.png" alt="3D illustration of current-carrying coil in magnetic field between N and S poles producing force (motor)">
+      <div class="figure-caption">A current-carrying wire in the presence of a magnetic field has a force induced on it (motor)</div>
+    </div>
+
+    <div class="note-box">
+      <div class="note-title">🎥 فيديو توضيحي (ذكره الدكتور)</div>
+      <p class="ltr" style="direction:ltr; text-align:left; margin:0; word-break:break-all; overflow-wrap:break-word;">https://www.youtube.com/watch?v=LAtPHANEfQo</p>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">💡 خلاصة التطبيقات الثلاثة</div>
+      <p style="margin:0;">التطبيقات دي كلها بتدور حول نفس الفكرة: العلاقة بين <strong>التيار</strong> و <strong>المجال المغناطيسي</strong> و <strong>الجهد/القوة</strong> — وهي نفسها الأساس اللي هنبني عليه فهم الـ Transformer والـ Generator والـ Motor في باقي المقرر.</p>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section class="section" id="s9">
+    <div class="section-header">
+      <div class="section-icon">🔧</div>
+      <div class="section-title-group">
+        <h2>9. Reluctance والحاجة لاستخدام الحديد</h2>
+        <div class="sub">Magnetic Reluctance</div>
+      </div>
+    </div>
+    <p>لو حطينا الملف في الهواء، هيولّد مجالًا مغناطيسيًا، لكن المجال الناتج ممكن ما يكونش بالشكل أو القوة المطلوبة. والسبب مرتبط بخاصية مهمة في الدوائر المغناطيسية اسمها <strong>Magnetic Reluctance</strong> (الممانعة المغناطيسية)، وهي تشبه إلى حد ما فكرة المقاومة في الدائرة الكهربائية.</p>
+
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>الدائرة الكهربائية</th><th>الدائرة المغناطيسية</th></tr></thead>
+        <tbody>
+          <tr><td>Resistance تقاوم مرور التيار</td><td>Reluctance تقاوم تكوّن ومرور الفيض المغناطيسي</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>والهواء لديه Reluctance عالية مقارنةً بالمواد المغناطيسية المناسبة، لذلك بنستخدم مادة ذات خصائص مغناطيسية أفضل لتكوين مسار للفيض.</p>
+
+    <div class="insight-box">
+      <div class="insight-title">💡 مواد مغناطيسية وPermanent Magnet</div>
+      <p style="margin:0;">فيه مواد وسبائك بيتم اختيارها بعناية للحصول على خواص مغناطيسية معينة، من ضمنها المواد المستخدمة في تصنيع <strong>Permanent Magnets</strong> (المغناطيسات الدائمة) اللي بتحتفظ بمغنطتها لفترة طويلة. مثال ذكره الدكتور: فكرة قطارات <strong>Maglev</strong> اللي بتعتمد على الرفع المغناطيسي — الفكرة الأساسية إن المجال المغناطيسي ممكن يُستخدم لإنتاج قوى ميكانيكية.</p>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section class="section" id="s10">
+    <div class="section-header">
+      <div class="section-icon">🌀</div>
+      <div class="section-title-group">
+        <h2>10. الـ Magnetic Circuit (الدائرة المغناطيسية)</h2>
+        <div class="sub">Flux Path</div>
+      </div>
+    </div>
+    <p>لما نحط الملف حول قلب مصنوع من مادة مغناطيسية مناسبة، الفيض المغناطيسي بيلاقي مسارًا أفضل، وهنا نبدأ في تكوين <strong>Magnetic Circuit</strong>. فكما أن التيار الكهربائي بيسير في مسار داخل دائرة كهربائية، فإن Magnetic Flux بيسلك مسارًا داخل الـ Magnetic Circuit. ولهذا بنستخدم في المحولات والماكينات الكهربائية قلوبًا مصنوعة من مواد مغناطيسية مناسبة، وليست مجرد قطعة حديد عادية.</p>
+
+    <div class="figure-wrap">
+      <img src="images/lecture-01-core-basic.png" alt="Magnetic core with N turns, current i, flux φ, and mean path length lc">
+      <div class="figure-caption">مسار الفيض داخل القلب الحديدي — Magnetic Circuit</div>
+    </div>
+
+    <div class="figure-wrap">
+      <img src="images/lecture-01-coupled-coils.png" alt="Two coupled coils L1 and L2 on a shared magnetic core with equivalent reluctance circuit">
+      <div class="figure-caption">قلب مغناطيسي بملفين L1 و L2 مع الدائرة المكافئة للممانعة (Reluctance) — φ1, φ2, φc = φ1 + φ2</div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section class="section" id="s11">
+    <div class="section-header">
+      <div class="section-icon">📐</div>
+      <div class="section-title-group">
+        <h2>11. التعريفات الأساسية للدائرة المغناطيسية</h2>
+        <div class="sub">Important Definitions</div>
+      </div>
+    </div>
+
+    <div class="def-box">
+      <p><strong>Φ — Magnetic Flux</strong>: عدد خطوط القوة المغناطيسية (Weber).</p>
+    </div>
+    <div class="formula-box">
+      \[ B = \frac{\phi}{A} \quad \text{, where } A \text{ is area } (m^2) \]
+    </div>
+    <p><strong>B — Magnetic Flux Density</strong> (تسلا، \(T = Wb/m^2\)).</p>
+
+    <div class="formula-box">
+      \[ F = MMF = \phi \mathcal{R} = Ni \quad (AT) \]
+    </div>
+    <p><strong>F — Magnetomotive Force (MMF)</strong>: القدرة على رفع المجال المغناطيسي.</p>
+
+    <div class="formula-box">
+      \[ \mathcal{R} = \frac{l_c}{\mu A} \quad \text{(A-turns/Wb)} \]
+      \[ \mu = \mu_r \cdot \mu_0 \quad ; \quad \mu_0 = 4\pi \times 10^{-7}\ H/m \]
+    </div>
+    <p><strong>Reluctance (\(\mathcal{R}\))</strong>: الممانعة المغناطيسية، حيث \(l_c\) طول المسار المغناطيسي المتوسط، و \(\mu\) النفاذية المغناطيسية.</p>
+
+    <div class="formula-box">
+      \[ MMF = H \cdot l_c = \phi \mathcal{R} = Ni \quad ; \quad B = \mu H \]
+    </div>
+    <p><strong>H — Magnetic Field Intensity</strong> (AT/m): الجهد الذي يبذله التيار لإنتاج مجال مغناطيسي.</p>
+
+    <div class="formula-box">
+      \[ \lambda = N \cdot \phi \]
+    </div>
+    <p><strong>λ — Flux Linkage</strong>: الفيض الناتج مضروبًا في عدد اللفات (Weber).</p>
+
+    <div class="figure-wrap">
+      <img src="images/example-01-core-diagram.png" alt="Magnetic core with N turns, current i, flux φ, mean path length lc, and cross-sectional area A">
+      <div class="figure-caption">القلب المغناطيسي: مسار الفيض ومساحة المقطع (Cross-sectional area A)</div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section class="section" id="s12">
+    <div class="section-header">
+      <div class="section-icon">⚖️</div>
+      <div class="section-title-group">
+        <h2>12. Magnetic Circuit مقابل Electric Circuit</h2>
+        <div class="sub">Analogy</div>
+      </div>
+    </div>
+    <p>الفكرة إننا هنحاول نعمل نموذجًا يشبه إلى حد ما الدائرة الكهربائية، عشان نقدر نحسب الـ Magnetic Flux ونحلل الـ Magnetic Circuit بطريقة أسهل:</p>
+
+    <div class="formula-box">
+      \[ \text{Voltage} \rightarrow \text{Current} \rightarrow \text{Resistance} \]
+      \[ \text{MMF} \rightarrow \text{Magnetic Flux} \rightarrow \text{Reluctance} \]
+    </div>
+
+    <div class="figure-wrap">
+      <img src="images/lecture-01-electric-vs-magnetic-table.png" alt="Electric circuit with E and R compared to magnetic circuit with F and Reluctance, with comparison table">
+      <div class="figure-caption">Driving Force: Emf(E)/Mmf(F) — Produce: Current i / Flux Φ — Limited by: Resistance R / Reluctance</div>
+    </div>
+
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th></th><th class="mono">Electric Circuit</th><th class="mono">Magnetic Circuit</th></tr></thead>
+        <tbody>
+          <tr><td>Driving Force</td><td class="mono">EMF (E)</td><td class="mono">MMF (F)</td></tr>
+          <tr><td>Produces</td><td class="mono">Current (i)</td><td class="mono">Flux (Φ)</td></tr>
+          <tr><td>Limited by</td><td class="mono">Resistance (R)</td><td class="mono">Reluctance (ℛ)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="scroll-hint">← اسحب لرؤية المزيد →</p>
+
+    <div class="formula-box">
+      \[ MMF = \phi \cdot \mathcal{R} \qquad , \qquad \mathcal{R} = \frac{l_c}{\mu A} \]
+      \[ EMF = i \cdot R \qquad , \qquad R = \frac{l}{\rho A} \]
+    </div>
+
+    <div class="formula-box">
+      \[ \Phi = \frac{MMF}{\mathcal{R}} = \frac{N I}{\mathcal{R}} \]
+    </div>
+    <p>التشبيه دي بتشبه في فكرتها قانون أوم في الدائرة الكهربائية:</p>
+    <div class="formula-box">
+      \[ I = \frac{V}{R} \]
+    </div>
+    <p>مع الفرق طبعًا إن دي دائرة مغناطيسية وليست دائرة كهربائية.</p>
+  </section>
+
+  <hr class="section-divider">
+
+  <section class="section" id="s13">
+    <div class="section-header">
+      <div class="section-icon">📝</div>
+      <div class="section-title-group">
+        <h2>13. مثال محلول — Example 1</h2>
+        <div class="sub">Worked Example</div>
+      </div>
+    </div>
+
+    <div class="example-card">
+      <div class="example-head">Example 1 — Magnetic Core Calculation</div>
+      <div class="example-body">
+        <div class="example-question">
+          Given: i = 1 A, N = 100, l_c = 40 cm, A = 100 cm², μr = 5000<br>
+          Calculate: F, H, B, R and φ
+        </div>
+
+        <div class="figure-wrap" style="box-shadow:none; padding:10px;">
+          <img src="images/example-01-core-diagram.png" alt="Example 1 diagram: magnetic core with N turns, current i, flux φ, mean path length lc, and cross-sectional area A">
+          <div class="figure-caption">Cross-sectional area A</div>
+        </div>
+
+        <ol class="solution-steps">
+          <li>
+            <strong>MMF:</strong>
+            <div class="formula-box" style="margin:8px 0;">\[ F = N \cdot i = 100 \times 1 = 100\ \text{AT} \]</div>
+          </li>
+          <li>
+            <strong>Field intensity H:</strong>
+            <div class="formula-box" style="margin:8px 0;">\[ H = \frac{F}{l_c} = \frac{100}{0.4} = 250\ \text{AT/m} \]</div>
+          </li>
+          <li>
+            <strong>Flux density B:</strong>
+            <div class="formula-box" style="margin:8px 0;">\[ B = \mu H = 4\pi \times 10^{-7} \times 5000 \times 250 = 1.57\ \text{T} \]</div>
+          </li>
+          <li>
+            <strong>Reluctance R:</strong>
+            <div class="formula-box" style="margin:8px 0;">\[ \mathcal{R} = \frac{l_c}{\mu A} = \frac{0.4}{4\pi \times 10^{-7} \times 5000 \times 0.01} = 6366.385\ \text{A-turns/Wb} \]</div>
+          </li>
+          <li>
+            <strong>Flux φ:</strong>
+            <div class="formula-box" style="margin:8px 0;">\[ \phi = B \cdot A = 1.57 \times 0.01 = 0.0157\ \text{Wb} \]</div>
+          </li>
+        </ol>
+        <span class="answer-badge">✓ F=100 AT, H=250 AT/m, B=1.57 T, R=6366.385 A-t/Wb, φ=0.0157 Wb</span>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section class="section" id="s14">
+    <div class="section-header">
+      <div class="section-icon">🌫️</div>
+      <div class="section-title-group">
+        <h2>14. Fringing Effect</h2>
+        <div class="sub">Air Gap Correction</div>
+      </div>
+    </div>
+    <div class="def-box">
+      <p style="margin:0;">The effective cross-sectional area of the air gap is <strong>larger</strong> than the cross-sectional area of the iron-core.</p>
+    </div>
+
+    <div class="figure-wrap">
+      <img src="images/lecture-01-fringing-effect.png" alt="Fringing effect diagram showing flux lines spreading in the air gap between N and S poles">
+      <div class="figure-caption">انتشار خطوط الفيض في الفجوة الهوائية (Air Gap) — Fringing Effect</div>
+    </div>
+
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">Practically:</h3>
+    <div class="note-box">
+      <p style="margin-bottom:8px;">1. Add the air gap length to each dimension.</p>
+      <p style="margin:0;">2. Assume the effective area is 5% more than the cross-sectional area of the iron-core.</p>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section class="section" id="s15">
+    <div class="section-header">
+      <div class="section-icon">🔁</div>
+      <div class="section-title-group">
+        <h2>15. المبدأ الأساسي لعمل الـ Transformer</h2>
+        <div class="sub">Working Principle</div>
+      </div>
+    </div>
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">مكونات المحول البسيط</h3>
+    <div class="def-box">
+      <p style="margin:0;">ملف أولي <strong>Primary Winding</strong> · ملف ثانوي <strong>Secondary Winding</strong> · قلب مغناطيسي <strong>Magnetic Core</strong></p>
+    </div>
+
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">خطوات العمل</h3>
+    <ol class="solution-steps">
+      <li>بنوصّل مصدر كهربائي (AC) بالـ Primary.</li>
+      <li>لما يمر تيار متغير في الملف الأولي، يتولد مجال مغناطيسي متغير، وبالتالي Magnetic Flux متغير داخل الـ Magnetic Core.</li>
+      <li>الفيض المتغير ده بيقطع موصلات الملف الثانوي، فيتسبب في توليد EMF — Electromotive Force في الملف الثانوي.</li>
+      <li>وبالتالي نحصل على جهد كهربائي في الطرف الثانوي.</li>
+    </ol>
+
+    <div class="formula-box">
+      \[ \text{AC} \rightarrow \text{Magnetic Flux} \rightarrow \text{Induced EMF} \]
+    </div>
+    <div class="formula-box">
+      \[ \text{Electrical Energy} \rightarrow \text{Primary Winding} \rightarrow \text{Alternating Magnetic Flux} \rightarrow \text{Secondary Winding} \rightarrow \text{Electrical Energy} \]
+    </div>
+    <p>يعني الطاقة بتنتقل من الملف الأولي للملف الثانوي عن طريق <strong>Magnetic Coupling</strong>.</p>
+
+    <div class="figure-wrap">
+      <img src="images/lecture-01-transformer-schematic.png" alt="Transformer schematic with primary N1, secondary N2, flux φ, i1, i2, Load — no direct electrical connection">
+      <div class="figure-caption">Primary و Secondary مفصولين كهربيًا، متصلين مغناطيسيًا فقط (Magnetic Coupling)</div>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">💡 هل يوجد اتصال كهربائي بين الملفين؟</div>
+      <p style="margin:0;">من أهم مميزات الـ Transformer إن الملف الابتدائي والملف الثانوي <strong>ليس بينهما اتصال كهربائي مباشر</strong> في المحول التقليدي، لكن بينهما Magnetic Coupling. والخاصية دي بتسمح باستخدام المحول لتحقيق <strong>Electrical Isolation</strong> (العزل الكهربائي بين دائرتين).</p>
+    </div>
+
+    <div class="note-box">
+      <div class="note-title">📌 العزل بين دائرة القدرة ودائرة التحكم</div>
+      <p style="margin:0;">في الأنظمة الصناعية والـ Mechatronics: Power Circuit يجب فصلها وعزلها عن Control Circuit عندما يتطلب التصميم ذلك، لحماية دائرة التحكم وتقليل انتقال الجهد العالي إليها في حالة حدوث Fault في دائرة القدرة.</p>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section class="section" id="s16">
+    <div class="section-header">
+      <div class="section-icon">📊</div>
+      <div class="section-title-group">
+        <h2>16. Turns Ratio ونقل القدرة</h2>
+        <div class="sub">V₁/V₂ = N₁/N₂ , P = VI</div>
+      </div>
+    </div>
+
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">علاقة الجهد بعدد اللفات</h3>
+    <div class="formula-box">
+      \[ \frac{V_1}{V_2} = \frac{N_1}{N_2} \]
+    </div>
+    <div class="def-box">
+      <p>\(V_1\): جهد الـ Primary — \(V_2\): جهد الـ Secondary</p>
+      <p style="margin:0;">\(N_1\): عدد لفات الـ Primary — \(N_2\): عدد لفات الـ Secondary</p>
+    </div>
+    <p>نسبة الجهد بتعتمد على <strong>Turns Ratio</strong>. لو عدد لفات الملف الثانوي أكبر من الأولي → <strong>Step-up</strong>. لو أقل → <strong>Step-down</strong>.</p>
+
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">ليه بنرفع الجهد أثناء نقل القدرة؟</h3>
+    <div class="formula-box">
+      \[ P = VI \]
+    </div>
+    <p>يعني نفس القدرة ممكن تُنقل باستخدام جهد كبير وتيار صغير، أو جهد صغير وتيار كبير. لكن التيار الكبير له مشكلة مهمة، وهي إنه بيؤدي لفقد أكبر في خطوط النقل:</p>
+    <div class="formula-box">
+      \[ P_{loss} = I^2 R \]
+    </div>
+    <p><strong>الاستنتاج:</strong> كل ما زاد التيار، زادت الخسائر بشكل كبير (لأن العلاقة مع مربع التيار). لذلك بنرفع الجهد ونقلل التيار أثناء النقل.</p>
+
+    <div class="warn-box">
+      <div class="warn-title">⚠️ ليه ما بننقلش القدرة بتيار كبير؟</div>
+      <p style="margin:0;">لأن التيار الكبير بيحتاج موصلات أكبر لتحمل التيار (Cross-sectional Area أكبر)، يعني موصل أكبر ووزن وتكلفة أكبر وفقد قدرة أكبر. أما رفع الجهد فبيسمح بنقل نفس القدرة تقريبًا بتيار أقل، وبالتالي موصلات أنسب مع تقليل الفقد.</p>
+    </div>
+
+    <div class="formula-box">
+      \[ \text{Generation} \rightarrow \text{Step-up} \rightarrow \text{Transmission} \rightarrow \text{Step-down} \rightarrow \text{Distribution} \rightarrow \text{Loads} \]
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section class="section" id="s17">
+    <div class="section-header">
+      <div class="section-icon">⚙️</div>
+      <div class="section-title-group">
+        <h2>17. الـ DC Motor</h2>
+        <div class="sub">Current + Field → Force → Torque</div>
+      </div>
+    </div>
+    <p>في الـ DC Motor محتاجين نحقق شرط أساسي:</p>
+    <div class="formula-box">
+      \[ \text{Current} + \text{Magnetic Field} \rightarrow \text{Force} \]
+    </div>
+    <p>أي محتاجين: (1) تيار يمر في الموصل، و(2) مجال مغناطيسي. عند وجود الاثنين، بتتولد قوة على الموصل، وممكن نستخدم القوة دي لإنتاج عزم دوران.</p>
+
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">Commutator والـ Brushes</h3>
+    <div class="def-box">
+      <p><strong>Commutator</strong>: أجزاء موصلة، غالبًا من النحاس، مرتبطة بملفات الـ Armature.</p>
+      <p style="margin:0;"><strong>Brushes</strong> (الفُرَش): بتلامس الـ Commutator، ووظيفتها توصيل التيار الكهربائي إلى الجزء الدوار مع السماح له بالدوران.</p>
+    </div>
+
+    <div class="formula-box">
+      \[ \text{Current} + \text{Magnetic Field} \rightarrow \text{Force} \rightarrow \text{Torque} \rightarrow \text{Rotation} \]
+    </div>
+
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>الجهاز</th><th>دور المجال المغناطيسي</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">Transformer</td><td>نقل الطاقة بين الملفين عن طريق Magnetic Coupling</td></tr>
+          <tr><td class="mono">Generator</td><td>تحويل الطاقة الميكانيكية إلى كهربائية</td></tr>
+          <tr><td class="mono">Motor</td><td>تحويل الطاقة الكهربائية إلى ميكانيكية</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="scroll-hint">← اسحب لرؤية المزيد →</p>
+  </section>
+
+  <hr class="section-divider">
+
+  <section class="section" id="s18">
+    <div class="section-header">
+      <div class="section-icon">🎯</div>
+      <div class="section-title-group">
+        <h2>18. الخلاصة العامة وملاحظات الدكتور</h2>
+        <div class="sub">Summary &amp; Key Takeaways</div>
+      </div>
+    </div>
+
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">أهمية المهندس وقت المشكلة</h3>
+    <p>طول ما المصنع شغال بشكل طبيعي، ممكن ما يبانش تأثير قرارات المهندس بشكل كبير. لكن لما تحصل مشكلة ويتوقف الإنتاج، يبدأ العمل <strong>Under Pressure</strong>: الإنتاج متوقف، الـ Owner منتظر الحل، الوقت محسوب، وكل دقيقة توقف ممكن يكون لها تكلفة. وهنا بتظهر أهمية إن المهندس يكون فاهم النظام وقادر على تحليل المشكلة واتخاذ القرار المناسب.</p>
+
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">أولًا: أنواع تحويل الطاقة</h3>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>الجهاز</th><th>نوع التحويل</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">Generator</td><td class="mono">Mechanical → Electrical</td></tr>
+          <tr><td class="mono">Motor</td><td class="mono">Electrical → Mechanical</td></tr>
+          <tr><td class="mono">Transformer</td><td class="mono">Electrical → Electrical (تغيير الجهد والتيار)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="scroll-hint">← اسحب لرؤية المزيد →</p>
+
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">ثانيًا: الـ Transformer</h3>
+    <div class="def-box">
+      <p>ممكن يكون Step-up لرفع الجهد، أو Step-down لخفض الجهد.</p>
+      <p>العلاقة الأساسية: <span class="ltr" style="display:inline">\(\dfrac{V_1}{V_2} = \dfrac{N_1}{N_2}\)</span></p>
+      <p style="margin:0;">بيحقق Electrical Isolation عن طريق الـ Magnetic Coupling.</p>
+    </div>
+
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">ثالثًا: أنظمة القدرة</h3>
+    <div class="def-box">
+      <p>في أنظمة القدرة الكبيرة بنستخدم غالبًا Three Phase، والفازات الثلاث بينها \(120^\circ\)، وممكن توصيلها إما Star أو Delta.</p>
+      <p>الـ Single Line Diagram هي الخريطة اللي بتساعدنا نفهم النظام الكهربائي داخل المصنع أو المحطة.</p>
+      <p style="margin:0;">الـ Nameplate هي بطاقة تعريف أي جهاز.</p>
+    </div>
+
+    <h3 style="color:var(--royal); font-family:'Cairo',sans-serif;">رابعًا: العنصر المشترك</h3>
+    <p>العنصر المشترك في كل الماكينات دي هو Magnetic Field، ولكي نحلله نبدأ بدراسة Magnetic Circuit، وأهم عناصره:</p>
+    <div class="formula-box">
+      \[ MMF = NI \qquad , \qquad \Phi = \frac{MMF}{\mathcal{R}} \]
+      \[ \text{MMF} \rightarrow \text{Flux} \rightarrow \text{Reluctance} \]
+    </div>
+
+    <div class="q-section">
+      <h4>📚 ملاحظات مهمة من الدكتور</h4>
+      <button class="q-toggle-btn" onclick="toggleSolution(this)">عرض الملاحظات الكاملة ▼</button>
+      <div class="q-solution">
+        <p>1. المحول لا يحوّل الكهرباء إلى حركة ولا العكس — وظيفته تغيير مستوى الجهد فقط.</p>
+        <p>2. kVA ≠ kW — الـ kVA قدرة ظاهرية، والـ kW قدرة فعالة.</p>
+        <p>3. المحول مش مفضّل تشغيله باستمرار عند أقصى حمل له.</p>
+        <p>4. ما تعتمدش على كلام العاملين في معرفة قدرة المصنع؛ ارجع للـ Nameplate والمخططات والـ SLD وبيانات الأحمال الفعلية.</p>
+        <p>5. ما تحفظش أرقام مستويات الجهد الواردة في التسجيل حرفيًا؛ الأرقام الفعلية بتعتمد على الشبكة ومستوى التوزيع في المكان.</p>
+        <p>6. أهمية المهندس بتظهر وقت المشكلة، لما يكون الإنتاج متوقف والوقت محسوب.</p>
+        <p>7. في الـ Mechatronics والأنظمة الصناعية: افصل دائرة القدرة عن دائرة التحكم لما التصميم يتطلب ذلك.</p>
+        <p style="margin:0;">8. القادم في المحاضرة: البدء في دراسة الـ Transformer رياضيًا وحل المسائل باستخدام مفاهيم الـ Magnetic Circuit.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <h3>Basics of Electric Machines</h3>
+  <p>Magnetic Circuit — Lecture Notes</p>
+  <div class="tags-row">
+    <span class="tag">Magnetic Circuit</span>
+    <span class="tag">Transformer</span>
+    <span class="tag">Three-Phase Systems</span>
+    <span class="tag">Star / Delta</span>
+    <span class="tag">Energy Conversion</span>
+    <span class="tag">MMF · Flux · Reluctance</span>
+    <span class="tag">DC Motor</span>
+  </div>
+</footer>
+
+<div class="closing-wrapper">
+  <div class="closing-card">
+    <p>🤲 ولا تنسوا الصلاة على النبي صلى الله عليه وسلم، والدعاء لإخوانكم في فلسطين وغزة وفي جميع بقاع الأرض، وأن ينصر الله المسلمين المستضعفين. 🤲</p>
+  </div>
+</div>
+
+<script>
+function toggleDuaa(){
+  var content = document.getElementById('duaaContent');
+  var btn = document.getElementById('duaaBtn');
+  var arrow = document.getElementById('duaaArrow');
+  var isOpen = content.classList.contains('open');
+  if(isOpen){
+    content.classList.remove('open');
+    btn.setAttribute('aria-expanded','false');
+  } else {
+    content.classList.add('open');
+    btn.setAttribute('aria-expanded','true');
+  }
+}
+function toggleSolution(btn){
+  var sol = btn.nextElementSibling;
+  var isOpen = sol.classList.contains('open');
+  if(isOpen){
+    sol.classList.remove('open');
+    btn.textContent = 'عرض الملاحظات الكاملة ▼';
+  } else {
+    sol.classList.add('open');
+    btn.textContent = 'إخفاء الملاحظات ▲';
+  }
+}
+document.querySelectorAll('.toc-item').forEach(function(link){
+  link.addEventListener('click', function(e){
+    e.preventDefault();
+    var target = document.querySelector(this.getAttribute('href'));
+    if(target){ target.scrollIntoView({behavior:'smooth', block:'start'}); }
+  });
+});
+
+/* Show a "swipe to see more" hint under any equation box whose rendered
+   math is actually wider than the box (only relevant on narrow screens). */
+function markOverflowingFormulas(){
+  document.querySelectorAll('.formula-box').forEach(function(box){
+    var isOverflowing = box.scrollWidth > box.clientWidth + 1;
+    var hint = box.nextElementSibling;
+    if(!hint || !hint.classList || !hint.classList.contains('formula-scroll-hint')){
+      hint = document.createElement('p');
+      hint.className = 'formula-scroll-hint';
+      hint.textContent = '\u2190 \u0627\u0633\u062d\u0628 \u0644\u0631\u0624\u064a\u0629 \u0627\u0644\u0645\u0639\u0627\u062f\u0644\u0629 \u0643\u0627\u0645\u0644\u0629 \u2192';
+      box.parentNode.insertBefore(hint, box.nextSibling);
+    }
+    hint.classList.toggle('show', isOverflowing);
+  });
+}
+if(window.MathJax && MathJax.startup && MathJax.startup.promise){
+  MathJax.startup.promise.then(markOverflowingFormulas);
+} else {
+  window.addEventListener('load', markOverflowingFormulas);
+}
+window.addEventListener('resize', markOverflowingFormulas);
+</script>
+<script>
+(function(){
+  var KEY='eyeProtection', root=document.documentElement, btn=document.getElementById('eyeToggle');
+  if(!btn) return;
+  var st=btn.querySelector('.eye-st');
+  function render(on){ btn.setAttribute('aria-pressed', on?'true':'false'); st.textContent = on?'ON':'OFF'; }
+  render(root.getAttribute('data-eye')==='on');
+  btn.addEventListener('click', function(){
+    var on = root.getAttribute('data-eye') !== 'on';
+    if(on){ root.setAttribute('data-eye','on'); } else { root.removeAttribute('data-eye'); }
+    render(on);
+    try{ localStorage.setItem(KEY, on?'on':'off'); }catch(e){}
+  });
+})();
+</script>
+
+</body>
+</html>
