@@ -77,6 +77,7 @@ footer h4{font:700 1.2rem 'Playfair Display',serif;margin:0 0 6px}footer p{opaci
 @media(max-width:650px){.grid2{grid-template-columns:1fr}.sec-head h2{font-size:1.45rem}}
 @media(max-width:600px){body{font-size:16px}.toc-body{grid-template-columns:1fr}.hint{display:block}.content,.wrap,.dua-wrap{padding:0 14px}}
 @media(max-width:380px){header{padding:36px 14px}.ico{flex-basis:42px;width:42px;height:42px}}
+.eq-t{font:600 .8rem JetBrains Mono,monospace;color:var(--amber);letter-spacing:.5px;margin-bottom:6px;direction:ltr}.grid2 .eq-t{color:var(--royal);margin-top:8px}table.sym td:first-child{font-family:JetBrains Mono,monospace;text-align:center}table.sym td:nth-child(3){font-family:Cairo,sans-serif}table.sym{margin:8px 0}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.grid2 figure,.grid3 figure{margin:0}.grid2 figure img,.grid3 figure img{width:100%}@media(max-width:650px){.grid3{grid-template-columns:1fr}}
 </style>
 <script>
 try{ if(localStorage.getItem('eyeProtection')==='on'){ document.documentElement.setAttribute('data-eye','on'); } }catch(e){}
@@ -125,7 +126,7 @@ html[data-eye="on"] .home-link{background:#F8F8F5}
 <header>
   <div class="badge">Electric Machines · Lecture 2</div>
   <h1>Single-Phase Transformers<br><span>المحولات أحادية الفاز</span></h1>
-  <p class="sub">Grid role, construction, ideal-transformer theory, EMF equation, impedance transformation and solved examples</p>
+  <p class="sub">Grid role, construction, ideal vs real, EMF equation, ratios, impedance transformation and solved examples</p>
   <div class="pills"><span>⚡ Power Grid</span><span>🧲 Core &amp; Windings</span><span>📐 EMF Equation</span><span>📝 Solved Examples</span></div>
 </header>
 
@@ -149,143 +150,155 @@ html[data-eye="on"] .home-link{background:#F8F8F5}
     <a href="#s1"><b>1</b>لماذا نحتاج Transformers؟</a>
     <a href="#s2"><b>2</b>أنواع الـ Transformers</a>
     <a href="#s3"><b>3</b>التركيب والمكونات</a>
-    <a href="#s4"><b>4</b>Ideal Transformer &amp; EMF</a>
-    <a href="#s5"><b>5</b>Ratios &amp; Rating</a>
+    <a href="#s4"><b>4</b>Principle, EMF &amp; Ideal vs Real</a>
+    <a href="#s5"><b>5</b>Ratios, Step-up/Down &amp; Rating</a>
     <a href="#s6"><b>6</b>Impedance Transformation</a>
-    <a href="#s7"><b>7</b>أمثلة محلولة</a>
-    <a href="#s8"><b>8</b>أسئلة تدريبية</a>
+    <a href="#s7"><b>7</b>Key Points &amp; Summary</a>
+    <a href="#s8"><b>8</b>أمثلة محلولة</a>
+    <a href="#s9"><b>9</b>أسئلة تدريبية</a>
   </div>
 </div></div>
 
 <main class="content">
 
 <section id="s1">
-  <div class="sec-head"><div class="ico">⚡</div><div><h2>Why Do We Need Transformers?</h2><small>Grid · Voltage Levels</small></div></div>
-  <div class="split"><div>
-    <div class="def-box"><b>Transformer:</b> جهاز كهربائي ساكن (<span class="en">static</span>) بيحوّل القدرة الكهربائية <span class="en">AC</span> من مستوى جهد لمستوى جهد تاني <b>بنفس الـ frequency</b>.</div>
-    <p>الـ Transformer بيخلّينا نـ <span class="en">transmit electrical power</span> لمسافات طويلة، ونستخدم جهد الـ generator عشان ننقل <b>high power at low current</b>، وده بيقلل تكلفة نظام النقل، وبعدها نظبط الجهد لمستوى صالح للاستخدام.</p>
-  </div>
-  <figure class="s"><img src="images/img-01-transformer-overview.jpg" alt="Oil-filled power transformer with bushings and conservator" loading="lazy"><figcaption>IMG-01 — Oil-filled power transformer</figcaption></figure></div>
-  <p>في <b>IMG-04</b> الرحلة كاملة: <span class="en">Power Plant → Step-up Transformer → Tower → Transmission Substation → Distribution Substation → Transformers → Home</span>.</p>
-  <figure class="m"><img src="images/img-04-power-system-chain.jpg" alt="Power chain from power plant through step-up transformer, towers and substations to home" loading="lazy"><figcaption>IMG-04 — From power plant to home</figcaption></figure>
-  <h3>Voltage levels in the Egyptian grid</h3>
-  <div class="note-box">قاعدة تقريبية من المحاضرة: <span class="en">1 V ≈ 1 m</span>، <span class="en">1 kV ≈ 1 km</span>، و <span class="en">500 kV</span> بينقل قدرة عالية لحوالي <span class="en">500 km</span>. عشان كده الشبكة الموحدة <span class="en">500 &amp; 220 kV</span>.</div>
-  <div class="split"><figure class="m"><img src="images/img-03-egypt-unified-grid-map.jpg" alt="Map of the Egyptian unified power system with 500, 400, 220 and 132 kV lines" loading="lazy"><figcaption>IMG-03 — Unified Power System (500/400/220/132 kV)</figcaption></figure>
-  <div><p><b>66/22 kV</b> في المدن الجديدة: <span class="en">22 kV ≈ 22 km</span> فالمحول بيغطي حوالي <span class="en">1500 km²</span> (مساحات كبيرة).</p><p><b>66/11 kV</b> في القرى القديمة: <span class="en">11 kV ≈ 11 km</span> فبيغطي حوالي <span class="en">380 km²</span> (مساحات صغيرة).</p></div></div>
-  <div class="tw"><table><tr><th>Unit</th><th>Ratio</th><th>Voltage</th><th>Level</th></tr>
-  <tr><td>Gen_1</td><td>250 MVA</td><td>11 : 35 kV</td><td>Generation</td></tr>
-  <tr><td>TR_1</td><td>Δ–Y</td><td>11 / 220 kV</td><td>Generation</td></tr>
-  <tr><td>TR_2</td><td>Y–Y</td><td>220 / 66 kV</td><td>Transmission</td></tr>
-  <tr><td>TR_3</td><td>Δ–Y</td><td>66 / 11 kV</td><td>Transmission</td></tr>
-  <tr><td>TR_4</td><td>Δ–Y</td><td>11 / 0.4 kV</td><td>Distribution</td></tr></table></div>
+<div class="sec-head"><div class="ico">⚡</div><div><h2>Why Do We Need Transformers?</h2><small>Grid · Voltage Levels</small></div></div>
+<div class="def-box"><b>Transformer:</b> جهاز كهربائي ساكن (<span class="en">static</span>) بيحوّل القدرة <span class="en">AC</span> من مستوى جهد لمستوى جهد تاني <b>بنفس الـ frequency</b>: بيدخل له جهد وتيار، ويطلع جهد وتيار تانيين، والتردد ثابت.</div>
+<p>محطات التوليد بعيدة عن المستهلكين، فلازم ننقل القدرة لمسافات طويلة. القدرة المنقولة تقريبًا <span class="en">P = V·I</span> (<span class="en">P</span> القدرة، <span class="en">V</span> الجهد، <span class="en">I</span> التيار)، وفقد الخط <span class="en">I²R<sub>line</sub></span> (<span class="en">R<sub>line</sub></span> مقاومة الخط). فلو رفعنا الجهد <span class="en">V</span> ننقل نفس القدرة بتيار <span class="en">I</span> أقل، فيقل الفقد وتقل تكلفة الموصلات. وفي الآخر لازم نخفّض الجهد لمستوى صالح للاستخدام. الـ Transformer هو الجهاز اللي بيعمل الرفع والخفض ده.</p>
+<div class="grid2"><figure class="m"><img src="images/img-04-power-system-chain.jpg" alt="Power chain from plant to home" loading="lazy"><figcaption>Power plant → home</figcaption></figure><figure class="m"><img src="images/img-03-egypt-unified-grid-map.jpg" alt="Egyptian unified power system map" loading="lazy"><figcaption>Egyptian unified grid</figcaption></figure></div>
+<div class="note-box">قاعدة تقريبية: <span class="en">1 V ≈ 1 m</span>، <span class="en">1 kV ≈ 1 km</span>، و<span class="en">500 kV</span> ≈ <span class="en">500 km</span> (high power) — عشان كده الشبكة الموحدة <span class="en">500 &amp; 220 kV</span>. وبنفس المنطق: <b>66/22 kV</b> للمدن الجديدة (<span class="en">22 km</span> ≈ <span class="en">1500 km²</span>، مساحات كبيرة)، و<b>66/11 kV</b> للقرى القديمة (<span class="en">11 km</span> ≈ <span class="en">380 km²</span>، مساحات صغيرة).</div>
+<p>السلسلة في الشبكة المصرية (توصيلات <span class="en">Δ / Y</span> تخص الـ three-phase وهتتشرح مع موضوعها):</p>
+<div class="tw"><table><tr><th>Unit</th><th>Rating</th><th>Connection</th><th>Voltage</th><th>Level</th></tr><tr><td>Gen_1</td><td>250 MVA</td><td>Y</td><td>11 : 35 kV</td><td>Generation</td></tr><tr><td>TR_1</td><td>—</td><td>Δ–Y</td><td>11 / 220 kV</td><td>Generation</td></tr><tr><td>TR_2</td><td>—</td><td>Y–Y</td><td>220 / 66 kV</td><td>Transmission</td></tr><tr><td>TR_3</td><td>—</td><td>Δ–Y</td><td>66 / 11 kV</td><td>Transmission</td></tr><tr><td>TR_4</td><td>—</td><td>Δ–Y</td><td>11 / 0.4 kV</td><td>Distribution</td></tr></table></div>
 </section>
 <hr class="section-divider">
-
 <section id="s2">
-  <div class="sec-head"><div class="ico">🗂️</div><div><h2>Types of Transformers</h2><small>Power · Instrument · Single-phase</small></div></div>
-  <p>المحاضرة بتقسّم الـ Transformers لـ: <span class="en">Single phase</span>، <span class="en">Three phase</span>، و<span class="en">Autotransformers</span>، وبعدين بتصنفهم حسب الوظيفة في الشبكة.</p>
-  <div class="split"><figure class="m"><img src="images/img-02-transformer-classification.jpg" alt="Classification tree of electrical transformers" loading="lazy"><figcaption>IMG-02 — Classification</figcaption></figure><div><p>الشجرة في <b>IMG-02</b> بتقسم لـ <b>Power Transformers</b> (Generator GSU، Transmission، Distribution بنوعيه Oil وDry، وأنواع تانية زي Arc Furnace وHVDC وRail Truck وPhase Shift وIsolation) و<b>Instrument Transformers</b> (<span class="en">PT/VT</span> و<span class="en">CT</span>).</p></div></div>
-  <div class="split"><figure class="s"><img src="images/img-05-gsu-transformer.jpg" alt="GSU transformer being serviced" loading="lazy"><figcaption>IMG-05 — GSU Transformer</figcaption></figure><div><p><b>GSU</b> هو الـ Generator Transformer اللي بيرفع جهد الـ generator قبل النقل، زي <span class="en">TR_1: 11/220 kV</span> في الشبكة المصرية (IMG-04).</p></div></div>
-  <div class="split"><figure class="s"><img src="images/img-06-distribution-oil-transformers.png" alt="Oil-type distribution transformers" loading="lazy"><figcaption>IMG-06 — Distribution (Oil)</figcaption></figure><div><p>الـ <b>Distribution Transformer</b> من نوع <b>Oil</b>: الصورة بتبين المحول بالـ tank والـ radiators بتاعته على الأرض.</p></div></div>
-  <div class="split"><figure class="s"><img src="images/img-07-distribution-dry-transformer.jpg" alt="Dry-type distribution transformer with red coils" loading="lazy"><figcaption>IMG-07 — Distribution (Dry)</figcaption></figure><div><p>النوع التاني <b>Dry</b>: الـ coils ظاهرة ومفيش tank زيت، بعكس IMG-06.</p></div></div>
-  <div class="split"><figure class="s"><img src="images/img-10-low-power-single-phase.jpg" alt="Low power single-phase transformers" loading="lazy"><figcaption>IMG-10 — Low power</figcaption></figure><div><p>الـ <b>Single-phase transformers</b> بتيجي <b>low power</b> (محولات صغيرة بالـ enclosure)...</p></div></div>
-  <div class="split"><figure class="s"><img src="images/img-11-high-power-single-phase.png" alt="High power single-phase transformer" loading="lazy"><figcaption>IMG-11 — High power</figcaption></figure><div><p>...أو <b>high power single-phase</b> (محول زيتي بالـ radiator fins). الاتنين بيشتغلوا بنفس المبدأ.</p></div></div>
-  </section>
+<div class="sec-head"><div class="ico">🗂️</div><div><h2>Types of Transformers</h2><small>Power · Instrument · Single-phase</small></div></div>
+<p>من حيث عدد الأوجه فيه <span class="en">Single phase</span> و<span class="en">Three phase</span> و<span class="en">Autotransformers</span>؛ وهنا بنركز على الـ single-phase. ومن حيث الوظيفة في الشبكة:</p>
+<div class="split"><figure class="m"><img src="images/img-02-transformer-classification.jpg" alt="Classification tree" loading="lazy"><figcaption>Classification</figcaption></figure><div><p><b>Power Transformers</b> (بتنقل القدرة): Generator (<span class="en">GSU</span>)، Transmission، Distribution (<span class="en">Oil</span> أو <span class="en">Dry</span>)، وأنواع خاصة (Arc Furnace، HVDC، Rail Traction، Phase Shift، Isolation).</p><p><b>Instrument Transformers</b> (للقياس): <span class="en">PT/VT</span> بيصغّر الجهد لقيمة آمنة للأجهزة، و<span class="en">CT</span> بيصغّر التيار.</p></div></div>
+<div class="grid3"><figure class="s"><img src="images/img-05-gsu-transformer.jpg" alt="GSU transformer" loading="lazy"><figcaption>GSU</figcaption></figure><figure class="s"><img src="images/img-06-distribution-oil-transformers.png" alt="Oil distribution transformers" loading="lazy"><figcaption>Distribution (Oil)</figcaption></figure><figure class="s"><img src="images/img-07-distribution-dry-transformer.jpg" alt="Dry-type transformer" loading="lazy"><figcaption>Distribution (Dry)</figcaption></figure></div>
+<p>الـ <b>GSU</b> بيرفع جهد الـ generator قبل النقل (<span class="en">TR_1: 11/220 kV</span>). الـ <b>Oil</b> الـ coils فيه جوه tank زيت بـ radiators للتبريد، والـ <b>Dry</b> الـ coils ظاهرة ومتبرّدة بالهواء من غير زيت.</p>
+<div class="grid2"><figure class="s"><img src="images/img-10-low-power-single-phase.jpg" alt="Low power single-phase" loading="lazy"><figcaption>Low power</figcaption></figure><figure class="s"><img src="images/img-11-high-power-single-phase.png" alt="High power single-phase" loading="lazy"><figcaption>High power</figcaption></figure></div>
+<p>الـ <b>Single-phase transformer</b> ممكن يبقى low power (صغير بـ enclosure) أو high power (زيتي بـ radiator fins)، والاتنين نفس المبدأ. الجاي: مكوناته، وبعدين إزاي بيشتغل.</p>
+</section>
 <hr class="section-divider">
-
 <section id="s3">
-  <div class="sec-head"><div class="ico">🧲</div><div><h2>Construction &amp; Components</h2><small>Core · Windings · Tank</small></div></div>
-  <p><b>IMG-08</b> بتوضح إن الـ Transformer <i>complex system</i>: <span class="en">Coils, Core, Oil, Tank, Bushings, Tap changer, Cooling System, Control Cabinet</span>.</p>
-  <figure class="m"><img src="images/img-08-transformer-complex-system.jpg" alt="Cutaway showing coils, core, oil, tank, bushings, tap changer, cooling system and control cabinet" loading="lazy"><figcaption>IMG-08 — The transformer as a complex system</figcaption></figure>
-  <figure class="l"><img src="images/img-09-transformer-labeled-parts.jpg" alt="Labeled power transformer: bushings, conservator, core, LV and HV windings, on-load tap changer, radiators, cooling fans" loading="lazy"><figcaption>IMG-09 — Labeled parts of a power transformer</figcaption></figure>
-  <h3>Basic components of a single-phase transformer</h3>
-  <p>أربع مكونات: <b>1) Magnetic core</b>، <b>2) Primary winding</b>، <b>3) Secondary winding</b>، <b>4) Enclosure</b>.</p>
-  <div class="split"><figure class="s"><img src="images/img-12-single-phase-enclosure.jpg" alt="Small single-phase transformer in enclosure" loading="lazy"><figcaption>IMG-12 — Enclosure</figcaption></figure><div><p><b>Enclosure</b> هو المكون الرابع: الغلاف اللي بيحوي الـ core والـ windings وبتخرج منه الأطراف.</p></div></div>
-  <div class="split"><figure class="m"><img src="images/img-13-core-windings-flux-diagram.jpg" alt="Laminated core with limbs, yoke, windings and flux" loading="lazy"><figcaption>IMG-13 — Core, windings, flux</figcaption></figure><div><p>في <b>IMG-13</b>: المصدر <span class="en">V₁</span> على الـ primary (<span class="en">supply side</span>) والحمل <span class="en">V₂</span> على الـ secondary (<span class="en">load side</span>)، والـ flux <span class="en">φ</span> بيلف في الـ laminated core عبر الـ limbs والـ yoke.</p></div></div>
-  <h3>Core</h3>
-  <p>الـ core بيدّي مسار للـ magnetic flux، وهو مش <i>solid bar</i> من الحديد لكن طبقات رفيعة <b>laminated steel sheets</b> عشان نقلل الـ heating. فيه نوعين:</p>
-  <div class="grid2">
-    <div class="def-box"><b>Core Type:</b> فيه limbين رأسيين و yokeين أفقيين، مغناطيسي واحد مشترك، والـ windings (HV و LV) <b>بتحيط بالـ core</b> على الـ limbs.</div>
-    <div class="def-box"><b>Shell Type:</b> فيه central limb و two outer limbs، والـ HV و LV على الـ central limb، والـ windings <b>محاطة بالـ core</b>، و<i>double magnetic circuit</i>.</div>
-  </div>
-  <h3>Windings</h3>
-  <p>ملفين نحاس معزولين كويس حوالين الـ core. الـ <b>primary</b> بيستقبل القدرة من المصدر، والـ AC بيولّد changing magnetic field في الـ core. الـ <b>secondary</b> بيتولد فيه جهد من الـ field المتغير، وحسب الـ turns ratio يبقى step-up أو step-down.</p>
-  <div class="note-box"><b>Why is the LV winding next to the core?</b> (1) تقليل الـ leakage reactance، (2) تقليل العزل لأن الـ core grounded، (3) الـ Tap changer على الـ HV لأن التيار هناك قليل فاحتكاك الـ contacts أقل.</div>
-  <h3>Multi-output transformer</h3>
-  <div class="split"><figure class="s"><img src="images/img-14-multi-output-circuit.jpg" alt="One primary winding with three secondary windings" loading="lazy"><figcaption>IMG-14 — Multi-output circuit</figcaption></figure><div><p>الـ primary <span class="en">V<sub>P1</sub></span> واحد، وعدة secondaries <span class="en">V<sub>S1</sub>, V<sub>S2</sub>, V<sub>S3</sub></span> بتغذي أحمال مختلفة (Load #1 وLoad #2).</p></div></div>
-  <div class="split"><figure class="s"><img src="images/img-15-multi-output-tapped-transformer.jpg" alt="Multi-output transformer with 220 V AC input" loading="lazy"><figcaption>IMG-15 — Multi-output transformer</figcaption></figure><div><p>مثال عملي: دخل <span class="en">220 V AC</span> وخرج بجهود من <span class="en">0 إلى 24 V</span> (Multi Voltage Output Step Down) بخطوات 3 V.</p></div></div>
+<div class="sec-head"><div class="ico">🧲</div><div><h2>Construction &amp; Components</h2><small>Core · Windings · Tank</small></div></div>
+<p>الـ Transformer الكبير <i>complex system</i>: Core، Windings (<b>HV</b> = الملف ذو الجهد الأعلى، <b>LV</b> = الملف ذو الجهد الأقل)، Oil، Tank، Bushings (أطراف التوصيل المعزولة)، Tap changer (بيغيّر عدد اللفات المستخدمة لضبط الجهد)، Cooling system، Control cabinet.</p>
+<figure class="l"><img src="images/img-09-transformer-labeled-parts.jpg" alt="Labeled power transformer" loading="lazy"><figcaption>Labeled parts of a power transformer</figcaption></figure>
+<h3>Basic components of a single-phase transformer</h3>
+<div class="split"><div><p><b>1) Magnetic core</b> — بيدّي مسار للـ magnetic flux. <b>2) Primary winding</b> — بيتوصّل بالمصدر (<span class="en">supply side</span>). <b>3) Secondary winding</b> — بيتوصّل بالحمل (<span class="en">load side</span>). <b>4) Enclosure</b> — الغلاف اللي بتخرج منه الأطراف.</p><p>الـ flux بيلف في الـ laminated core عبر الـ <b>limbs</b> (الأرجل) والـ <b>yoke</b> (الجزء الأفقي الواصل بينهم).</p></div>
+<figure class="m"><img src="images/img-13-core-windings-flux-diagram.jpg" alt="Laminated core, windings, flux" loading="lazy"><figcaption>Core, windings, flux</figcaption></figure></div>
+<h3>Core</h3>
+<p>الـ core مش <i>solid bar</i> لكن <b>laminated steel sheets</b> رفيعة معزولة عن بعض: لأن الـ flux المتغير بيولّد تيارات دوامية (<span class="en">eddy currents</span>) في الحديد بتسخّنه، والـ laminations بتقطع مساراتها فتقل الحرارة. فيه نوعين:</p>
+<div class="grid2"><div class="def-box"><b>Core Type:</b> limbين رأسيين + yokeين أفقيين، مغناطيسي واحد مشترك، والـ windings (HV وLV) <b>بتحيط بالـ core</b>، وملفات أسطوانية على الـ limbs.</div><div class="def-box"><b>Shell Type:</b> central limb + two outer limbs، الـ HV وLV على الـ central limb، والـ windings <b>محاطة بالـ core</b>، و<i>double magnetic circuit</i>.</div></div>
+<h3>Windings</h3>
+<p>ملفين نحاس (عدد لفات كل منهم <span class="en">N</span>) معزولين كويس حوالين الـ core: واحد primary والتاني secondary. إزاي القدرة بتعدّي من الـ primary للـ secondary من غير توصيل كهربائي بينهم؟ ده موضوع القسم الجاي.</p>
 </section>
 <hr class="section-divider">
-
 <section id="s4">
-  <div class="sec-head"><div class="ico">📐</div><div><h2>Ideal Transformer &amp; EMF Equation</h2><small>Faraday · Flux · 4.44</small></div></div>
-  <div class="def-box"><b>Ideal transformer assumptions:</b> مقاومة الـ windings = 0، pure inductive، no leakage flux، لا hysteresis ولا eddy losses، core له infinite permeability، efficiency = 100%. <b>مستحيل تتحقق عمليًا.</b></div>
-  <div class="formula-box">\[ e_1 = N_1\frac{d\phi}{dt}\qquad e_2 = N_2\frac{d\phi}{dt} \]</div>
-  <h3>Derivation</h3>
-  <p>نفترض إن الـ core flux جيبي:</p>
-  <div class="formula-box">\[ \Phi(t)=\Phi_{max}\sin\omega t \]
-  \[ e_1(t)=-N_1\frac{d\Phi}{dt}=-N_1\omega\Phi_{max}\cos\omega t=2\pi f N_1\Phi_{max}\sin(\omega t-90^\circ) \]
-  \[ E_{1max}=2\pi f N_1\Phi_{max}\;\Rightarrow\; E_1=\frac{E_{1max}}{\sqrt2}=\sqrt2\,\pi f N_1\Phi_{max} \]
-  \[ \boxed{E_1=4.44\,f\,N_1\,\Phi_{max}}\qquad \boxed{E_2=4.44\,f\,N_2\,\Phi_{max}} \]</div>
-  <div class="note-box">الجهد المستحث متأخر <b>90°</b> عن الـ flux. وللـ ideal transformer: <span class="en">E₁ ≈ V₁</span> و <span class="en">V₂ ≈ E₂</span>.</div>
+<div class="sec-head"><div class="ico">📐</div><div><h2>Operating Principle, EMF &amp; Ideal vs Real</h2><small>Faraday · Flux · 4.44</small></div></div>
+<h3>1) Quantities and notation</h3>
+<p>الفكرة: جهد AC على الـ primary ← تيار ← <b>flux متغير Φ</b> في الـ core ← الـ flux بيربط الـ secondary ← بيتولد فيه جهد مستحث. قبل القوانين، دي الرموز اللي هنستخدمها (subscript <b>1</b> = primary، <b>2</b> = secondary؛ حرف صغير = قيمة لحظية، حرف كبير = <span class="en">rms</span>):</p>
+<div class="tw"><table class="sym"><tr><th>Symbol</th><th>English</th><th>عربي</th></tr><tr><td>V₁ , V₂</td><td>Terminal voltage: source voltage on primary / load voltage on secondary</td><td>جهد الأطراف (المصدر / الحمل)</td></tr><tr><td>I₁ , I₂</td><td>Primary / secondary current</td><td>تيار الـ primary / الـ secondary</td></tr><tr><td>N₁ , N₂</td><td>Number of turns</td><td>عدد اللفات</td></tr><tr><td>Φ(t), Φmax</td><td>Core flux (Wb) and its maximum value</td><td>الفيض في الـ core وأقصى قيمة له</td></tr><tr><td>e₁ , e₂</td><td>Induced EMF (instantaneous)</td><td>القوة الدافعة المستحثة اللحظية</td></tr><tr><td>E₁ , E₂</td><td>rms value of induced EMF</td><td>القيمة الفعالة للـ EMF المستحث</td></tr><tr><td>f , ω</td><td>Frequency (Hz) , angular frequency ω = 2πf</td><td>التردد , التردد الزاوي</td></tr></table></div>
+<div class="note-box"><b>V vs E:</b> <span class="en">V</span> هو الجهد اللي بتقيسه على أطراف الـ winding، أما <span class="en">E</span> فهو الجهد المتولد جوه الـ winding بسبب تغير الـ flux. هل هما متساويان؟ هنجاوب في (4).</div>
+<h3>2) Faraday's law</h3>
+<p>الجهد المستحث في winding عدد لفاتها <span class="en">N</span> بيتناسب مع معدل تغير الـ flux اللي بيربطها (الإشارة السالبة = <b>Lenz's law</b>: الجهد بيقاوم التغير). الـ flux في الـ core بيربط الـ winding الاتنين (لو مفيش leakage)، فنفس <span class="en">dΦ/dt</span> لكل منهما:</p>
+<div class="formula-box"><div class="eq-t">Faraday's Law (instantaneous EMF)</div>\[ e_1=-N_1\frac{d\Phi}{dt}\qquad e_2=-N_2\frac{d\Phi}{dt}\;\Rightarrow\;\frac{e_2}{e_1}=\frac{N_2}{N_1} \]</div>
+<p>يعني نسبة الـ EMF لحظيًا = نسبة اللفات؛ ده أصل الـ turns ratio.</p>
+<h3>3) EMF equation</h3>
+<p>الـ AC المتولد بيخلّي الـ flux جيبي. نعوّض بـ <span class="en">Φ(t) = Φmax sin ωt</span> في قانون Faraday، وبعدين ناخد الـ rms (القيمة العظمى ÷ <span class="en">√2</span>):</p>
+<div class="formula-box">\[\begin{gathered}\Phi(t)=\Phi_{max}\sin\omega t\\ \downarrow\ \ e_1=-N_1\tfrac{d\Phi}{dt}\\ e_1=-N_1\omega\Phi_{max}\cos\omega t=\underbrace{2\pi f N_1\Phi_{max}}_{E_{1max}}\sin(\omega t-90^\circ)\\ \downarrow\ \ E_1=E_{1max}/\sqrt2\\ E_1=\sqrt2\,\pi f N_1\Phi_{max}\approx 4.44\,f N_1\Phi_{max}\end{gathered}\]</div>
+<div class="formula-box"><div class="eq-t">EMF Equation</div>\[ \boxed{E_1=4.44\,f\,N_1\,\Phi_{max}}\qquad \boxed{E_2=4.44\,f\,N_2\,\Phi_{max}} \]</div>
+<div class="note-box"><b>المعنى:</b> الـ EMF بيزيد مع التردد وعدد اللفات وأقصى flux، وبيتأخر <b>90°</b> عن الـ flux. ولأن <span class="en">E₁ ≈ V₁</span> (بعد شوية)، فالجهد المطبّق على الـ primary هو اللي بيحدد <span class="en">Φmax</span> مش الحمل. ولو غيّرنا <span class="en">f</span> لازم <span class="en">Φmax</span> يتغير (Example 2.7).</div>
+<h4 style="direction:ltr;text-align:left;color:var(--royal);margin:14px 0 4px">Using the EMF equation in design problems</h4>
+<p>بقسمة <span class="en">E</span> على <span class="en">N</span> بنحصل على <b>EMF per turn</b> وهو نفسه للـ winding الاتنين. وبربط الـ flux بالـ core:</p>
+<div class="tw"><table class="sym"><tr><th>Symbol</th><th>English</th><th>عربي</th></tr><tr><td>B_max</td><td>Maximum flux density (T = Wb/m²)</td><td>أقصى كثافة فيض</td></tr><tr><td>A_i</td><td>Net iron cross-section of core (m²)</td><td>مساحة الحديد الصافية</td></tr><tr><td>A_g</td><td>Gross cross-section (from dimensions)</td><td>المساحة الكلية</td></tr><tr><td>k_i</td><td>Iron (stacking) factor = A_i / A_g &lt; 1</td><td>معامل الحديد (العزل بين الـ laminations)</td></tr></table></div>
+<div class="formula-box"><div class="eq-t">EMF per turn &amp; core flux</div>\[ \frac{E_1}{N_1}=\frac{E_2}{N_2}=4.44\,f\,\Phi_{max}\qquad \Phi_{max}=B_{max}A_i\qquad A_i=k_iA_g \]</div>
+<h3>4) Ideal transformer — and why V = E</h3>
+<div class="grid2"><div class="def-box"><b>Ideal assumptions:</b><br>• مقاومة الـ windings = 0 (لا copper loss)<br>• <b>No leakage flux</b>: كل الـ flux بيربط الـ windings الاتنين<br>• الـ core: لا hysteresis ولا eddy losses<br>• <b>infinite permeability</b> (μ → ∞) — هنستخدمها في MMF<br>• η = 100% (<span class="en">η = P<sub>out</sub>/P<sub>in</sub></span>)</div>
+<div class="def-box"><b>النتيجة:</b> مفيش أي هبوط جهد جوه الـ windings، فجهد الأطراف بيساوي الـ EMF المستحث بالظبط:<br><span class="en">V₁ = E₁ , V₂ = E₂</span><br>(وبتتكتب كمان <span class="en">E₁ ≈ V₁</span>, <span class="en">V₂ ≈ E₂</span>). الـ ideal transformer مستحيل يتحقق عمليًا.</div></div>
+<h3>5) Real transformer</h3>
+<div class="tw"><table><tr><th></th><th>Ideal</th><th>Real</th></tr><tr><td>Winding resistance</td><td>0</td><td>≠ 0 → copper loss (<span class="en">I²R</span>)</td></tr><tr><td>Leakage flux (flux لا يربط الـ winding التانية)</td><td>None</td><td>Exists → leakage reactance</td></tr><tr><td>Core</td><td>No losses, μ = ∞</td><td>Hysteresis + eddy (core losses)</td></tr><tr><td>Efficiency η</td><td>100%</td><td>&lt; 100%</td></tr><tr><td>V vs E</td><td>V = E</td><td>V ≠ E (فرق = هبوط الجهد في R والـ leakage reactance)</td></tr></table></div>
+<div class="note-box"><b>Why is the LV winding next to the core?</b> (1) <b>Reduce leakage reactance</b>: الـ leakage flux سببه إن الـ coupling بين الـ windings مش مثالي. (2) <b>Reduce insulation</b>: الـ core grounded، فلو الـ LV جنبه العزل أقل والحجم والتكلفة أقل. (3) الـ Tap changer على الـ HV لأن تيارها قليل فاحتكاك الـ contacts أقل ولأن الـ leads أرفع.</div>
+<p>من هنا للآخر بنفترض <b>ideal transformer</b> (<span class="en">V = E</span>)؛ الـ real هيتناول بالـ equivalent circuit.</p>
 </section>
 <hr class="section-divider">
-
 <section id="s5">
-  <div class="sec-head"><div class="ico">🔁</div><div><h2>Ratios &amp; Transformer Rating</h2><small>K · mmf balance · kVA</small></div></div>
-  <div class="formula-box">\[ \frac{V_2}{V_1}=\frac{E_2}{E_1}=\frac{I_1}{I_2}=\frac{N_2}{N_1}=K \qquad S_{in}=V_1I_1=V_2I_2=S_{out} \]</div>
-  <div class="note-box">الـ <b>mmf balance</b> محفوظ لما الـ windings الاتنين بيحملوا تيار: الـ mmf للـ primary والـ secondary متساويين ومتعاكسين، يعني <span class="en">I₁N₁ = I₂N₂</span>.</div>
-  <div class="grid2">
-    <div class="def-box"><b>Step-down:</b> <span class="en">V₂ &lt; V₁ (N₂ &lt; N₁)</span> — many turns / high voltage / low current في الـ primary، و few turns / low voltage / high current في الـ secondary.</div>
-    <div class="def-box"><b>Step-up:</b> <span class="en">V₂ &gt; V₁ (N₂ &gt; N₁)</span>.</div>
-  </div>
-  <h3>Nameplate</h3>
-  <p>مثال: <span class="en">10 kVA, 1100/110 V</span> يعني <b>Rated Apparent Power = 10 kVA</b>، <b>Rated Primary Voltage = 1100 V</b>، <b>Rated Secondary Voltage = 110 V</b>. والقدرة بالـ <span class="en">kVA</span> مش <span class="en">kW</span>.</p>
-  <div class="formula-box">\[ I_{FL}=\frac{\text{VA rating}}{V} \]</div>
+<div class="sec-head"><div class="ico">🔁</div><div><h2>Ratios, Step-up/Down &amp; Rating</h2><small>K · MMF balance · kVA</small></div></div>
+<h3>1) Voltage ratio</h3>
+<p>بنعرّف <b>turns ratio</b> <span class="en">K = N₂/N₁</span>. من قانون Faraday <span class="en">E₂/E₁ = N₂/N₁</span>، ولأن <span class="en">V = E</span> في الـ ideal:</p>
+<div class="formula-box"><div class="eq-t">Turns (Voltage) Ratio</div>\[ \frac{V_2}{V_1}=\frac{E_2}{E_1}=\frac{N_2}{N_1}=K \]</div>
+<p><b>Step-up:</b> <span class="en">N₂ &gt; N₁</span> ⇒ <span class="en">V₂ &gt; V₁</span>. <b>Step-down:</b> <span class="en">N₂ &lt; N₁</span> ⇒ <span class="en">V₂ &lt; V₁</span> (primary: many turns / high V، secondary: few turns / low V).</p>
+<p><b>Multi-output transformer:</b> نفس الـ flux بيربط كل الـ secondaries، فكل secondary <span class="en">k</span> بيحقق <span class="en">V<sub>Sk</sub>/V<sub>P</sub> = N<sub>Sk</sub>/N<sub>P</sub></span>؛ ولذلك مخارج <span class="en">3, 6, 9 … 24 V</span> بتيجي من أماكن مختلفة على الملف (عدد لفات متزايد).</p>
+<div class="grid2"><figure class="s"><img src="images/img-14-multi-output-circuit.jpg" alt="One primary, three secondaries" loading="lazy"><figcaption>One primary, several secondaries</figcaption></figure><figure class="s"><img src="images/img-15-multi-output-tapped-transformer.jpg" alt="220 V input multi-output" loading="lazy"><figcaption>220 V AC → 0–24 V</figcaption></figure></div>
+<h3>2) Current ratio — MMF balance</h3>
+<p>الجهد اتحدد بنسبة اللفات؛ التيار بيتحدد بإن الـ core لازم يفضل ماسك الـ flux. نحتاج تعريفين:</p>
+<div class="tw"><table class="sym"><tr><th>Symbol</th><th>English</th><th>عربي</th></tr><tr><td>MMF = N·I</td><td>Magnetomotive force (ampere-turns)</td><td>القوة الدافعة المغناطيسية</td></tr><tr><td>ℛ</td><td>Reluctance = l / (μ A_i): مقاومة الـ core لمرور الـ flux</td><td>الممانعة المغناطيسية</td></tr><tr><td>l , μ</td><td>Core path length , core permeability</td><td>طول المسار , النفاذية</td></tr></table></div>
+<p>زي قانون أوم المغناطيسي: <span class="en">Φ = MMF<sub>net</sub> / ℛ</span>. الـ primary بيدفع الـ flux بـ <span class="en">N₁I₁</span> والـ secondary بيعاكسه بـ <span class="en">N₂I₂</span> (Lenz). في الـ ideal <span class="en">μ → ∞</span> يعني <span class="en">ℛ → 0</span>، والـ Φ محدد من الجهد (EMF eq.) أي محدود، فالـ net MMF لازم يساوي صفر:</p>
+<div class="formula-box">\[\begin{gathered}\Phi=\frac{N_1I_1-N_2I_2}{\mathcal R},\ \ \mathcal R\to0\\ \downarrow\\ N_1I_1-N_2I_2=0\end{gathered}\]</div>
+<div class="formula-box"><div class="eq-t">MMF Balance → Current Ratio</div>\[ N_1I_1=N_2I_2\;\Rightarrow\;\frac{I_1}{I_2}=\frac{N_2}{N_1}=K \]</div>
+<div class="note-box">الجهد بيتناسب مع <span class="en">N₂/N₁</span> والتيار مع <span class="en">N₁/N₂</span> (عكسي). في الـ real بيفضل تيار صغير (magnetizing) عشان الـ flux؛ بيتجاهل هنا.</div>
+<h3>3) Power</h3>
+<p>القدرة الظاهرية <span class="en">S = VI</span> (VA). الـ ideal من غير losses (η = 100%) فقدرة الدخل = قدرة الخرج، وده متسق مع النسبتين: <span class="en">(V₂/V₁)(I₂/I₁) = K·(1/K) = 1</span>.</p>
+<div class="formula-box"><div class="eq-t">Ideal Power Balance</div>\[ S_{in}=V_1I_1=V_2I_2=S_{out} \]</div>
+<h3>4) Transformer rating</h3>
+<p>الـ nameplate بيذكر <b>Rated Apparent Power</b> والجهدين المقننين، مثال <span class="en">10 kVA, 1100/110 V</span>: <span class="en">10 kVA</span>، <span class="en">V₁ = 1100 V</span>، <span class="en">V₂ = 110 V</span>. بالـ kVA مش kW لأن الـ copper loss بيتحدد بالتيار والـ core loss بالجهد، من غير ما يهم الـ power factor. التيار المقنن (<b>full-load current</b>) لكل جانب:</p>
+<div class="formula-box"><div class="eq-t">Full-Load Current</div>\[ I_{1FL}=\frac{S}{V_1}\qquad I_{2FL}=\frac{S}{V_2}=I_{1FL}\frac{N_1}{N_2} \]</div>
+<p>(<span class="en">S</span> = rated VA، <span class="en">I<sub>1FL</sub>, I<sub>2FL</sub></span> = تيار الحمل الكامل للـ primary والـ secondary.) أحيانًا بنكتب <span class="en">I<sub>FL</sub> = VA rating / V</span> للجانب اللي بنحسبه.</p>
 </section>
 <hr class="section-divider">
-
 <section id="s6">
-  <div class="sec-head"><div class="ico">🔄</div><div><h2>Impedance Transformation</h2><small>Reflected Impedance</small></div></div>
-  <p>لو عايزين نشوف حمل الـ secondary من ناحية الـ primary (<b>Reflected Impedance</b>): <span class="en">Z₂′ = V₁ / I₁</span>، وبتعويض نسب الجهد والتيار:</p>
-  <div class="formula-box">\[ \frac{Z_2'}{Z_2}=\frac{V_1}{V_2}\cdot\frac{I_2}{I_1}=\left(\frac{N_1}{N_2}\right)^2=\frac1{K^2}\;\Rightarrow\; Z_2'=Z_2\left(\frac{N_1}{N_2}\right)^2 \]
-  \[ V_2'=V_2\frac{N_1}{N_2}\qquad I_2'=I_2\frac{N_2}{N_1} \]</div>
-  <h3>From primary to secondary side</h3>
-  <div class="formula-box">\[ V_1'=V_1\frac{N_2}{N_1}\qquad I_1'=I_1\frac{N_1}{N_2}\qquad Z_1'=Z_1\left(\frac{N_2}{N_1}\right)^2 \]</div>
-  <div class="note-box">الـ impedance بتتغير مع <b>مربع</b> الـ turns ratio، مش مع النسبة نفسها.</div>
+<div class="sec-head"><div class="ico">🔄</div><div><h2>Impedance Transformation</h2><small>Reflected Impedance</small></div></div>
+<p><b>Impedance</b> <span class="en">Z = V / I</span> (Ω) هي النسبة بين جهد وتيار عنصر. حمل الـ secondary <span class="en">Z₂ = V₂/I₂</span>، وبالمثل <span class="en">Z₁ = V₁/I₁</span> لأي impedance على جانب الـ primary. المصدر على الـ primary مش بيشوف <span class="en">Z₂</span> نفسها، لكن حمل "مكافئ" <b><span class="en">Z₂′</span> = V₁/I₁</b> — ده <b>Reflected (Referred) Impedance</b>. الـ prime (′) معناها "منقولة للجانب التاني". نعوّض بنسبتي الجهد والتيار من القسم 5:</p>
+<div class="formula-box">\[\begin{gathered}\frac{Z_2'}{Z_2}=\frac{V_1/I_1}{V_2/I_2}=\frac{V_1}{V_2}\cdot\frac{I_2}{I_1}\\ \downarrow\ \ V_1=V_2\tfrac{N_1}{N_2},\ \ I_2=I_1\tfrac{N_1}{N_2}\\ \frac{Z_2'}{Z_2}=\left(\frac{N_1}{N_2}\right)^2=\frac1{K^2}\end{gathered}\]</div>
+<p>والجهد والتيار المنقولين: <span class="en">V₂′ = V₁</span> و<span class="en">I₂′ = I₁</span> (القيم اللي المصدر بيشوفها)، وبالنسب نفسها:</p>
+<div class="grid2"><div><div class="eq-t">Secondary → Primary</div><div class="formula-box">\[ Z_2^{\prime}=Z_2\left(\frac{N_1}{N_2}\right)^2 \]\[ V_2^{\prime}=V_2\frac{N_1}{N_2}\qquad I_2^{\prime}=I_2\frac{N_2}{N_1} \]</div></div><div><div class="eq-t">Primary → Secondary</div><div class="formula-box">\[ Z_1^{\prime}=Z_1\left(\frac{N_2}{N_1}\right)^2 \]\[ V_1^{\prime}=V_1\frac{N_2}{N_1}\qquad I_1^{\prime}=I_1\frac{N_1}{N_2} \]</div></div></div>
+<div class="tw"><table class="sym"><tr><th>Symbol</th><th>English</th><th>عربي</th></tr><tr><td>Z₂ , Z₁</td><td>Impedance on the secondary / primary side (= V/I of that side)</td><td>الممانعة على جانب الـ secondary / الـ primary</td></tr><tr><td>Z₂′ , V₂′ , I₂′</td><td>Secondary quantities referred to primary</td><td>كميات الـ secondary منقولة للـ primary</td></tr><tr><td>Z₁′ , V₁′ , I₁′</td><td>Primary quantities referred to secondary</td><td>كميات الـ primary منقولة للـ secondary</td></tr></table></div>
+<p>الاتجاه العكسي بنفس الطريقة: <span class="en">Z₁′ = V₁′/I₁′ = (V₁N₂/N₁)/(I₁N₁/N₂) = Z₁(N₂/N₁)²</span>. والـ referring مش بيغيّر القدرة: <span class="en">V₂′I₂′ = V₁I₁ = V₂I₂</span>.</p>
+<div class="note-box">الـ impedance بتتغير مع <b>مربع</b> الـ turns ratio لأن الجهد والتيار بيتغيروا بنسبتين معكوستين. ده اللي هنستخدمه لما ننقل عناصر الـ equivalent circuit من جانب للتاني.</div>
 </section>
 <hr class="section-divider">
-
 <section id="s7">
+<div class="sec-head"><div class="ico">⚠️</div><div><h2>Key Points &amp; Equation Summary</h2><small>Review</small></div></div>
+<div class="grid2">
+<div class="note-box"><b>V vs E:</b> <span class="en">E</span> مستحث بتغير الـ flux، <span class="en">V</span> جهد الأطراف؛ متساويان في الـ ideal فقط.</div>
+<div class="note-box"><b>Φ vs E:</b> <span class="en">Φ</span> فيض (Wb)، <span class="en">E</span> جهد (V) ناتج عن <i>تغيره</i> ومتأخر عنه 90°.</div>
+<div class="note-box"><b>R vs ℛ:</b> <span class="en">R</span> مقاومة كهربائية (Ω) لمرور التيار، <span class="en">ℛ</span> ممانعة مغناطيسية لمرور الـ flux. الـ ideal: <span class="en">R = 0</span> و<span class="en">ℛ → 0</span>.</div>
+<div class="note-box"><b>Voltage vs Current ratio:</b> <span class="en">V₂/V₁ = K</span> بينما <span class="en">I₂/I₁ = 1/K</span>؛ والقدرة ثابتة.</div>
+<div class="note-box"><b>Actual vs Reflected Z:</b> <span class="en">Z₂</span> الفعلية، و<span class="en">Z₂′ = Z₂(N₁/N₂)²</span> شكلها من الـ primary.</div>
+<div class="note-box"><b>Ideal vs Real:</b> الـ relations في الأقسام 5 و6 للـ ideal فقط.</div></div>
+<div class="tw"><table><tr><th>Name</th><th>Equation</th></tr><tr><td>EMF</td><td>E = 4.44 f N Φmax</td></tr><tr><td>Turns ratio</td><td>V₂/V₁ = E₂/E₁ = N₂/N₁ = K</td></tr><tr><td>MMF / current</td><td>N₁I₁ = N₂I₂ , I₁/I₂ = K</td></tr><tr><td>Power</td><td>V₁I₁ = V₂I₂ , S = VI</td></tr><tr><td>Full-load current</td><td>I_FL = S / V</td></tr><tr><td>Reflected Z</td><td>Z₂′ = Z₂(N₁/N₂)² , Z₁′ = Z₁(N₂/N₁)²</td></tr></table></div>
+</section>
+<hr class="section-divider">
+<section id="s8">
   <div class="sec-head"><div class="ico">📝</div><div><h2>Solved Examples</h2><small>Examples 2.1 – 2.7</small></div></div>
-  <p>الأمثلة دي كلها تطبيق مباشر على <b>EMF equation</b> و<b>turns ratio</b> اللي اتشرحوا في الأقسام 4 و5.</p>
+  <p>الأمثلة دي كلها تطبيق مباشر على <b>EMF equation</b> و<b>turns ratio</b> اللي اتشرحوا في الأقسام 4 و5 (EMF per turn و Φmaxax = B·A_i و iron factor في 4، والـ ratios و I_FL في 5).</p>
   <div class="example-card"><div class="ex-h">Example 2.1</div><div class="ex-b"><div class="qb">What will be the number of primary and secondary turns of a single-phase 2310/220 V, 50 Hz transformer which has an emf of 13 V per turn approximately.</div><h4>Solution</h4><div class="sm">\[\frac{E_1}{N_1}=\frac{E_2}{N_2}=13\text{ V (given)};\quad E_1=2310\text{ V};\ E_2=220\text{ V}\]\[N_1=\frac{E_1}{13}=\frac{2310}{13}=177.69\cong 178\qquad N_2=\frac{E_2}{13}=\frac{220}{13}=16.92\cong 17\]</div><span class="ans">N₁ = 178 · N₂ = 17</span></div></div>
-  <div class="example-card"><div class="ex-h">Example 2.2</div><div class="ex-b"><div class="qb">A power transformer has 1000 primary turns and 100 secondary turns. The cross-sectional area of the core is 6 sq. cm and the maximum flux density while in operation is 10000 Gauss. Calculate turns per volt for the primary and secondary windings.</div><h4>Solution</h4><div class="sm">\[N_1=1000;\ N_2=100;\ A_i=6\text{ cm}^2=6\times10^{-4}\text{ m}^2\]\[B_m=10000\text{ gauss}=10000\times10^{-8}\times10^{4}=1\text{ tesla}\]\[E_1=4.44\,N_1fB_mA_i=4.44\times1000\times50\times1\times6\times10^{-4}=133.2\text{ V}\]\[E_2=4.44\,N_2fB_mA_i=4.44\times100\times50\times1\times6\times10^{-4}=13.32\text{ V}\]\[\text{Primary: }\frac{N_1}{E_1}=\frac{1000}{133.2}=7.5\qquad \text{Secondary: }\frac{N_2}{E_2}=\frac{100}{13.32}=7.5\]</div><p class="en">The number of turns per volt (voltage per turn) on primary and secondary remains the same.</p><span class="ans">7.5 turns/V</span></div></div>
-  <div class="example-card"><div class="ex-h">Example 2.3 (Example 1.1 in the slides)</div><div class="ex-b"><div class="qb">The primary and secondary of a 25 kVA transformer have 500 and 40 turns, respectively. If the primary is connected to 3000 V, 50 Hz mains, calculate (i) primary and secondary currents at full load; (ii) the secondary emf and (iii) the maximum flux in the core. Neglect magnetic leakage, resistance of the winding and the primary no-load current in relation to the full load current.</div><h4>Solution</h4><div class="sm">\[\text{(i)}\quad I_1=\frac{25\times10^3}{3000}=8.33\text{ A}\qquad \frac{I_1}{I_2}=\frac{E_2}{E_1}=\frac{N_2}{N_1}\]\[I_2=\frac{N_1}{N_2}I_1=\frac{500}{40}\times8.33=104.15\text{ A}\]\[\text{(ii)}\quad E_2=\frac{N_2}{N_1}E_1=\frac{40}{500}\times3000=240\text{ V}\]\[\text{(iii)}\quad E_1=4.44\,N_1f\phi_m\ \Rightarrow\ \phi_m=\frac{3000}{4.44\times500\times50}=27\text{ mWb}\]</div><div class="note-box">في المرجع مكتوب <span class="en">3300</span> في سطر (iii) بالغلط، والصح <span class="en">3000</span> زي ما الحل بيستخدمه.</div><span class="ans">I₁ = 8.33 A · I₂ = 104.15 A · E₂ = 240 V · φm = 27 mWb</span></div></div>
-  <div class="example-card"><div class="ex-h">Example 2.4</div><div class="ex-b"><div class="qb">The emf per turn of an 11 kV/415 V, 50 Hz single-phase core type transformer is 15 V. The maximum flux density in the core is 2.5 T. Find number of primary and secondary turns and net cross sectional area of core.</div><h4>Solution</h4><div class="sm">\[E_1=11000\text{ V};\ E_2=415\text{ V};\ f=50\text{ Hz};\ B_m=2.5\text{ T}\]\[N_1=\frac{11000}{15}=733.33\qquad N_2=\frac{415}{15}=27.67\]\[E_1=4.44\,N_1fA_iB_m\ \Rightarrow\ 15=4.44\times50\times A_i\times2.5\]\[A_i=\frac{15}{4.44\times50\times2.5}=0.027\text{ m}^2\approx 270\text{ cm}^2\]</div><div class="note-box"><b>تصحيح:</b> المرجع كتب <span class="en">1.5</span> في المقام فطلع <span class="en">450.45 cm²</span>، لكن <span class="en">B<sub>m</sub> = 2.5 T</span> فالناتج الصحيح حوالي <span class="en">270 cm²</span>.</div><span class="ans">N₁ = 733.33 · N₂ = 27.67 · A_i ≈ 270 cm²</span></div></div>
-  <div class="example-card"><div class="ex-h">Example 2.5 — Iron factor</div><div class="ex-b"><div class="qb">A single phase 50 Hz core type transformer has rectangular cores 30 × 20 cm and the maximum allowable density is 1.05 tesla. Find the number of turns per limb on the high and low voltage sides for a voltage ratio of 3300/200 volt. Take iron factor as 0.93.</div><h4>Solution</h4><p>الـ gross area بتتحسب من أبعاد الـ core (الـ limbs في IMG-13)، والـ iron factor لأن الـ laminations معزولة عن بعض:</p><div class="sm">\[A_{gc}=30\times20=600\text{ cm}^2=600\times10^{-4}\text{ m}^2\]\[K_i=\frac{\text{Net Area}}{\text{Gross Area}}=\frac{A_i}{A_{gc}}\ \Rightarrow\ A_i=0.93\times600\times10^{-4}=558\times10^{-4}\text{ m}^2\]\[\text{emf per turn}=4.44\,fB_{max}A_i=4.44\times50\times1.05\times558\times10^{-4}=13\text{ V}\]\[N_1=\frac{3300}{13}=254\qquad N_2=\frac{200}{13}=16\]</div><span class="ans">254 turns (HV) · 16 turns (LV)</span></div></div>
-  <div class="example-card"><div class="ex-h">Example 2.6</div><div class="ex-b"><div class="qb">The secondary of a 500 kVA, 4400/500 V, 50 Hz, single-phase transformer has 500 turns. Determine (i) emf per turn (ii) primary turns (iii) secondary full load current (iv) maximum flux (v) gross cross-sectional area of the core for flux density of 1.2 tesla and iron factor 0.92 (vi) if the core is of square cross-section find the width of the limb.</div><h4>Solution</h4><div class="sm">\[\text{Rating}=500\text{ kVA};\ V_1=4400\text{ V};\ V_2=500\text{ V};\ f=50\text{ Hz};\ N_2=500;\ B_m=1.2\text{ T};\ k_i=0.92\]\[\text{(i)}\ \frac{E_2}{N_2}=\frac{500}{500}=1.0\text{ V/turn}\qquad \text{(ii)}\ N_1=\frac{4400}{1.0}=4440\]\[\text{(iii)}\ I_2=\frac{kVA\times1000}{V_2}=\frac{500\times1000}{500}=1000\text{ A}\]\[\text{(iv)}\ \phi_m=\frac{E_2}{4.44N_2f}=\frac{500}{4.44\times500\times50}=4.5\text{ mWb}\]\[\text{(v)}\ A_i=\frac{\phi_m}{B_m}=\frac{4.5\times10^{-3}}{1.2}=37.54\text{ cm}^2\ ;\ A_g=\frac{A_i}{k_i}=\frac{37.54}{0.92}=40.8\text{ cm}^2\]\[\text{(vi)}\ \text{width}=\sqrt{A_g}=\sqrt{40.8}=6.39\text{ cm}\]</div><span class="ans">1 V/turn · 4440 · 1000 A · 4.5 mWb · 40.8 cm² · 6.39 cm</span></div></div>
-  <div class="example-card"><div class="ex-h">Example 2.7 — Frequency change</div><div class="ex-b"><div class="qb">A 100 kVA, 3300/200 volt, 50 Hz single phase transformer has 40 turns on the secondary, calculate: (i) the values of primary and secondary currents. (ii) the number of primary turns. (iii) the maximum value of the flux. If the transformer is to be used on a 25 Hz system, calculate (iv) the primary voltage, assuming that the flux is increased by 10%. (v) the kVA rating of the transformer assuming the current density in the windings to be unaltered.</div><h4>Solution</h4><div class="sm">\[\text{(i)}\ I_1=\frac{100\times1000}{3300}=30.3\text{ A}\qquad I_2=\frac{100\times1000}{200}=500\text{ A}\]\[\text{(ii)}\ N_1=N_2\frac{E_1}{E_2}=40\times\frac{3300}{200}=660\]\[\text{(iii)}\ E_2=4.44f\phi_{max}N_2\ \Rightarrow\ \phi_{max}=\frac{200}{4.44\times50\times40}=0.0225\text{ Wb}\]\[\text{(iv)}\ \phi_m=0.0225\times1.1=0.02475\text{ Wb};\ V_1=4.44N_1f\phi_m=4.44\times660\times25\times0.02475=1815\text{ V}\]\[\text{(v)}\ \text{same current density}\Rightarrow I_1,I_2\text{ unchanged};\ kVA=\frac{30.3\times1815}{1000}=55\text{ kVA}\]</div><span class="ans">30.3 A / 500 A · 660 · 0.0225 Wb · 1815 V · 55 kVA</span></div></div>
+  <div class="example-card"><div class="ex-h">Example 2.2</div><div class="ex-b"><div class="qb">A power transformer has 1000 primary turns and 100 secondary turns. The cross-sectional area of the core is 6 sq. cm and the maximum flux density while in operation is 10000 Gauss. Calculate turns per volt for the primary and secondary windings.</div><h4>Solution</h4><div class="sm">\[N_1=1000;\ N_2=100;\ A_i=6\text{ cm}^2=6\times10^{-4}\text{ m}^2\]\[B_{max}=10000\text{ gauss}=10000\times10^{-8}\times10^{4}=1\text{ tesla}\]\[E_1=4.44\,N_1fB_{max}A_i=4.44\times1000\times50\times1\times6\times10^{-4}=133.2\text{ V}\]\[E_2=4.44\,N_2fB_{max}A_i=4.44\times100\times50\times1\times6\times10^{-4}=13.32\text{ V}\]\[\text{Primary: }\frac{N_1}{E_1}=\frac{1000}{133.2}=7.5\qquad \text{Secondary: }\frac{N_2}{E_2}=\frac{100}{13.32}=7.5\]</div><p class="en">The number of turns per volt (voltage per turn) on primary and secondary remains the same.</p><span class="ans">7.5 turns/V</span></div></div>
+  <div class="example-card"><div class="ex-h">Example 2.3</div><div class="ex-b"><div class="qb">The primary and secondary of a 25 kVA transformer have 500 and 40 turns, respectively. If the primary is connected to 3000 V, 50 Hz mains, calculate (i) primary and secondary currents at full load; (ii) the secondary emf and (iii) the maximum flux in the core. Neglect magnetic leakage, resistance of the winding and the primary no-load current in relation to the full load current.</div><h4>Solution</h4><div class="sm">\[\text{(i)}\quad I_1=\frac{25\times10^3}{3000}=8.33\text{ A}\qquad \frac{I_1}{I_2}=\frac{E_2}{E_1}=\frac{N_2}{N_1}\]\[I_2=\frac{N_1}{N_2}I_1=\frac{500}{40}\times8.33=104.15\text{ A}\]\[\text{(ii)}\quad E_2=\frac{N_2}{N_1}E_1=\frac{40}{500}\times3000=240\text{ V}\]\[\text{(iii)}\quad E_1=4.44\,N_1f\Phi_{max}\ \Rightarrow\ \Phi_{max}=\frac{3000}{4.44\times500\times50}=27\text{ mWb}\]</div><span class="ans">I₁ = 8.33 A · I₂ = 104.15 A · E₂ = 240 V · Φmax = 27 mWb</span></div></div>
+  <div class="example-card"><div class="ex-h">Example 2.4</div><div class="ex-b"><div class="qb">The emf per turn of an 11 kV/415 V, 50 Hz single-phase core type transformer is 15 V. The maximum flux density in the core is 2.5 T. Find number of primary and secondary turns and net cross sectional area of core.</div><h4>Solution</h4><div class="sm">\[E_1=11000\text{ V};\ E_2=415\text{ V};\ f=50\text{ Hz};\ B_{max}=2.5\text{ T}\]\[N_1=\frac{11000}{15}=733.33\qquad N_2=\frac{415}{15}=27.67\]\[E_1=4.44\,N_1fA_iB_{max}\ \Rightarrow\ 15=4.44\times50\times A_i\times2.5\]\[A_i=\frac{15}{4.44\times50\times2.5}=0.027\text{ m}^2\approx 270\text{ cm}^2\]</div><span class="ans">N₁ = 733.33 · N₂ = 27.67 · A_i ≈ 270 cm²</span></div></div>
+  <div class="example-card"><div class="ex-h">Example 2.5 — Iron factor</div><div class="ex-b"><div class="qb">A single phase 50 Hz core type transformer has rectangular cores 30 × 20 cm and the maximum allowable density is 1.05 tesla. Find the number of turns per limb on the high and low voltage sides for a voltage ratio of 3300/200 volt. Take iron factor as 0.93.</div><h4>Solution</h4><p>الـ gross area بتتحسب من أبعاد الـ core (الـ limbs في IMG-13)، والـ iron factor لأن الـ laminations معزولة عن بعض:</p><div class="sm">\[A_g=30\times20=600\text{ cm}^2=600\times10^{-4}\text{ m}^2\]\[k_i=\frac{\text{Net Area}}{\text{Gross Area}}=\frac{A_i}{A_g}\ \Rightarrow\ A_i=0.93\times600\times10^{-4}=558\times10^{-4}\text{ m}^2\]\[\text{emf per turn}=4.44\,fB_{max}A_i=4.44\times50\times1.05\times558\times10^{-4}=13\text{ V}\]\[N_1=\frac{3300}{13}=254\qquad N_2=\frac{200}{13}=15.4\cong16\]</div><span class="ans">254 turns (HV) · 16 turns (LV)</span></div></div>
+  <div class="example-card"><div class="ex-h">Example 2.6</div><div class="ex-b"><div class="qb">The secondary of a 500 kVA, 4400/500 V, 50 Hz, single-phase transformer has 500 turns. Determine (i) emf per turn (ii) primary turns (iii) secondary full load current (iv) maximum flux (v) gross cross-sectional area of the core for flux density of 1.2 tesla and iron factor 0.92 (vi) if the core is of square cross-section find the width of the limb.</div><h4>Solution</h4><div class="sm">\[\text{Rating}=500\text{ kVA};\ V_1=4400\text{ V};\ V_2=500\text{ V};\ f=50\text{ Hz};\ N_2=500;\ B_{max}=1.2\text{ T};\ k_i=0.92\]\[\text{(i)}\ \frac{E_2}{N_2}=\frac{500}{500}=1.0\text{ V/turn}\qquad \text{(ii)}\ N_1=\frac{4400}{1.0}=4400\]\[\text{(iii)}\ I_2=\frac{kVA\times1000}{V_2}=\frac{500\times1000}{500}=1000\text{ A}\]\[\text{(iv)}\ \Phi_{max}=\frac{E_2}{4.44N_2f}=\frac{500}{4.44\times500\times50}=4.5\text{ mWb}\]\[\text{(v)}\ A_i=\frac{\Phi_{max}}{B_{max}}=\frac{4.5\times10^{-3}}{1.2}=37.54\text{ cm}^2\ ;\ A_g=\frac{A_i}{k_i}=\frac{37.54}{0.92}=40.8\text{ cm}^2\]\[\text{(vi)}\ \text{width}=\sqrt{A_g}=\sqrt{40.8}=6.39\text{ cm}\]</div><span class="ans">1 V/turn · 4400 · 1000 A · 4.5 mWb · 40.8 cm² · 6.39 cm</span></div></div>
+  <div class="example-card"><div class="ex-h">Example 2.7 — Frequency change</div><div class="ex-b"><div class="qb">A 100 kVA, 3300/200 volt, 50 Hz single phase transformer has 40 turns on the secondary, calculate: (i) the values of primary and secondary currents. (ii) the number of primary turns. (iii) the maximum value of the flux. If the transformer is to be used on a 25 Hz system, calculate (iv) the primary voltage, assuming that the flux is increased by 10%. (v) the kVA rating of the transformer assuming the current density in the windings to be unaltered.</div><h4>Solution</h4><div class="sm">\[\text{(i)}\ I_1=\frac{100\times1000}{3300}=30.3\text{ A}\qquad I_2=\frac{100\times1000}{200}=500\text{ A}\]\[\text{(ii)}\ N_1=N_2\frac{E_1}{E_2}=40\times\frac{3300}{200}=660\]\[\text{(iii)}\ E_2=4.44f\Phi_{max}N_2\ \Rightarrow\ \Phi_{max}=\frac{200}{4.44\times50\times40}=0.02252\text{ Wb}\]\[\text{(iv)}\ \Phi_{max}=1.1\times0.02252=0.02477\text{ Wb};\ V_1=4.44N_1f\Phi_{max}=4.44\times660\times25\times0.02477\approx1815\text{ V}\]\[\text{(v)}\ \text{same current density}\Rightarrow I_1,I_2\text{ unchanged};\ kVA=\frac{30.3\times1815}{1000}=55\text{ kVA}\]</div><span class="ans">30.3 A / 500 A · 660 · 0.0225 Wb · 1815 V · 55 kVA</span></div></div>
   </section>
 <hr class="section-divider">
 
-<section id="s8">
+<section id="s9">
   <div class="sec-head"><div class="ico">❓</div><div><h2>Practice Questions</h2><small>Tap to reveal</small></div></div>
   <div class="q-section"><div class="q">Q1. Why is the transformer core made of laminated steel sheets?</div>
     <button type="button" class="sol-btn" onclick="tg(this)">عرض الحل الكامل ▼</button>
-    <div class="sol">لأن الـ core مش <i>solid bar</i> بل طبقات رفيعة، والتصميم ده بيساعد في تقليل الـ heating.</div></div>
+    <div class="sol">الـ flux المتغير بيولّد eddy currents في الـ core، والـ laminated sheets المعزولة عن بعض بتقطع مساراتها فتقلل الـ heating (core loss).</div></div>
   <div class="q-section"><div class="q">Q2. Why is the LV winding placed next to the core?</div>
     <button type="button" class="sol-btn" onclick="tg(this)">عرض الحل الكامل ▼</button>
     <div class="sol">(1) Reduce leakage reactance. (2) Reduce insulation: الـ core grounded، فالـ LV جنبه بيصغّر الحجم والتكلفة. والـ Tap changer على الـ HV لأن التيار هناك قليل.</div></div>
   <div class="q-section"><div class="q">Q3. State the mmf balance condition.</div>
     <button type="button" class="sol-btn" onclick="tg(this)">عرض الحل الكامل ▼</button>
-    <div class="sol"><span class="en">I₁N₁ = I₂N₂</span> — الـ mmfs متساوية ومتعاكسة في الاتجاه.</div></div>
+    <div class="sol"><span class="en">I₁N₁ = I₂N₂</span> — الـ mmf للـ primary والـ secondary متساويين ومتعاكسين لأن μ → ∞ فالـ net mmf = 0 (ideal).</div></div>
 </section>
 </main>
 
 <footer>
   <h4>Lecture 2 — Single-Phase Transformers</h4>
-  <p>Dr.Eng. Abdelaziz Ismail · Faculty of Engineering, Capital University</p>
   <div class="tags"><span>Grid Levels</span><span>Core &amp; Shell</span><span>EMF Equation</span><span>Turns Ratio</span><span>Reflected Impedance</span><span>Solved Examples</span></div>
 </footer>
 
