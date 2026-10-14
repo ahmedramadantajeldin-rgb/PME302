@@ -91,7 +91,7 @@ html[data-eye="on"] .card{background:var(--eye-paper);}
     <g fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="1.5"><path d="M60 60h120v40h60"/><path d="M1140 70h-110v50h-70"/><circle cx="240" cy="100" r="5"/><circle cx="960" cy="120" r="5"/></g>
   </svg>
   <div class="hub-nav">
-    <a href="https://ahmedramadantajeldin-rgb.github.io/MechLibrary/" class="hub-link" title="العودة إلى MechHub">
+    <a href="#" onclick="goBackToMechHub(event)" class="hub-link" title="العودة إلى MechHub">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
       <span>Back to MechHub &nbsp;·&nbsp; العودة إلى MechHub</span>
     </a>
@@ -140,6 +140,27 @@ html[data-eye="on"] .card{background:var(--eye-paper);}
     try{ localStorage.setItem(KEY, on?'on':'off'); }catch(e){}
   });
 })();
+</script>
+
+<script>
+/* ── MechHub back-navigation helper ──────────────────────────────────────────
+ * Called by every "Back to MechHub" link.
+ * Strategy:
+ *   1. If there is a prior history entry in this tab, go back (the user came
+ *      from MechHub via same-tab navigation — no new entry is added).
+ *   2. Otherwise navigate with location.replace() so MechHub replaces this
+ *      page in history rather than stacking a new entry on top.
+ * This prevents duplicate hub pages accumulating on mobile and in the PWA.
+ */
+function goBackToMechHub(e) {
+  if (e) e.preventDefault();
+  var HUB = "https://ahmedramadantajeldin-rgb.github.io/MechLibrary/";
+  if (window.history.length > 1) {
+    window.history.back();
+  } else {
+    window.location.replace(HUB);
+  }
+}
 </script>
 </body>
 </html>
