@@ -3,65 +3,173 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#0B2447">
-<title>الموقع قيد التحديث</title>
+<title>Basics of Electric Machines — أساسيات الآلات الكهربية</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=Cairo:wght@300;400;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{
-  --navy:#0B2447; --royal:#1B4F8A; --sky:#2E86C1; --azure:#5DADE2;
-  --pearl:#EBF5FB; --ink:#1A1A2E; --graphite:#2C3E50; --amber:#F0B429;
-  --bg1:#f0f6ff; --bg2:#e8f1fb; --card:#ffffff; --line:#D6EAF8;
-}
-@media (prefers-color-scheme: dark){
-  :root{ --bg1:#0a1626; --bg2:#0d1d33; --card:#12243d; --line:#23406a; --ink:#EAF2FB; --graphite:#C9D8EA; --pearl:#17304f; }
-}
+:root{--navy:#0B2447;--royal:#1B4F8A;--sky:#2E86C1;--azure:#5DADE2;--mist:#D6EAF8;--pearl:#EBF5FB;--white:#FFFFFF;--ink:#1A1A2E;--graphite:#2C3E50;--slate:#5D6D7E;--gold:#D4AC0D;--amber:#F0B429;--mint:#1ABC9C;--shadow:0 4px 20px rgba(11,36,71,0.10);--shadow-lg:0 8px 40px rgba(11,36,71,0.16);--radius:14px;--radius-sm:8px;--eye-paper:#FFFFFF}
 *,*::before,*::after{box-sizing:border-box}
-html,body{margin:0;height:100%}
-body{
-  font-family:'Cairo','Segoe UI',Tahoma,'Noto Naskh Arabic',Arial,sans-serif;
-  background:linear-gradient(160deg,var(--bg1),var(--bg2));
-  color:var(--ink);
-  line-height:1.9;
-  display:flex;align-items:center;justify-content:center;
-  padding:max(20px,env(safe-area-inset-top)) max(16px,env(safe-area-inset-right)) max(20px,env(safe-area-inset-bottom)) max(16px,env(safe-area-inset-left));
+html,body{margin:0;max-width:100%;overflow-x:hidden}
+body{background:linear-gradient(160deg,#f0f6ff 0%,#e8f1fb 50%,#f5f9ff 100%);font-family:'Cairo','Source Serif 4',serif;font-size:17px;line-height:1.85;color:var(--ink);min-height:100vh}
+.hero{position:relative;overflow:hidden;color:#fff;text-align:center;background:linear-gradient(135deg,var(--navy) 0%,var(--royal) 60%,var(--sky) 100%);padding:clamp(56px,9vw,96px) 24px clamp(90px,12vw,130px)}
+.hero svg.bg{position:absolute;inset:0;width:100%;height:100%;opacity:.5;pointer-events:none}
+.hero>*:not(svg){position:relative}
+.badge{display:inline-block;direction:ltr;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:999px;padding:4px 18px;font-size:.78rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:18px}
+h1{font-family:'Playfair Display',serif;font-weight:800;font-size:clamp(2rem,5.5vw,3.6rem);line-height:1.2;margin:0 0 10px;text-shadow:0 2px 14px rgba(93,173,226,.45)}
+h1 span{display:block;font-family:'Cairo';font-weight:600;font-size:.42em;opacity:.88;margin-top:10px;text-shadow:none}
+.sub{font-family:'Source Serif 4',serif;direction:ltr;max-width:600px;margin:0 auto;opacity:.85;font-size:1.05rem}
+.coil{display:block;margin:0 auto 14px;width:92px;height:46px;filter:drop-shadow(0 0 8px rgba(93,173,226,.8))}
+.wrap{max-width:960px;margin:-70px auto 0;padding:0 24px 40px;position:relative}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.card{display:flex;flex-direction:column;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;text-decoration:none;color:inherit;transition:transform .25s,box-shadow .25s;border:1px solid var(--mist)}
+.card:hover,.card:focus-visible{transform:translateY(-5px);box-shadow:var(--shadow-lg);outline:none}
+.card:focus-visible{box-shadow:0 0 0 3px var(--amber),var(--shadow-lg)}
+.c-top{position:relative;background:linear-gradient(135deg,var(--navy),var(--royal));color:#fff;padding:20px 22px;display:flex;align-items:center;gap:16px;overflow:hidden}
+.c-top::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 15% 120%,rgba(93,173,226,.35),transparent 60%)}
+.num{position:relative;z-index:1;flex:0 0 58px;width:58px;height:58px;border-radius:14px;background:linear-gradient(135deg,var(--sky),var(--azure));display:flex;align-items:center;justify-content:center;font:800 1.6rem 'Playfair Display',serif;box-shadow:0 0 18px rgba(93,173,226,.55)}
+.c-top div{position:relative;z-index:1;direction:ltr;text-align:left}
+.c-top small{display:block;font:400 .75rem 'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;opacity:.75}
+.c-top b{font:700 1.5rem 'Playfair Display',serif}
+.c-body{padding:18px 22px 22px;display:flex;flex-direction:column;gap:14px;flex:1}
+.c-body h2{margin:0;font-size:1.05rem;color:var(--navy);direction:ltr;text-align:left;font-family:'Playfair Display',serif;line-height:1.4}
+.c-body p{margin:0;color:var(--graphite);font-size:.95rem;line-height:1.7}
+.tags{display:flex;flex-wrap:wrap;gap:6px;direction:ltr}
+.tags span{font:500 .72rem 'JetBrains Mono',monospace;background:var(--pearl);color:var(--royal);border:1px solid var(--mist);border-radius:999px;padding:1px 10px}
+.go{margin-top:auto;align-self:flex-start;display:inline-flex;align-items:center;gap:8px;direction:ltr;background:linear-gradient(90deg,var(--royal),var(--sky));color:#fff;font:600 .95rem 'Cairo';padding:8px 20px;border-radius:999px}
+.card:hover .go{background:linear-gradient(90deg,var(--navy),var(--royal))}
+.go i{font-style:normal;transition:transform .2s}.card:hover .go i{transform:translateX(4px)}
+.foot{text-align:center;color:var(--slate);font-size:.85rem;margin-top:34px;direction:ltr;font-family:'Source Serif 4',serif}
+.foot b{font-family:'JetBrains Mono',monospace;font-weight:500;color:var(--royal)}
+@media(max-width:700px){.cards{grid-template-columns:1fr}.wrap{padding:0 14px 30px;margin-top:-56px}body{font-size:16px}}
+@media(prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important}}
+@keyframes flow{to{stroke-dashoffset:-120}}
+.w{stroke-dasharray:6 14;animation:flow 6s linear infinite}
+</style>
+<script>
+try{ if(localStorage.getItem('eyeProtection')==='on'){ document.documentElement.setAttribute('data-eye','on'); } }catch(e){}
+</script>
+<style id="eye-protection-css">
+.eye-toggle{position:fixed; top:14px; left:14px; z-index:10000; direction:ltr; display:inline-flex; align-items:center; gap:8px; padding:6px 14px 6px 12px; border-radius:999px; cursor:pointer; margin:0; font-family:'Cairo',sans-serif; font-weight:600; font-size:0.82rem; line-height:1.4; background:rgba(255,255,255,0.93); color:#0B2447; border:1px solid rgba(11,36,71,0.28); box-shadow:0 2px 10px rgba(11,36,71,0.18); backdrop-filter:blur(6px); transition:background .2s, border-color .2s, color .2s;}
+.eye-toggle:focus-visible{outline:2px solid #F0B429; outline-offset:2px;}
+.eye-sw{position:relative; flex:0 0 30px; width:30px; height:16px; border-radius:999px; background:#A9B4C0; transition:background .2s;}
+.eye-sw::after{content:""; position:absolute; top:2px; left:2px; width:12px; height:12px; border-radius:50%; background:#fff; box-shadow:0 1px 2px rgba(0,0,0,.3); transition:transform .2s;}
+.eye-st{min-width:2.3em; text-align:left; font-family:'JetBrains Mono',monospace; font-size:0.76rem; font-weight:500;}
+.eye-toggle[aria-pressed="true"]{background:#F8EFD6; border-color:#C9A25A; color:#5A3E00;}
+.eye-toggle[aria-pressed="true"] .eye-sw{background:#C8902E;}
+.eye-toggle[aria-pressed="true"] .eye-sw::after{transform:translateX(14px);}
+@media (max-width:420px){ .eye-toggle{padding:5px 10px 5px 9px; gap:6px; font-size:0.74rem;} .eye-lbl{display:none;} }
+.eye-overlay{display:none;}
+@media screen{
+html[data-eye="on"]{ --pearl:#EAF1F5; --mist:#D5E4EE; --white:#F8F8F5; --sky:#3A84B3; --azure:#69A8CF; --amber:#E2AD3C; --gold:#C8A21C; --mint:#27AD93; --slate:#556576; --shadow:0 4px 20px rgba(50,44,32,0.10); --shadow-lg:0 8px 40px rgba(50,44,32,0.14); --eye-paper:#F8F8F5; }
+html[data-eye="on"] body{background:linear-gradient(160deg,#F0F1F0 0%,#ECEDEC 50%,#F1F2F1 100%);}
+html[data-eye="on"] .card{background:var(--eye-paper);}
+@supports (mix-blend-mode:multiply){ html[data-eye="on"] .eye-overlay{ display:block; position:fixed; inset:0; z-index:9990; pointer-events:none; background:rgba(255,225,170,0.22); mix-blend-mode:multiply; } }
 }
-.card{
-  width:100%;max-width:620px;text-align:center;
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:18px;
-  box-shadow:0 8px 40px rgba(11,36,71,.16);
-  overflow:hidden;
-}
-.top{
-  background:linear-gradient(135deg,var(--navy),var(--royal) 65%,var(--sky));
-  padding:34px 24px 28px;color:#fff;
-}
-.icon{width:64px;height:64px;margin:0 auto 14px;display:block}
-.icon .gear{transform-origin:32px 32px;animation:spin 14s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-h1{margin:0;font-size:clamp(1.4rem,4.6vw,1.9rem);font-weight:700;line-height:1.4}
-.body{padding:28px clamp(20px,5vw,40px) 34px}
-p{margin:0;font-size:clamp(1rem,3.4vw,1.12rem);color:var(--graphite)}
-.bar{width:64px;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--sky),var(--amber));margin:0 auto 22px}
-@media (prefers-reduced-motion:reduce){.icon .gear{animation:none}}
+@media print{ .eye-toggle,.eye-overlay{display:none !important;} }
+.hub-nav{margin-bottom:18px;display:flex;justify-content:center}
+.hub-link{display:inline-flex;align-items:center;gap:8px;direction:ltr;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.32);border-radius:999px;padding:5px 18px;font-size:.82rem;font-weight:600;color:#fff;text-decoration:none;backdrop-filter:blur(4px);transition:all .2s ease}
+.hub-link:hover,.hub-link:focus-visible{background:rgba(255,255,255,.28);border-color:#fff;transform:translateY(-1px);box-shadow:0 4px 14px rgba(0,0,0,.15);outline:none}
+.hub-link svg{width:14px;height:14px;transition:transform .2s ease}
+.hub-link:hover svg{transform:translateX(-3px)}
 </style>
 </head>
 <body>
-<main class="card" role="main">
-  <div class="top">
-    <svg class="icon" viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <g class="gear">
-        <circle cx="32" cy="32" r="9"/>
-        <path d="M32 6v7M32 51v7M6 32h7M51 32h7M13.6 13.6l5 5M45.4 45.4l5 5M13.6 50.4l5-5M45.4 18.6l5-5"/>
-      </g>
-    </svg>
-    <h1>الموقع قيد التحديث</h1>
+<button type="button" class="eye-toggle" id="eyeToggle" aria-pressed="false" title="Eye Protection: softer brightness and less blue light for long study sessions">
+  <span class="eye-ico" aria-hidden="true">👁</span>
+  <span class="eye-lbl">Eye Protection</span>
+  <span class="eye-sw" aria-hidden="true"></span>
+  <span class="eye-st">OFF</span>
+</button>
+<div class="eye-overlay" aria-hidden="true"></div>
+
+<header class="hero">
+  <svg class="bg" viewBox="0 0 1200 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <defs><pattern id="g" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#fff" stroke-opacity=".07"/></pattern></defs>
+    <rect width="1200" height="400" fill="url(#g)"/>
+    <path class="w" d="M0 250 Q75 150 150 250 T300 250 T450 250 T600 250 T750 250 T900 250 T1050 250 T1200 250" fill="none" stroke="#5DADE2" stroke-width="2"/>
+    <path d="M0 290 Q75 210 150 290 T300 290 T450 290 T600 290 T750 290 T900 290 T1050 290 T1200 290" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="1.5"/>
+    <g fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="1.5"><path d="M60 60h120v40h60"/><path d="M1140 70h-110v50h-70"/><circle cx="240" cy="100" r="5"/><circle cx="960" cy="120" r="5"/></g>
+  </svg>
+  <div class="hub-nav">
+    <a href="#" onclick="goBackToMechHub(event)" class="hub-link" title="العودة إلى MechHub">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span>Back to MechHub &nbsp;·&nbsp; العودة إلى MechHub</span>
+    </a>
   </div>
-  <div class="body">
-    <div class="bar"></div>
-    <p>نود إعلامكم بأنه يجري حاليًا العمل على تحديث الملفات واستكمال المعلومات الناقصة. وبمجرد الانتهاء من التحديث ومراجعة الملفات والتأكد من صحة المعلومات الواردة بها، سيتم رفع النسخ المحدّثة على الموقع. شكرًا لتفهمكم.</p>
+  <div class="badge">Electrical Engineering · Course Home</div>
+  <svg class="coil" viewBox="0 0 92 46" aria-hidden="true"><g fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M2 36h8M82 36h8"/><path d="M10 36c0-14 10-14 10 0s10-14 10 0 10-14 10 0"/><path d="M62 36c0-14 10-14 10 0s10-14 10 0"/><path d="M40 6v34M48 6v34" stroke="#5DADE2"/></g></svg>
+  <h1>Basics of Electric Machines<span>أساسيات الآلات الكهربية</span></h1>
+  <p class="sub">Choose a lecture to start studying — magnetic circuits, transformers, and the principles behind electric machines.</p>
+</header>
+
+<main class="wrap">
+  <div class="cards">
+    <a class="card" href="Lecture%201.html">
+      <div class="c-top"><div class="num">1</div><div><small>Lecture 01</small><b>Magnetic Circuit</b></div></div>
+      <div class="c-body">
+        <h2>Basics of Electric Machines</h2>
+        <p>الدائرة المغناطيسية: الـ MMF والـ Flux والـ Reluctance، والمفاهيم الأساسية للتحويل الكهروميكانيكي.</p>
+        <div class="tags"><span>MMF</span><span>Flux</span><span>Reluctance</span></div>
+        <span class="go">Open Lecture <i>→</i></span>
+      </div>
+    </a>
+    <a class="card" href="Lecture%202.html">
+      <div class="c-top"><div class="num">2</div><div><small>Lecture 02</small><b>Single-Phase Transformers</b></div></div>
+      <div class="c-body">
+        <h2>Principle, Construction &amp; EMF Equation</h2>
+        <p>المحولات أحادية الفاز: التركيب، الـ ideal transformer، معادلة الـ EMF، الـ impedance transformation وأمثلة محلولة.</p>
+        <div class="tags"><span>Transformer</span><span>EMF</span><span>Turns Ratio</span></div>
+        <span class="go">Open Lecture <i>→</i></span>
+      </div>
+    </a>
+    <a class="card" href="Lecture%203-4.html">
+      <div class="c-top"><div class="num" style="font-size:1.2rem">3–4</div><div><small>Lectures 03 &amp; 04</small><b>Transformer Analysis &amp; AC Power</b></div></div>
+      <div class="c-body">
+        <h2>Equivalent Circuit, Losses, Regulation &amp; Phasors</h2>
+        <p>الدائرة المكافئة للمحول، الفقد والكفاءة، اختبارا الدائرة المفتوحة والقصر، تنظيم الجهد والـ autotransformer، ثم الـ phasors وقدرة التيار المتردد وتصحيح معامل القدرة والأنظمة ثلاثية الأطوار والتوافقيات، مع مخططات phasor تفاعلية.</p>
+        <div class="tags"><span>Equivalent Circuit</span><span>Regulation</span><span>Phasors</span></div>
+        <span class="go">Open Lecture <i>→</i></span>
+      </div>
+    </a>
   </div>
+  <p class="foot">Basics of Electric Machines · <b>4 lectures · 3 pages</b></p>
 </main>
+
+<script>
+(function(){
+  var KEY='eyeProtection', root=document.documentElement, btn=document.getElementById('eyeToggle');
+  if(!btn) return;
+  var st=btn.querySelector('.eye-st');
+  function render(on){ btn.setAttribute('aria-pressed', on?'true':'false'); st.textContent = on?'ON':'OFF'; }
+  render(root.getAttribute('data-eye')==='on');
+  btn.addEventListener('click', function(){
+    var on = root.getAttribute('data-eye') !== 'on';
+    if(on){ root.setAttribute('data-eye','on'); } else { root.removeAttribute('data-eye'); }
+    render(on);
+    try{ localStorage.setItem(KEY, on?'on':'off'); }catch(e){}
+  });
+})();
+</script>
+
+<script>
+/* ── MechHub back-navigation helper ──────────────────────────────────────────
+ * Called by every "Back to MechHub" link.
+ * Strategy:
+ *   1. If there is a prior history entry in this tab, go back (the user came
+ *      from MechHub via same-tab navigation — no new entry is added).
+ *   2. Otherwise navigate with location.replace() so MechHub replaces this
+ *      page in history rather than stacking a new entry on top.
+ * This prevents duplicate hub pages accumulating on mobile and in the PWA.
+ */
+function goBackToMechHub(e) {
+  if (e) e.preventDefault();
+  var HUB = "https://ahmedramadantajeldin-rgb.github.io/MechLibrary/";
+  if (window.history.length > 1) {
+    window.history.back();
+  } else {
+    window.location.replace(HUB);
+  }
+}
+</script>
 </body>
 </html>
